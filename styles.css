@@ -1,0 +1,2175 @@
+/* ---------- Base ---------- */
+:root {
+  --bg: #FBF7F0;
+  --ink: #2B2118;
+  --ink-soft: #6B5E54;
+  --line: #E8DFD2;
+  --accent: #D96A4A;
+  --frame-bg: #E5D5B5;
+  --frame-width: 480px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--frame-bg);
+  color: var(--ink);
+  font-family: "Hiragino Maru Gothic ProN", "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
+  font-feature-settings: "palt";
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.7;
+  transition: background-color 1.4s ease;
+}
+
+/* スマホ幅で中央寄せされる「カード」コンテナ */
+.page-frame {
+  max-width: var(--frame-width);
+  margin: 0 auto;
+  background: var(--bg);
+  min-height: 100vh;
+  box-shadow: 0 0 60px rgba(0,0,0,0.06);
+  container-type: inline-size;
+  container-name: frame;
+}
+
+/* ヒーロー時計：コンテナ内に収める */
+.page-frame .hero-clock {
+  width: min(440px, 86%);
+  height: min(440px, 86%);
+}
+
+/* 主要タイポはコンテナ幅に合わせて控えめに */
+.page-frame .hero-title { font-size: clamp(30px, 9cqw, 44px); }
+.page-frame .contact-display { font-size: clamp(40px, 12.5cqw, 64px); }
+.page-frame .about-clock { width: min(240px, 60cqw); height: min(240px, 60cqw); }
+
+/* ---------- セクション扉（タイトル大） ---------- */
+.section-door {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  min-height: 200px;
+}
+
+.section-door-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.section-door-rule {
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.section-door-title {
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(48px, 14cqw, 84px);
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  margin: 0;
+  text-align: center;
+}
+
+/* スクロール連動：入場時にフェードイン＆スケールアップ */
+@supports (animation-timeline: view()) {
+  .section-door-inner {
+    animation: section-door-reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% contain 30%;
+  }
+
+  @keyframes section-door-reveal {
+    from {
+      opacity: 0;
+      transform: scale(0.85) translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-door-inner {
+    animation: none;
+  }
+}
+
+
+/* 固定要素：カード右端に揃える */
+.page-indicator {
+  right: max(18px, calc((100vw - var(--frame-width)) / 2 + 18px)) !important;
+}
+
+/* ---------- 左右余白の装飾 ---------- */
+.margin-decor {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: calc((100vw - var(--frame-width)) / 2);
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+  display: none; /* 余白が十分にあるときだけ表示 */
+}
+
+.margin-decor-left  { left: 0; }
+.margin-decor-right { right: 0; }
+
+/* 縦書きの飾り文字 */
+.margin-decor-vtext {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  color: var(--ink-soft);
+  opacity: 0.55;
+  white-space: nowrap;
+  user-select: none;
+}
+
+
+/* ふわっと漂う点 */
+.margin-decor-dot {
+  position: absolute;
+  left: var(--x, 50%);
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0;
+  animation: marginDrift 16s ease-in-out var(--d, 0s) infinite;
+}
+
+@keyframes marginDrift {
+  0%   { transform: translateY(110vh); opacity: 0; }
+  15%  { opacity: 0.45; }
+  85%  { opacity: 0.45; }
+  100% { transform: translateY(-10vh); opacity: 0; }
+}
+
+/* 余白が確保できる広さでだけ表示 */
+@media (min-width: 760px) {
+  .margin-decor { display: block; }
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ---------- Header ---------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 22px;
+  background: rgba(251, 247, 240, 0.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ---------- Menu toggle (MENU / CLOSE text) ---------- */
+.nav-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 2px;
+  background: none;
+  border: 0;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--ink);
+  cursor: pointer;
+  z-index: 60;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nav-toggle-text {
+  position: relative;
+  display: inline-block;
+  min-width: 4.4em;
+  text-align: right;
+  line-height: 1;
+}
+
+.nav-toggle-text > span {
+  display: block;
+  transition: opacity .25s ease, transform .25s ease;
+}
+
+.nav-toggle-text-close {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translateY(4px);
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle-text-open {
+  opacity: 0;
+  transform: translateY(-4px);
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle-text-close {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.nav-toggle:hover {
+  color: var(--accent);
+  transition: color .3s ease;
+}
+
+.logo-image {
+  display: block;
+  height: 36px;
+  width: auto;
+  object-fit: contain;
+}
+
+.logo-mark {
+  font-family: "Georgia", serif;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.02em;
+  background: var(--ink);
+  color: var(--bg);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.logo-text {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* ---------- Site nav: right-side drawer ---------- */
+.site-nav-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 54;
+  background: rgba(43, 33, 24, 0.42);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .4s ease;
+}
+
+.site-nav-backdrop.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.site-nav-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  color: var(--ink);
+  -webkit-tap-highlight-color: transparent;
+  transition: color .2s ease, transform .3s ease;
+  z-index: 2;
+}
+
+.site-nav-close::before,
+.site-nav-close::after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 1.5px;
+  background: currentColor;
+  border-radius: 1px;
+}
+
+.site-nav-close::before { transform: rotate(45deg); }
+.site-nav-close::after  { transform: rotate(-45deg); }
+
+.site-nav-close:hover {
+  color: var(--accent);
+  transform: rotate(90deg);
+}
+
+.site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: min(340px, 80%);
+  z-index: 55;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 90px 32px 40px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--bg);
+  box-shadow: 10px 0 40px rgba(0, 0, 0, 0.08);
+  transform: translateX(-100%);
+  visibility: hidden;
+  transition:
+    transform .45s cubic-bezier(.2,.7,.2,1),
+    visibility 0s linear .45s;
+}
+
+.site-nav.is-open {
+  transform: translateX(0);
+  visibility: visible;
+  transition:
+    transform .45s cubic-bezier(.2,.7,.2,1),
+    visibility 0s linear 0s;
+}
+
+.site-nav a {
+  position: relative;
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 22px;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+  opacity: 0;
+  transform: translateX(20px);
+  transition:
+    opacity .5s ease,
+    transform .5s cubic-bezier(.2,.7,.2,1),
+    color .2s ease,
+    padding-left .25s ease;
+}
+
+.site-nav.is-open a {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.site-nav.is-open a:nth-child(1) { transition-delay: .12s; }
+.site-nav.is-open a:nth-child(2) { transition-delay: .18s; }
+.site-nav.is-open a:nth-child(3) { transition-delay: .24s; }
+.site-nav.is-open a:nth-child(4) { transition-delay: .30s; }
+.site-nav.is-open a:nth-child(5) { transition-delay: .36s; }
+.site-nav.is-open a:nth-child(6) { transition-delay: .42s; }
+
+.site-nav a:hover {
+  color: var(--accent);
+  padding-left: 6px;
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  text-align: center;
+  padding: 60px 24px;
+  min-height: 78vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* 背景：大きな時計 */
+.hero-clock {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(640px, 84vw);
+  height: min(640px, 84vw);
+  transform: translate(-50%, -50%);
+  color: var(--ink);
+  pointer-events: none;
+  z-index: 0;
+  overflow: visible;
+}
+
+.hero-clock-dial {
+  opacity: 0.09;
+}
+
+.hero-clock-center {
+  opacity: 0.15;
+}
+
+/* 針：ロード後に3:00を指すアニメーション */
+.hero-clock-min {
+  transform-origin: 100px 100px;
+  transform-box: view-box;
+  transform: rotate(0deg);
+  transition: transform 2.4s cubic-bezier(.4,0,.2,1);
+}
+
+.hero.is-active .hero-clock-min {
+  transform: rotate(1080deg);
+}
+
+.hero-clock-hour {
+  transform-origin: 100px 100px;
+  transform-box: view-box;
+  transform: rotate(-90deg);
+  transition: transform 2.4s cubic-bezier(.4,0,.2,1);
+}
+
+.hero.is-active .hero-clock-hour {
+  transform: rotate(0deg);
+}
+
+/* 外円を周回するオレンジの点 */
+.hero-clock-orbit {
+  transform-origin: 100px 100px;
+  transform-box: view-box;
+  animation: heroOrbit 14s linear infinite;
+}
+
+.hero-clock-orbit-dot {
+  fill: var(--accent);
+  filter: drop-shadow(0 0 6px rgba(217, 106, 74, 0.45));
+}
+
+@keyframes heroOrbit {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes heroFade {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-eyebrow {
+  font-family: "Georgia", serif;
+  font-style: italic;
+  color: var(--ink-soft);
+  letter-spacing: 0.08em;
+  font-size: 14px;
+  margin: 0 0 18px;
+  opacity: 0;
+  animation: heroFade 1.6s ease forwards;
+  animation-play-state: paused;
+}
+
+.hero-title {
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 800;
+  line-height: 1.3;
+  margin: 0 0 24px;
+  letter-spacing: 0.02em;
+  opacity: 0;
+  animation: heroTitleIn 2.0s cubic-bezier(.2,.7,.2,1) .3s forwards;
+  animation-play-state: paused;
+}
+
+.hero-title em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+.hero-lead {
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin: 0;
+  opacity: 0;
+  animation: heroFade 1.8s ease 1.0s forwards;
+  animation-play-state: paused;
+}
+
+.hero.is-text-reveal .hero-eyebrow,
+.hero.is-text-reveal .hero-title,
+.hero.is-text-reveal .hero-lead {
+  animation-play-state: running;
+}
+
+@keyframes heroTitleIn {
+  0% {
+    opacity: 0;
+    letter-spacing: 0.32em;
+    filter: blur(4px);
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    letter-spacing: 0.02em;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+/* ---------- Apps (Catalog) ---------- */
+.apps {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 40px 24px 100px;
+  background: linear-gradient(180deg, transparent, rgba(213, 226, 206, 0.22) 10%, rgba(213, 226, 206, 0.22) 90%, transparent);
+}
+
+.apps-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.apps-eyebrow {
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 22px;
+  letter-spacing: 0.16em;
+  color: var(--ink-soft);
+  margin: 0 0 10px;
+}
+
+.apps-title {
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin: 0 0 8px;
+}
+
+.apps-sub {
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin: 0;
+  letter-spacing: 0.05em;
+}
+
+.catalog {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--ink);
+}
+
+.catalog-item {
+  border-bottom: 1px solid var(--line);
+  /* スクロール演出：初期状態 */
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity .65s ease,
+    transform .65s ease;
+  transition-delay: calc(var(--i, 0) * 80ms);
+}
+
+.catalog-item.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 表示完了後はホバー用の素早いトランジションに */
+.catalog-item.is-revealed {
+  transition: opacity .3s ease, transform .3s ease;
+  transition-delay: 0s;
+}
+
+.catalog-item:last-child {
+  border-bottom: 1px solid var(--ink);
+}
+
+/* フォーカス効果：ホバー中の行以外をうっすら */
+.catalog:hover .catalog-item.is-revealed:not(:hover) {
+  opacity: 0.35;
+}
+
+.catalog-row {
+  display: grid;
+  grid-template-columns: 72px 1fr auto 24px;
+  align-items: center;
+  gap: 28px;
+  padding: 42px 14px;
+  position: relative;
+  transition: background-color .3s ease;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 12px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.catalog-row:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -4px;
+}
+
+.catalog-row:hover {
+  background-color: rgba(43, 33, 24, 0.03);
+}
+
+/* Logo */
+.catalog-logo {
+  display: block;
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--bg);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04), inset 0 0 0 1px rgba(43,33,24,0.06);
+  transition: transform .35s cubic-bezier(.4,0,.2,1);
+}
+
+.catalog-logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1);
+  transition: filter .6s ease;
+}
+
+.catalog-row:hover .catalog-logo {
+  transform: scale(1.06) rotate(-2deg);
+}
+
+.catalog-row:hover .catalog-logo img {
+  filter: grayscale(0);
+}
+
+/* main */
+.catalog-main {
+  min-width: 0;
+}
+
+/* No. ラベル（小さなメタ表記） */
+.catalog-no {
+  display: inline-block;
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--ink-soft);
+  margin-bottom: 4px;
+}
+
+.catalog-name {
+  margin: 0 0 4px;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+}
+
+.catalog-tag {
+  margin: 0;
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
+/* category */
+.catalog-category {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  font-weight: 500;
+  padding: 5px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  transition: border-color .3s ease, color .3s ease;
+}
+
+.catalog-row:hover .catalog-category {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+/* arrow */
+.catalog-arrow {
+  font-size: 16px;
+  color: var(--ink-soft);
+  transition: transform .35s ease, color .35s ease;
+  justify-self: end;
+}
+
+.catalog-row:hover .catalog-arrow {
+  transform: translateX(4px);
+  color: var(--ink);
+}
+
+/* ---------- 大きな番号（背景に浮かぶ / マグネティック） ---------- */
+.catalog-bignum {
+  --mx: 0px;
+  --my: 0px;
+  position: absolute;
+  top: 50%;
+  right: 24px;
+  font-family: "Georgia", serif;
+  font-weight: 300;
+  font-size: clamp(110px, 17vw, 190px);
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: var(--ink);
+  opacity: 0;
+  pointer-events: none;
+  z-index: -1;
+  white-space: nowrap;
+  transform: translate(calc(40px + var(--mx)), calc(-50% + var(--my)));
+  transition:
+    opacity .55s ease,
+    transform .5s cubic-bezier(.2,.7,.2,1);
+}
+
+.catalog-row:hover .catalog-bignum,
+.catalog-item.is-open .catalog-bignum {
+  opacity: 0.08;
+  transform: translate(var(--mx), calc(-50% + var(--my)));
+}
+
+/* アコーディオン展開時、矢印を下向きに */
+.catalog-item.is-open .catalog-arrow {
+  transform: rotate(90deg);
+  color: var(--accent);
+}
+
+.catalog-item.is-open .catalog-row {
+  background-color: rgba(43, 33, 24, 0.03);
+}
+
+/* ---------- Detail（クリック展開） ---------- */
+.catalog-detail {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows .5s cubic-bezier(.4,0,.2,1);
+}
+
+.catalog-item.is-open .catalog-detail {
+  grid-template-rows: 1fr;
+}
+
+.catalog-detail-inner {
+  overflow: hidden;
+  padding: 0 12px;
+}
+
+.catalog-item.is-open .catalog-detail-inner {
+  padding: 4px 12px 32px;
+}
+
+.catalog-detail-desc {
+  margin: 0 0 18px;
+  font-size: 14px;
+  line-height: 1.85;
+  color: var(--ink-soft);
+  max-width: 640px;
+}
+
+.catalog-detail-tags {
+  list-style: none;
+  margin: 0 0 22px;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.catalog-detail-tags li {
+  font-family: "Georgia", serif;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  padding: 4px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--ink-soft);
+}
+
+.catalog-detail-link {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 3px;
+  transition: letter-spacing .25s ease;
+}
+
+.catalog-detail-link:hover {
+  letter-spacing: 0.1em;
+}
+
+
+/* ---------- About ---------- */
+.about {
+  position: relative;
+  margin: 0;
+  padding: 64px 24px 120px;
+  overflow: hidden;
+  background: linear-gradient(180deg, transparent, rgba(223, 212, 224, 0.22) 10%, rgba(223, 212, 224, 0.22) 90%, transparent);
+}
+
+/* ダイヤル全体：時計を中心に、12時=eyebrow、3/9時=サイドマーク、6時=本文 */
+.about-dial {
+  position: relative;
+  max-width: 400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.about-clock-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  width: 100%;
+}
+
+/* 9時/3時位置の縦書きマーク */
+.about-side-mark {
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 10.5px;
+  letter-spacing: 0.32em;
+  color: var(--accent);
+  white-space: nowrap;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity .9s ease 2.8s, transform .9s ease 2.8s;
+  flex: 0 0 auto;
+}
+
+.about-side-mark--left {
+  transform: rotate(180deg) translateY(6px);
+}
+
+.about-side-mark--right {
+  transform: translateY(6px);
+}
+
+.about.is-active .about-side-mark--left {
+  opacity: 1;
+  transform: rotate(180deg) translateY(0);
+}
+
+.about.is-active .about-side-mark--right {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 時計：センターピース */
+.about-clock {
+  position: relative;
+  flex: 0 0 auto;
+  width: 240px;
+  height: 240px;
+  color: var(--ink);
+}
+
+.about-clock-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+.about-clock-rim {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.2;
+  opacity: 0.9;
+}
+
+.about-clock-rim-outer {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 0.5;
+  opacity: 0.22;
+}
+
+.about-clock-tick-major {
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.about-clock-tick-minor {
+  stroke: currentColor;
+  stroke-width: 0.9;
+  stroke-linecap: round;
+  opacity: 0.4;
+}
+
+.about-clock-min,
+.about-clock-hour {
+  stroke: currentColor;
+  stroke-linecap: round;
+  fill: none;
+  transform-origin: 100px 100px;
+  transform-box: view-box;
+}
+
+.about-clock-min {
+  stroke-width: 2.4;
+  transform: rotate(0deg);
+  transition: transform 2.6s cubic-bezier(.45,.05,.2,1) .3s;
+}
+
+.about-clock-hour {
+  stroke-width: 3.4;
+  transform: rotate(0deg);
+  transition: transform 2.6s cubic-bezier(.45,.05,.2,1) .3s;
+}
+
+.about.is-active .about-clock-min { transform: rotate(720deg); }
+.about.is-active .about-clock-hour { transform: rotate(90deg); }
+
+.about-clock-center-ring {
+  fill: var(--bg);
+  stroke: currentColor;
+  stroke-width: 0.8;
+}
+
+.about-clock-center-pip {
+  fill: currentColor;
+}
+
+/* 時計の縁を取り囲む薄いハロー */
+.about-clock::before {
+  content: "";
+  position: absolute;
+  inset: -24px;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, rgba(217, 106, 74, 0.07) 0%, rgba(217, 106, 74, 0) 60%);
+  opacity: 0;
+  transition: opacity 1.4s ease 2.2s;
+  pointer-events: none;
+}
+
+.about.is-active .about-clock::before { opacity: 1; }
+
+/* 12時位置：eyebrow */
+.about-eyebrow {
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 11.5px;
+  letter-spacing: 0.32em;
+  color: var(--ink-soft);
+  margin: 0 0 36px;
+  text-align: center;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity .8s ease .2s, transform .8s ease .2s;
+}
+
+.about.is-active .about-eyebrow {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 6時位置：本文 */
+.about-content {
+  margin-top: 56px;
+  max-width: 320px;
+  text-align: center;
+}
+
+.about-text {
+  color: var(--ink-soft);
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 2;
+  text-align: center;
+}
+
+/* 段落間の小さな仕切り（中央に小さなドット） */
+.about-divider {
+  display: block;
+  width: 36px;
+  height: 1px;
+  background: var(--line);
+  margin: 32px auto;
+  position: relative;
+  opacity: 0;
+  transition: opacity .9s ease 3.4s, transform .9s ease 3.4s;
+  transform: scaleX(0);
+  transform-origin: center;
+}
+
+.about-divider::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 4px;
+  height: 4px;
+  background: var(--accent);
+  border-radius: 50%;
+}
+
+.about.is-active .about-divider {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+/* キーワードのハイライト */
+.about-highlight {
+  position: relative;
+  color: var(--ink);
+  font-weight: 600;
+  display: inline-block;
+}
+
+.about-highlight::after {
+  content: "";
+  position: absolute;
+  left: -2px;
+  right: -2px;
+  bottom: -7px;
+  height: 10px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'><path d='M3,7 C 40,3 70,10 110,6 S 170,3 197,7' stroke='%23D96A4A' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 1.2s cubic-bezier(.6,.05,.3,1) 3.6s;
+  pointer-events: none;
+}
+
+.about-content .about-text:nth-of-type(2) .about-highlight::after {
+  transition-delay: 4.0s;
+}
+
+.about.is-active .about-highlight::after {
+  clip-path: inset(0 0 0 0);
+}
+
+/* 本文：1文字ずつ静かに現れる */
+.about-text .char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(6px);
+  filter: blur(2px);
+  transition: opacity .5s ease, transform .5s ease, filter .5s ease;
+}
+
+.about.is-active .about-text .char {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+  transition-delay: calc(2.8s + var(--ci, 0) * 12ms);
+}
+
+/* ---------- Contact ---------- */
+.contact {
+  position: relative;
+  margin: 80px 24px 0;
+  padding: 120px 24px 130px;
+  background: linear-gradient(180deg, rgba(217, 106, 74, 0.018), rgba(217, 106, 74, 0.035));
+  border-radius: 28px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.contact::before {
+  content: "3:00";
+  position: absolute;
+  top: 28px;
+  left: 32px;
+  font-family: "Georgia", serif;
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  opacity: 0.6;
+}
+
+.contact::after {
+  content: "since 2026";
+  position: absolute;
+  top: 28px;
+  right: 32px;
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+}
+
+.contact-inner {
+  position: relative;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.contact-eyebrow {
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  color: var(--ink-soft);
+  margin: 0 0 22px;
+}
+
+.contact-display {
+  font-family: "Caveat", "Georgia", serif;
+  font-weight: 500;
+  font-size: clamp(56px, 9vw, 96px);
+  line-height: 1.0;
+  letter-spacing: 0;
+  margin: 0 0 24px;
+  color: rgba(43, 33, 24, 0.78);
+  white-space: nowrap;
+}
+
+.contact-display em {
+  font-style: normal;
+  font-weight: 600;
+  color: rgba(217, 106, 74, 0.85);
+}
+
+.contact-lead {
+  color: var(--ink-soft);
+  font-size: 15px;
+  line-height: 2;
+  margin: 0 0 44px;
+}
+
+.contact-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 34px;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  background: var(--bg);
+  transition: background .25s ease, color .25s ease, transform .35s cubic-bezier(.2,.9,.3,1.2);
+  will-change: transform;
+}
+
+.contact-button:hover {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.contact-button-arrow {
+  display: inline-block;
+  transition: transform .35s cubic-bezier(.2,.9,.3,1.2);
+}
+
+.contact-button:hover .contact-button-arrow {
+  transform: translateX(6px);
+}
+
+
+/* ---------- Contact Form Page ---------- */
+.form-section {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 80px 24px 100px;
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.form-eyebrow {
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  color: var(--ink-soft);
+  margin: 0 0 16px;
+}
+
+.form-title {
+  font-weight: 700;
+  font-size: clamp(28px, 5vw, 36px);
+  letter-spacing: 0.06em;
+  margin: 0 0 24px;
+}
+
+.form-lead {
+  color: var(--ink-soft);
+  line-height: 1.9;
+  font-size: 14px;
+  margin: 0;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-row label {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+}
+
+.form-req {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.form-opt {
+  font-size: 11px;
+  color: var(--ink-soft);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+}
+
+.form-row input,
+.form-row textarea {
+  width: 100%;
+  padding: 14px 16px;
+  font: inherit;
+  font-size: 15px;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  transition: border-color .25s ease, box-shadow .25s ease, background .25s ease;
+}
+
+.form-row textarea {
+  resize: vertical;
+  min-height: 160px;
+  line-height: 1.7;
+}
+
+.form-row input:focus,
+.form-row textarea:focus {
+  outline: none;
+  border-color: var(--ink);
+  background: rgba(255,255,255,0.5);
+  box-shadow: 0 0 0 3px rgba(217, 106, 74, 0.12);
+}
+
+.form-row input:invalid:not(:placeholder-shown),
+.form-row textarea:invalid:not(:placeholder-shown) {
+  border-color: rgba(217, 106, 74, 0.45);
+}
+
+.form-actions {
+  margin-top: 8px;
+  text-align: center;
+}
+
+.form-submit {
+  display: inline-block;
+  padding: 16px 36px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--bg);
+  background: var(--ink);
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background .25s ease, color .25s ease, transform .35s cubic-bezier(.2,.9,.3,1.2);
+}
+
+.form-submit:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.form-submit:disabled {
+  opacity: 0.6;
+  cursor: default;
+  transform: none;
+}
+
+.form-status {
+  margin: 8px 0 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--ink-soft);
+  min-height: 1.4em;
+}
+
+.form-status.is-success {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.form-status.is-error {
+  color: #b04a2e;
+}
+
+@container frame (max-width: 640px) {
+  .form-section { padding: 56px 20px 80px; }
+  .form-header { margin-bottom: 36px; }
+  .contact-form { gap: 22px; }
+  .form-row input,
+  .form-row textarea { font-size: 16px; } /* iOSのズーム防止 */
+}
+
+/* ---------- 共通ドキュメントページ（会社概要・プライバシー等） ---------- */
+.doc-section {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 80px 24px 100px;
+}
+
+.doc-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.doc-eyebrow {
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  color: var(--ink-soft);
+  margin: 0 0 16px;
+}
+
+.doc-title {
+  font-weight: 700;
+  font-size: clamp(28px, 5vw, 36px);
+  letter-spacing: 0.06em;
+  margin: 0 0 24px;
+}
+
+.doc-lead {
+  color: var(--ink-soft);
+  line-height: 1.9;
+  font-size: 14px;
+  margin: 0;
+}
+
+.doc-body {
+  font-size: 14px;
+  line-height: 2;
+  color: var(--ink-soft);
+}
+
+.doc-body h2 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.04em;
+  margin: 40px 0 12px;
+}
+
+.doc-body h2:first-child { margin-top: 0; }
+
+.doc-body p { margin: 0 0 18px; }
+
+.doc-body ul {
+  margin: 0 0 18px;
+  padding-left: 1.4em;
+}
+
+.doc-body li { margin-bottom: 6px; }
+
+.doc-meta {
+  margin-top: 48px !important;
+  text-align: right;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+/* 会社概要：定義リスト */
+.info-list {
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+
+.info-row {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 20px;
+  padding: 20px 4px;
+  border-bottom: 1px solid var(--line);
+}
+
+.info-row dt {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+}
+
+.info-row dd {
+  margin: 0;
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.9;
+}
+
+.info-sub {
+  display: inline-block;
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--ink-soft);
+  opacity: 0.75;
+}
+
+.info-link {
+  color: var(--accent);
+  border-bottom: 1px solid currentColor;
+  transition: opacity .25s ease;
+}
+
+.info-link:hover { opacity: 0.7; }
+
+@container frame (max-width: 640px) {
+  .doc-section { padding: 56px 20px 80px; }
+  .doc-header { margin-bottom: 36px; }
+  .info-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 16px 4px;
+  }
+}
+
+/* ---------- Works ---------- */
+.works-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+
+.work-item {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.work-cover {
+  position: relative;
+  aspect-ratio: 5 / 3;
+  border-radius: 16px;
+  background: var(--cover, #EEE6D6);
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding: 18px 20px;
+  transition: transform .5s cubic-bezier(.2,.7,.2,1);
+}
+
+.work-item:hover .work-cover {
+  transform: translateY(-4px);
+}
+
+.work-cover-mark {
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 36px;
+  color: rgba(43, 33, 24, 0.4);
+  letter-spacing: 0.02em;
+}
+
+.work-body { padding: 0 4px; }
+
+.work-meta {
+  display: flex;
+  gap: 14px;
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--ink-soft);
+  margin: 0 0 8px;
+}
+
+.work-meta span + span::before {
+  content: "·";
+  margin-right: 14px;
+  opacity: 0.5;
+}
+
+.work-title {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+
+.work-desc {
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.9;
+  margin: 0 0 14px;
+}
+
+.work-tags {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.work-tags li {
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+  padding: 4px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+
+.works-cta,
+.members-cta {
+  margin: 64px 0 0;
+  font-size: 13px;
+  color: var(--ink-soft);
+  text-align: center;
+  line-height: 1.9;
+}
+
+/* ---------- News (top-page preview) ---------- */
+.news {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 40px 24px 100px;
+  background: linear-gradient(180deg, transparent, rgba(232, 222, 203, 0.28) 10%, rgba(232, 222, 203, 0.28) 90%, transparent);
+}
+
+/* セクションヘッダ：日記/ジャーナルの扉ページ風 */
+.news-section-header {
+  text-align: center;
+  margin-bottom: 56px;
+  position: relative;
+}
+
+.news-section-eyebrow {
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 12px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 0 0 14px;
+}
+
+.news-section-title {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin: 0 0 10px;
+}
+
+.news-section-sub {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin: 0;
+  letter-spacing: 0.08em;
+}
+
+.news-section-header::after {
+  content: "";
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--accent);
+  margin: 22px auto 0;
+}
+
+.news-section-cta {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.news-section-link {
+  display: inline-block;
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 2px;
+  transition: color .2s ease, border-color .2s ease, transform .35s cubic-bezier(.2,.7,.2,1);
+}
+
+.news-section-link:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  transform: translateX(3px);
+}
+
+/* ---------- News（日記エントリー） ---------- */
+.news-list {
+  list-style: none;
+  padding: 32px 28px;
+  margin: 0 auto;
+  max-width: 360px;
+  border: 1px solid rgba(43, 33, 24, 0.06);
+  border-radius: 6px;
+  background:
+    linear-gradient(180deg, rgba(255, 252, 245, 0.85), rgba(252, 247, 236, 0.85)),
+    repeating-linear-gradient(180deg, transparent 0 31px, rgba(43, 33, 24, 0.04) 31px 32px);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.6) inset,
+    0 8px 24px -16px rgba(43, 33, 24, 0.18),
+    0 2px 6px -4px rgba(43, 33, 24, 0.08);
+  position: relative;
+}
+
+.news-list::before {
+  content: "";
+  position: absolute;
+  left: 22px;
+  top: 16px;
+  bottom: 16px;
+  width: 1px;
+  background: rgba(217, 106, 74, 0.28);
+  pointer-events: none;
+}
+
+.news-item {
+  border-bottom: none;
+  padding: 0;
+}
+
+.news-item:not(:last-child) {
+  padding-bottom: 32px;
+  margin-bottom: 32px;
+  border-bottom: 1px dashed var(--line);
+}
+
+.news-link {
+  display: block;
+  padding: 4px 0;
+  transition: transform .35s cubic-bezier(.2,.7,.2,1);
+}
+
+.news-link:hover {
+  background: transparent;
+  transform: none;
+}
+
+.news-link:hover .news-title { color: var(--accent); }
+
+/* エントリーヘッダ：左に日付スタンプ、右にカテゴリ。下に小さなアクセント */
+.news-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  position: relative;
+}
+
+.news-head::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 24px;
+  height: 1px;
+  background: var(--accent);
+}
+
+/* 日付スタンプ：日にちを大きく、月/年を小さなイタリックで上に */
+.news-datestamp {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1;
+}
+
+.news-monthyear {
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 10.5px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+}
+
+.news-day {
+  font-family: "Georgia", serif;
+  font-weight: 300;
+  font-size: 38px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  line-height: 1;
+}
+
+/* カテゴリ：手書き風の小さなタグ（下線のみ） */
+.news-cat {
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: capitalize;
+  padding: 0 0 2px;
+  border: none;
+  border-bottom: 1px solid currentColor;
+  border-radius: 0;
+  background: none;
+  color: var(--ink-soft);
+}
+
+.news-cat--notice  { color: #7a6b58; }
+.news-cat--journal { color: var(--accent); }
+.news-cat--event   { color: #6d8a6f; }
+.news-cat--product { color: #7b5fa0; }
+.news-cat--company { color: var(--ink); }
+
+.news-title {
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  line-height: 1.65;
+  margin: 0 0 10px;
+  transition: color .25s ease;
+}
+
+.news-excerpt {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  line-height: 1.85;
+  margin: 0;
+}
+
+/* ---------- Members ---------- */
+.members-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.member-card {
+  text-align: center;
+}
+
+.member-avatar {
+  width: 110px;
+  height: 110px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  background: var(--avatar, #EEE6D6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 44px;
+  color: rgba(43, 33, 24, 0.45);
+  letter-spacing: 0.02em;
+}
+
+.member-role {
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+  margin: 0 0 8px;
+}
+
+.member-name {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin: 0 0 14px;
+}
+
+.member-bio {
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.9;
+  margin: 0 0 16px;
+  max-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.member-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+}
+
+.member-links a {
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--ink-soft);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 2px;
+  transition: color .25s ease, border-color .25s ease;
+}
+
+.member-links a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+  text-align: center;
+  padding: 40px 24px 30px;
+  border-top: 1px solid var(--line);
+  color: var(--ink-soft);
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.footer-nav,
+.footer-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px 22px;
+}
+
+.footer-nav a,
+.footer-meta a {
+  color: var(--ink-soft);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  transition: color .25s ease;
+}
+
+.footer-nav a:hover,
+.footer-meta a:hover {
+  color: var(--ink);
+}
+
+.footer-nav {
+  font-family: "Georgia", serif;
+  font-style: italic;
+}
+
+.footer-meta a {
+  font-size: 11px;
+  opacity: 0.85;
+}
+
+.site-footer small {
+  margin-top: 4px;
+}
+
+.footer-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.footer-logo img {
+  height: 40px;
+  width: auto;
+  display: block;
+}
+
+.footer-tagline {
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin: 0;
+  letter-spacing: 0.04em;
+}
+
+.footer-sns {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.footer-sns-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+  transition: color .25s ease, border-color .25s ease, transform .25s ease;
+}
+
+.footer-sns-link:hover {
+  color: var(--ink);
+  border-color: var(--ink);
+  transform: translateY(-2px);
+}
+
+.footer-sns-link svg {
+  display: block;
+}
+
+.footer-sns-text {
+  font-family: "Georgia", serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+/* ---------- 404 ---------- */
+.notfound-section {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 80px 24px 120px;
+  text-align: center;
+}
+
+.notfound-eyebrow {
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  color: var(--ink-soft);
+  margin: 0 0 24px;
+}
+
+.notfound-clock {
+  width: clamp(120px, 28vw, 180px);
+  height: clamp(120px, 28vw, 180px);
+  margin: 0 auto 28px;
+  color: var(--ink);
+  opacity: 0.7;
+}
+
+.notfound-title {
+  font-family: "Caveat", "Georgia", serif;
+  font-weight: 500;
+  font-size: clamp(40px, 7vw, 64px);
+  letter-spacing: 0.02em;
+  color: rgba(43, 33, 24, 0.85);
+  margin: 0 0 18px;
+  line-height: 1.2;
+}
+
+.notfound-title em {
+  font-style: normal;
+  font-weight: 600;
+  color: rgba(217, 106, 74, 0.9);
+}
+
+.notfound-lead {
+  font-size: 14px;
+  line-height: 1.95;
+  color: var(--ink-soft);
+  margin: 0 0 36px;
+}
+
+.notfound-back {
+  display: inline-block;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 2px;
+  transition: color .2s ease, border-color .2s ease, transform .35s cubic-bezier(.2,.7,.2,1);
+}
+
+.notfound-back:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  transform: translateX(3px);
+}
+
+/* ---------- ページインジケーター ---------- */
+.page-indicator {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 40;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
+  padding: 8px 14px;
+  font-family: "Georgia", serif;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  background: rgba(251, 247, 240, 0.78);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--ink-soft);
+  opacity: 0;
+  transform: translateY(8px);
+  animation: heroFade 1s ease 1.3s forwards;
+  pointer-events: none;
+}
+
+.page-current {
+  color: var(--ink);
+  font-weight: 600;
+  font-style: italic;
+  min-width: 1.5em;
+  display: inline-block;
+  text-align: right;
+  transition: color .3s ease;
+}
+
+.page-divider,
+.page-total {
+  opacity: 0.55;
+  font-style: italic;
+}
+
+/* ---------- 3時のイースターエッグ ---------- */
+.three-oclock {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--ink);
+  color: var(--bg);
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  opacity: 0;
+  transition: opacity .5s ease, transform .5s ease;
+  z-index: 100;
+}
+
+.three-oclock.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ---------- Responsive（コンテナ幅で判定） ---------- */
+@container frame (max-width: 640px) {
+  .hero { padding: 40px 20px; min-height: 72vh; }
+
+  .section-door { padding: 28px 20px; min-height: 160px; }
+  .section-door-inner { gap: 12px; }
+  .section-door-title { font-size: clamp(42px, 16cqw, 64px); }
+  .section-door-rule { width: 32px; }
+
+  .page-indicator {
+    bottom: 18px;
+    right: 18px;
+    padding: 6px 11px;
+    font-size: 11px;
+  }
+  .catalog-bignum {
+    font-size: clamp(80px, 24vw, 140px);
+    right: 12px;
+  }
+
+  .apps { padding: 30px 18px 80px; }
+  .apps-header { margin-bottom: 36px; }
+
+  .news { padding: 30px 18px 80px; }
+  .news-list { max-width: 320px; padding: 24px 22px; }
+  .news-list::before { left: 18px; }
+  .news-section-header { margin-bottom: 36px; }
+  .news-section-title { font-size: 22px; }
+  .news-link { padding: 0; }
+  .news-day { font-size: 30px; }
+  .news-monthyear { font-size: 10px; }
+  .news-title { font-size: 14px; }
+  .news-excerpt { font-size: 12px; }
+  .news-cat { font-size: 10px; }
+
+  .notfound-section { padding: 60px 18px 80px; }
+  .notfound-title { font-size: clamp(34px, 11vw, 52px); }
+  .notfound-lead { font-size: 13px; }
+
+  .footer-sns-link { width: 32px; height: 32px; }
+
+  .catalog-row {
+    grid-template-columns: 56px 1fr auto;
+    gap: 16px;
+    padding: 30px 8px;
+  }
+  .catalog-logo { width: 56px; height: 56px; border-radius: 14px; }
+  .catalog-no { font-size: 10px; }
+  .catalog-name { font-size: 15px; }
+  .catalog-tag { font-size: 12px; }
+  .catalog-arrow { display: none; }
+  .catalog-category { font-size: 9px; letter-spacing: 0.14em; padding: 4px 8px; }
+
+  .about { padding: 48px 18px 88px; }
+  .about-clock-row { gap: 10px; }
+  .about-clock { width: 200px; height: 200px; }
+  .about-side-mark { font-size: 9.5px; letter-spacing: 0.28em; }
+  .about-content { margin-top: 44px; }
+  .about-text { line-height: 1.9; font-size: 14px; }
+
+  .contact {
+    margin: 60px 16px 0;
+    padding: 90px 20px 100px;
+    border-radius: 22px;
+  }
+  .contact::before,
+  .contact::after { top: 18px; font-size: 11px; }
+  .contact::before { left: 20px; }
+  .contact::after { right: 20px; }
+  .contact-display { font-size: clamp(34px, 9vw, 52px); }
+  .contact-lead { font-size: 14px; line-height: 1.9; margin-bottom: 36px; }
+  .contact-button { padding: 16px 28px; }
+}
