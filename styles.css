@@ -42,7 +42,7 @@ html, body {
 
 /* 主要タイポはコンテナ幅に合わせて控えめに */
 .page-frame .hero-title { font-size: clamp(30px, 9cqw, 44px); }
-.page-frame .contact-display { font-size: clamp(40px, 12.5cqw, 64px); }
+.page-frame .contact-display { font-size: clamp(32px, 9.5cqw, 52px); }
 .page-frame .about-clock { width: min(240px, 60cqw); height: min(240px, 60cqw); }
 
 /* ---------- セクション扉（タイトル大） ---------- */
@@ -473,12 +473,13 @@ a { color: inherit; text-decoration: none; }
 }
 
 .hero-eyebrow {
-  font-family: "Caveat", "Georgia", serif;
-  font-weight: 500;
+  font-family: "Georgia", serif;
+  font-style: italic;
   color: var(--accent);
-  letter-spacing: 0.02em;
-  font-size: 22px;
-  margin: 0 0 14px;
+  letter-spacing: 0.12em;
+  font-size: 14px;
+  text-transform: uppercase;
+  margin: 0 0 18px;
   opacity: 0;
   animation: heroFade 1.6s ease forwards;
   animation-play-state: paused;
@@ -862,14 +863,15 @@ a { color: inherit; text-decoration: none; }
 
 /* 9時/3時位置の縦書きマーク */
 .about-side-mark {
-  font-family: "Caveat", "Georgia", serif;
-  font-weight: 500;
-  font-size: 16px;
-  letter-spacing: 0.08em;
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 10.5px;
+  letter-spacing: 0.32em;
   color: var(--accent);
   white-space: nowrap;
   writing-mode: vertical-rl;
   text-orientation: mixed;
+  text-transform: uppercase;
   opacity: 0;
   transition: opacity .9s ease 2.8s, transform .9s ease 2.8s;
   flex: 0 0 auto;
@@ -1148,13 +1150,14 @@ a { color: inherit; text-decoration: none; }
 }
 
 .contact-display {
-  font-family: "Caveat", "Georgia", serif;
-  font-weight: 500;
-  font-size: clamp(56px, 9vw, 96px);
-  line-height: 1.0;
-  letter-spacing: 0;
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(40px, 7vw, 72px);
+  line-height: 1.1;
+  letter-spacing: 0.01em;
   margin: 0 0 24px;
-  color: rgba(43, 33, 24, 0.78);
+  color: rgba(43, 33, 24, 0.85);
   white-space: nowrap;
 }
 
@@ -2009,9 +2012,10 @@ a { color: inherit; text-decoration: none; }
 }
 
 .notfound-title {
-  font-family: "Caveat", "Georgia", serif;
-  font-weight: 500;
-  font-size: clamp(40px, 7vw, 64px);
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(32px, 6vw, 52px);
   letter-spacing: 0.02em;
   color: rgba(43, 33, 24, 0.85);
   margin: 0 0 18px;
@@ -2166,7 +2170,7 @@ a { color: inherit; text-decoration: none; }
   .about { padding: 48px 18px 88px; }
   .about-clock-row { gap: 10px; }
   .about-clock { width: 200px; height: 200px; }
-  .about-side-mark { font-size: 14px; letter-spacing: 0.06em; }
+  .about-side-mark { font-size: 9.5px; letter-spacing: 0.28em; }
   .about-content { margin-top: 44px; }
   .about-text { line-height: 1.9; font-size: 14px; }
 
@@ -2179,7 +2183,7 @@ a { color: inherit; text-decoration: none; }
   .contact::after { top: 18px; font-size: 11px; }
   .contact::before { left: 20px; }
   .contact::after { right: 20px; }
-  .contact-display { font-size: clamp(34px, 9vw, 52px); }
+  .contact-display { font-size: clamp(28px, 7vw, 44px); }
   .contact-lead { font-size: 14px; line-height: 1.9; margin-bottom: 36px; }
   .contact-button { padding: 16px 28px; }
 }
