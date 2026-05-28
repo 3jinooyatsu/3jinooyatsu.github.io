@@ -163,7 +163,7 @@ html, body {
 }
 
 .page-bg-hover[data-for="namigo"] {
-  background-image: url("logos/surf_pic.png");
+  background-image: url("logos/surfin_pic.png");
 }
 
 body:has(.catalog-item[data-app="namigo"]:hover) .page-bg-hover[data-for="namigo"] {
