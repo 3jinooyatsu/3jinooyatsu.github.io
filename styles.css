@@ -25,6 +25,8 @@ html, body {
 
 /* スマホ幅で中央寄せされる「カード」コンテナ */
 .page-frame {
+  position: relative;
+  z-index: 1;
   max-width: var(--frame-width);
   margin: 0 auto;
   background: var(--bg);
@@ -146,24 +148,27 @@ html, body {
 }
 
 
-/* カタログホバー時に表示される左右の画像 */
-.margin-decor-img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 76%;
-  max-width: 320px;
-  max-height: 60vh;
-  transform: translate(-50%, -50%) scale(0.96);
+/* カタログホバー時に表示される全画面背景 */
+.page-bg-hover {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   opacity: 0;
-  transition: opacity .4s ease, transform .55s cubic-bezier(.2,.7,.2,1);
+  transform: scale(1.04);
+  transition: opacity .5s ease, transform .8s cubic-bezier(.2,.7,.2,1);
   pointer-events: none;
-  object-fit: contain;
 }
 
-body:has(.catalog-item[data-app="namigo"]:hover) .margin-decor-img[data-for="namigo"] {
+.page-bg-hover[data-for="namigo"] {
+  background-image: url("logos/surf_pic.png");
+}
+
+body:has(.catalog-item[data-app="namigo"]:hover) .page-bg-hover[data-for="namigo"] {
   opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
+  transform: scale(1);
 }
 
 body:has(.catalog-item:hover) .margin-decor-vtext { opacity: 0.18; }
