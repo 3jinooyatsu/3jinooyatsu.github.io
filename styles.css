@@ -36,8 +36,8 @@ html, body {
 
 /* ヒーロー時計：コンテナ内に収める */
 .page-frame .hero-clock {
-  width: min(440px, 86%);
-  height: min(440px, 86%);
+  width: min(500px, 96%);
+  height: min(500px, 96%);
 }
 
 /* 主要タイポはコンテナ幅に合わせて控えめに */
