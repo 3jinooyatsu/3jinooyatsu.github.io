@@ -146,6 +146,29 @@ html, body {
 }
 
 
+/* カタログホバー時に表示される左右の画像 */
+.margin-decor-img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 76%;
+  max-width: 320px;
+  max-height: 60vh;
+  transform: translate(-50%, -50%) scale(0.96);
+  opacity: 0;
+  transition: opacity .4s ease, transform .55s cubic-bezier(.2,.7,.2,1);
+  pointer-events: none;
+  object-fit: contain;
+}
+
+body:has(.catalog-item[data-app="namigo"]:hover) .margin-decor-img[data-for="namigo"] {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+body:has(.catalog-item:hover) .margin-decor-vtext { opacity: 0.18; }
+body:has(.catalog-item:hover) .margin-decor-dot { opacity: 0; }
+
 /* ふわっと漂う点 */
 .margin-decor-dot {
   position: absolute;
