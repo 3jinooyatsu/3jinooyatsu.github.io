@@ -473,12 +473,12 @@ a { color: inherit; text-decoration: none; }
 }
 
 .hero-eyebrow {
-  font-family: "Georgia", serif;
-  font-style: italic;
-  color: var(--ink-soft);
-  letter-spacing: 0.08em;
-  font-size: 14px;
-  margin: 0 0 18px;
+  font-family: "Caveat", "Georgia", serif;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: 0.02em;
+  font-size: 22px;
+  margin: 0 0 14px;
   opacity: 0;
   animation: heroFade 1.6s ease forwards;
   animation-play-state: paused;
@@ -536,6 +536,16 @@ a { color: inherit; text-decoration: none; }
   margin: 0 auto;
   padding: 40px 24px 100px;
   background: linear-gradient(180deg, transparent, rgba(213, 226, 206, 0.22) 10%, rgba(213, 226, 206, 0.22) 90%, transparent);
+}
+
+.apps-lead {
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.8;
+  letter-spacing: 0.04em;
+  text-align: center;
+  margin: 0 auto 48px;
+  max-width: 360px;
 }
 
 .apps-header {
@@ -852,15 +862,14 @@ a { color: inherit; text-decoration: none; }
 
 /* 9時/3時位置の縦書きマーク */
 .about-side-mark {
-  font-family: "Georgia", serif;
-  font-style: italic;
-  font-size: 10.5px;
-  letter-spacing: 0.32em;
+  font-family: "Caveat", "Georgia", serif;
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 0.08em;
   color: var(--accent);
   white-space: nowrap;
   writing-mode: vertical-rl;
   text-orientation: mixed;
-  text-transform: uppercase;
   opacity: 0;
   transition: opacity .9s ease 2.8s, transform .9s ease 2.8s;
   flex: 0 0 auto;
@@ -1586,7 +1595,7 @@ a { color: inherit; text-decoration: none; }
 /* セクションヘッダ：日記/ジャーナルの扉ページ風 */
 .news-section-header {
   text-align: center;
-  margin-bottom: 56px;
+  margin-bottom: 40px;
   position: relative;
 }
 
@@ -1608,10 +1617,11 @@ a { color: inherit; text-decoration: none; }
 }
 
 .news-section-sub {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--ink-soft);
   margin: 0;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.04em;
+  line-height: 1.8;
 }
 
 .news-section-header::after {
@@ -2156,7 +2166,7 @@ a { color: inherit; text-decoration: none; }
   .about { padding: 48px 18px 88px; }
   .about-clock-row { gap: 10px; }
   .about-clock { width: 200px; height: 200px; }
-  .about-side-mark { font-size: 9.5px; letter-spacing: 0.28em; }
+  .about-side-mark { font-size: 14px; letter-spacing: 0.06em; }
   .about-content { margin-top: 44px; }
   .about-text { line-height: 1.9; font-size: 14px; }
 
