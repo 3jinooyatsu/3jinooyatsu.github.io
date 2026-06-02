@@ -6,7 +6,7 @@
   <title>いこっか。｜行きたい場所を、ふたりで溜める iOS アプリ</title>
   <meta name="description" content="「ここ行ってみたい」を、思いついたその瞬間に。ふたり・グループ・ひとりで行きたい場所を溜めて、次のおでかけを決められる iOS アプリ「いこっか。」。" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="apple-touch-icon" href="/logos/3jinooyatsu_logo.png" />
+  <link rel="apple-touch-icon" href="/logos/ikocca-logo.png" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="３時のおやつ" />
   <meta property="og:title" content="いこっか。｜行きたい場所を、ふたりで溜める iOS アプリ" />
@@ -36,29 +36,14 @@
       color: var(--ikocca-sub);
       margin: 0 0 24px;
     }
-    .ikocca-logo-placeholder {
-      width: 96px;
-      height: 96px;
-      border-radius: 22px;
+    .ikocca-logo {
+      display: block;
+      width: 112px;
+      height: 112px;
+      border-radius: 24px;
+      object-fit: cover;
       margin: 0 auto 28px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: repeating-linear-gradient(
-        45deg,
-        rgba(194, 96, 63, 0.08),
-        rgba(194, 96, 63, 0.08) 8px,
-        rgba(194, 96, 63, 0.16) 8px,
-        rgba(194, 96, 63, 0.16) 16px
-      );
-      box-shadow: 0 1px 2px rgba(0,0,0,0.04), inset 0 0 0 1px rgba(43,33,24,0.06);
-    }
-    .ikocca-logo-placeholder span {
-      font-family: "Georgia", serif;
-      font-style: italic;
-      font-size: 44px;
-      color: var(--ikocca-accent);
-      opacity: 0.8;
+      box-shadow: 0 4px 16px -8px rgba(43,33,24,0.18), 0 1px 2px rgba(0,0,0,0.04), inset 0 0 0 1px rgba(43,33,24,0.05);
     }
     .ikocca-title {
       font-size: clamp(34px, 6vw, 52px);
@@ -232,9 +217,7 @@
   <main>
     <section class="ikocca-hero">
       <p class="ikocca-eyebrow">─ App No. 01</p>
-      <div class="ikocca-logo-placeholder" role="img" aria-label="ロゴ準備中">
-        <span>い</span>
-      </div>
+      <img class="ikocca-logo" src="/logos/ikocca-logo.png" alt="いこっか。" />
       <h1 class="ikocca-title">いこっか。</h1>
       <p class="ikocca-lead">
         「ここ行ってみたい」を、思いついたその瞬間に。<br />
