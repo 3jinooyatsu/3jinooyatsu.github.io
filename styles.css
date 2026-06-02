@@ -162,12 +162,21 @@ html, body {
   pointer-events: none;
 }
 
+.page-bg-hover[data-for="ikokka"] {
+  background-image: url("logos/ikocca_pic.png");
+}
+
 .page-bg-hover[data-for="namigo"] {
   background-image: url("logos/surfin_pic.png");
 }
 
 .page-bg-hover[data-for="hanabana"] {
   background-image: url("logos/hanabana_pic.png");
+}
+
+body:has(.catalog-item[data-app="ikokka"]:hover) .page-bg-hover[data-for="ikokka"] {
+  opacity: 1;
+  transform: scale(1);
 }
 
 body:has(.catalog-item[data-app="namigo"]:hover) .page-bg-hover[data-for="namigo"] {
