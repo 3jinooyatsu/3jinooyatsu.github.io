@@ -1129,7 +1129,7 @@ a { color: inherit; text-decoration: none; }
   right: -2px;
   bottom: -7px;
   height: 10px;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'><path d='M3,7 C 40,3 70,10 110,6 S 170,3 197,7' stroke='%23D96A4A' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'><path d='M3,7 L197,7' stroke='%23D96A4A' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   clip-path: inset(0 100% 0 0);
