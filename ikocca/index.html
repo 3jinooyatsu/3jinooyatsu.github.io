@@ -66,15 +66,13 @@
     .ikocca-cta {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      padding: 14px 28px;
-      background: var(--ikocca-accent);
-      color: #fff;
-      border-radius: 999px;
-      font-size: 14px;
-      letter-spacing: 0.08em;
       text-decoration: none;
       transition: opacity .25s ease, transform .25s ease;
+    }
+    .ikocca-cta img {
+      display: block;
+      height: 54px;
+      width: auto;
     }
     .ikocca-cta:hover { opacity: 0.85; transform: translateY(-1px); }
     .ikocca-cta-note {
@@ -370,14 +368,16 @@
         ふたりで、グループで、ひとりで。<br />
         行きたい場所を集めて、次のおでかけを決められる iOS アプリです。
       </p>
-      <a class="ikocca-cta" href="https://apps.apple.com/app/id6775837994" target="_blank" rel="noopener">App Store でダウンロード</a>
+      <a class="ikocca-cta" href="https://apps.apple.com/app/id6775837994" target="_blank" rel="noopener" aria-label="App Store でダウンロード">
+        <img src="/ikocca/appstore-badge-ja.svg" alt="App Store でダウンロード" width="180" height="60" />
+      </a>
       <span class="ikocca-cta-note">iOS 17.6 以降・無料（アプリ内課金あり）</span>
     </section>
 
     <section class="ikocca-shots" aria-label="アプリのスクリーンショット">
       <div class="ikocca-shots-head">
-        <h2 class="ikocca-section-title">アプリの中を、のぞいてみる</h2>
-        <p class="ikocca-section-sub">Screenshots</p>
+        <h2 class="ikocca-section-title">集めて、まとめて、でかける。</h2>
+        <p class="ikocca-section-sub">About the app</p>
       </div>
       <div class="ikocca-shots-track">
         <div class="ikocca-shot"><img src="/ikocca/shots/01.jpg" alt="いこっか。の画面：行きたい場所を集めて共有" loading="lazy" width="720" height="1557" /></div>
@@ -461,7 +461,6 @@
     <section class="ikocca-links">
       <a href="/ikocca/privacy">プライバシーポリシー</a>
       <a href="/contact.html">お問い合わせ</a>
-      <a href="/#apps">他のアプリを見る</a>
     </section>
   </main>
 
