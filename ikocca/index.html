@@ -3,16 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>いこっか。｜行きたい場所を、ふたりで溜める iOS アプリ</title>
-  <meta name="description" content="「ここ行ってみたい」を、思いついたその瞬間に。ふたり・グループ・ひとりで行きたい場所を溜めて、次のおでかけを決められる iOS アプリ「いこっか。」。" />
+  <title>いこっか。｜行きたい場所をSNSで集めて、ふたりで共有する iOS アプリ</title>
+  <meta name="description" content="SNSで見つけた「ここ行ってみたい」を、思いついたその瞬間に。ふたり・グループ・ひとりで行きたい場所を溜めて、次のおでかけを決められる iOS アプリ「いこっか。」。App Store で配信中。" />
+  <link rel="canonical" href="https://3jino-oyatsu.com/ikocca/" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="apple-touch-icon" href="/logos/ikocca-logo.png" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="３時のおやつ" />
-  <meta property="og:title" content="いこっか。｜行きたい場所を、ふたりで溜める iOS アプリ" />
-  <meta property="og:description" content="「ここ行ってみたい」を、思いついたその瞬間に。ふたり・グループ・ひとりで行きたい場所を溜めて、次のおでかけを決められる iOS アプリ。" />
-  <meta property="og:image" content="/logos/ikocca_pic.png" />
+  <meta property="og:url" content="https://3jino-oyatsu.com/ikocca/" />
+  <meta property="og:title" content="いこっか。｜行きたい場所をSNSで集めて、ふたりで共有する iOS アプリ" />
+  <meta property="og:description" content="SNSで見つけた「ここ行ってみたい」を、思いついたその瞬間に。ふたり・グループ・ひとりで行きたい場所を溜めて、次のおでかけを決められる iOS アプリ。App Store で配信中。" />
+  <meta property="og:image" content="https://3jino-oyatsu.com/logos/ikocca_pic.png" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="いこっか。｜行きたい場所をSNSで集めて、ふたりで共有する iOS アプリ" />
+  <meta name="twitter:description" content="SNSで見つけた「ここ行ってみたい」を、思いついたその瞬間に。行きたい場所を溜めて、次のおでかけを決められる iOS アプリ。" />
+  <meta name="twitter:image" content="https://3jino-oyatsu.com/logos/ikocca_pic.png" />
   <link rel="stylesheet" href="/styles.css" />
   <style>
     /* いこっかページ専用の追加スタイル */
@@ -98,34 +103,83 @@
       margin: 0 0 44px;
       letter-spacing: 0.05em;
     }
+    /* 使い方: 縦タイムライン (機能カードと差別化) */
     .ikocca-flow-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
+      max-width: 560px;
+      margin: 0 auto;
+      position: relative;
     }
     .ikocca-flow-item {
-      padding: 22px 18px;
-      border: 1px solid var(--ikocca-line);
-      border-radius: 14px;
-      background: #fffefb;
+      position: relative;
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      column-gap: 22px;
+      padding-bottom: 42px;
+    }
+    .ikocca-flow-item:last-child { padding-bottom: 0; }
+    .ikocca-flow-item:not(:last-child)::before {
+      content: "";
+      position: absolute;
+      left: 27px;
+      top: 58px;
+      bottom: -2px;
+      width: 2px;
+      background: var(--ikocca-line);
     }
     .ikocca-flow-num {
+      grid-column: 1;
+      grid-row: 1;
+      align-self: start;
+      position: relative;
+      z-index: 1;
+      width: 54px;
+      height: 54px;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: #fffefb;
+      border: 1.5px solid rgba(194,96,63,0.35);
+      box-shadow: 0 6px 16px -10px rgba(194,96,63,0.5);
       font-family: "Georgia", serif;
       font-style: italic;
+      font-size: 22px;
+      line-height: 1;
       color: var(--ikocca-accent);
-      font-size: 14px;
-      margin: 0 0 10px;
+      transition: transform .35s cubic-bezier(.2,.7,.2,1), border-color .35s ease;
+    }
+    .ikocca-flow-item:hover .ikocca-flow-num {
+      transform: scale(1.08);
+      border-color: var(--ikocca-accent);
     }
     .ikocca-flow-name {
-      font-size: 17px;
+      grid-column: 2;
+      grid-row: 1;
+      margin: 11px 0 7px;
+      font-size: 18px;
       font-weight: 600;
-      margin: 0 0 8px;
     }
     .ikocca-flow-desc {
-      font-size: 13px;
-      line-height: 1.7;
+      grid-column: 2;
+      grid-row: 2;
+      font-size: 13.5px;
+      line-height: 1.8;
       color: var(--ikocca-sub);
       margin: 0;
+    }
+    /* 使い方 スクロール演出: 左からスッと (機能は下からfadeで差別化) */
+    .ikocca-flowanim .ikocca-flow-item {
+      opacity: 0;
+      transform: translateX(-18px);
+      transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1);
+    }
+    .ikocca-flowanim .ikocca-flow-item.is-in {
+      opacity: 1;
+      transform: none;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .ikocca-flowanim .ikocca-flow-item { opacity: 1; transform: none; }
     }
 
     /* 機能リスト */
@@ -138,23 +192,77 @@
     .ikocca-feature-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 32px 36px;
+      gap: 20px;
+    }
+    .ikocca-feature {
+      position: relative;
+      padding: 28px 24px 30px;
+      border: 1px solid var(--ikocca-line);
+      border-radius: 16px;
+      background: #fffefb;
+      transition: transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s ease, border-color .35s ease, opacity .6s ease;
+    }
+    .ikocca-feature:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 34px -22px rgba(43,33,24,0.4);
+      border-color: rgba(194,96,63,0.32);
+    }
+    .ikocca-feature-kicker {
+      display: block;
+      font-family: "Georgia", serif;
+      font-style: italic;
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      color: var(--ikocca-accent);
+      margin: 0 0 13px;
     }
     .ikocca-feature h3 {
+      position: relative;
+      display: inline-block;
       font-size: 16px;
-      margin: 0 0 10px;
+      margin: 0 0 15px;
+      padding-bottom: 11px;
       font-weight: 600;
+      word-break: keep-all;
+      line-break: strict;
     }
-    .ikocca-feature h3::before {
-      content: "─";
-      color: var(--ikocca-accent);
-      margin-right: 10px;
+    .ikocca-feature h3::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 28px;
+      height: 2px;
+      border-radius: 2px;
+      background: var(--ikocca-accent);
+      transform: scaleX(1);
+      transform-origin: left;
+      transition: transform .55s cubic-bezier(.2,.7,.2,1) .12s;
     }
     .ikocca-feature p {
       font-size: 13px;
       line-height: 1.85;
       color: var(--ikocca-sub);
       margin: 0;
+    }
+    /* スクロール演出 (JS対応時のみ・プログレッシブ) */
+    .ikocca-anim .ikocca-feature {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .ikocca-anim .ikocca-feature.is-in {
+      opacity: 1;
+      transform: none;
+    }
+    .ikocca-anim .ikocca-feature h3::after {
+      transform: scaleX(0);
+    }
+    .ikocca-anim .ikocca-feature.is-in h3::after {
+      transform: scaleX(1);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .ikocca-anim .ikocca-feature { opacity: 1; transform: none; }
+      .ikocca-anim .ikocca-feature h3::after { transform: scaleX(1); transition: none; }
     }
 
     /* リンクセクション */
@@ -173,11 +281,49 @@
     }
     .ikocca-links a:hover { border-color: var(--ikocca-accent); }
 
+    /* スクショ カルーセル (App Store 風・横スクロール) */
+    .ikocca-shots-head { padding: 56px 24px 0; }
+    .ikocca-shots-track {
+      display: flex;
+      gap: 18px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-padding-left: 24px;
+      -webkit-overflow-scrolling: touch;
+      padding: 4px 24px 8px;
+      scrollbar-width: none;
+    }
+    .ikocca-shots-track::-webkit-scrollbar { display: none; }
+    .ikocca-shot {
+      flex: 0 0 auto;
+      width: clamp(200px, calc((100% - 24px) / 1.5), 300px);
+      scroll-snap-align: start;
+      border-radius: 22px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 10px 30px -14px rgba(43,33,24,0.28), inset 0 0 0 1px rgba(43,33,24,0.06);
+    }
+    .ikocca-shot img { display: block; width: 100%; height: auto; }
+
     @media (max-width: 640px) {
-      .ikocca-flow-grid { grid-template-columns: 1fr 1fr; }
       .ikocca-feature-grid { grid-template-columns: 1fr; }
+      .ikocca-shot { width: calc((100% - 20px) / 1.5); }
     }
   </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "いこっか。",
+    "operatingSystem": "iOS 17.6",
+    "applicationCategory": "TravelApplication",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
+    "url": "https://3jino-oyatsu.com/ikocca/",
+    "downloadUrl": "https://apps.apple.com/app/id6775837994",
+    "image": "https://3jino-oyatsu.com/logos/ikocca_pic.png",
+    "author": { "@type": "Organization", "name": "３時のおやつ" }
+  }
+  </script>
 </head>
 <body>
   <aside class="margin-decor margin-decor-left" aria-hidden="true">
@@ -224,29 +370,47 @@
         ふたりで、グループで、ひとりで。<br />
         行きたい場所を集めて、次のおでかけを決められる iOS アプリです。
       </p>
-      <a class="ikocca-cta" href="#">App Store で開く（準備中）</a>
-      <span class="ikocca-cta-note">2026 年配信予定 / iOS 17 以降</span>
+      <a class="ikocca-cta" href="https://apps.apple.com/app/id6775837994" target="_blank" rel="noopener">App Store でダウンロード</a>
+      <span class="ikocca-cta-note">iOS 17.6 以降・無料（アプリ内課金あり）</span>
+    </section>
+
+    <section class="ikocca-shots" aria-label="アプリのスクリーンショット">
+      <div class="ikocca-shots-head">
+        <h2 class="ikocca-section-title">アプリの中を、のぞいてみる</h2>
+        <p class="ikocca-section-sub">Screenshots</p>
+      </div>
+      <div class="ikocca-shots-track">
+        <div class="ikocca-shot"><img src="/ikocca/shots/01.jpg" alt="いこっか。の画面：行きたい場所を集めて共有" loading="lazy" width="720" height="1557" /></div>
+        <div class="ikocca-shot"><img src="/ikocca/shots/02.jpg" alt="いこっか。の画面：次の行き先に迷わない" loading="lazy" width="720" height="1557" /></div>
+        <div class="ikocca-shot"><img src="/ikocca/shots/03.jpg" alt="いこっか。の画面" loading="lazy" width="720" height="1557" /></div>
+        <div class="ikocca-shot"><img src="/ikocca/shots/04.jpg" alt="いこっか。の画面" loading="lazy" width="720" height="1557" /></div>
+        <div class="ikocca-shot"><img src="/ikocca/shots/05.jpg" alt="いこっか。の画面：行った場所の思い出が残せる" loading="lazy" width="720" height="1557" /></div>
+        <div class="ikocca-shot"><img src="/ikocca/shots/06.jpg" alt="いこっか。の画面" loading="lazy" width="720" height="1557" /></div>
+        <div class="ikocca-shot"><img src="/ikocca/shots/07.jpg" alt="いこっか。の画面" loading="lazy" width="720" height="1557" /></div>
+        <div class="ikocca-shot"><img src="/ikocca/shots/08.jpg" alt="いこっか。の画面" loading="lazy" width="720" height="1557" /></div>
+        <div class="ikocca-shot"><img src="/ikocca/shots/09.jpg" alt="いこっか。の画面：好みのデザインに変更できる" loading="lazy" width="720" height="1557" /></div>
+      </div>
     </section>
 
     <section class="ikocca-flow">
-      <h2 class="ikocca-section-title">4つのステップで、おでかけを軽くする</h2>
-      <p class="ikocca-section-sub">A small loop to keep your next trip alive.</p>
+      <h2 class="ikocca-section-title">使い方</h2>
+      <p class="ikocca-section-sub">How it works</p>
 
       <div class="ikocca-flow-grid">
         <div class="ikocca-flow-item">
           <p class="ikocca-flow-num">01</p>
-          <h3 class="ikocca-flow-name">溜める</h3>
-          <p class="ikocca-flow-desc">気になった場所を、Google マップの URL ごと一行で登録。期限と行きたい度も添えて。</p>
+          <h3 class="ikocca-flow-name">集める</h3>
+          <p class="ikocca-flow-desc">SNS の投稿も地図のリンクも、シェアするだけ。AI が場所を読み取って一行で追加。</p>
         </div>
         <div class="ikocca-flow-item">
           <p class="ikocca-flow-num">02</p>
           <h3 class="ikocca-flow-name">まとめる</h3>
-          <p class="ikocca-flow-desc">「宮崎旅行」「鎌倉デート候補」など、用途別のコレクションに自由に束ねる。</p>
+          <p class="ikocca-flow-desc">「週末の京都」「鎌倉デート候補」など、用途別のまとめに自由に束ねる。</p>
         </div>
         <div class="ikocca-flow-item">
           <p class="ikocca-flow-num">03</p>
-          <h3 class="ikocca-flow-name">行く</h3>
-          <p class="ikocca-flow-desc">月末リマインドとウィジェットで、ふたりの「行きたい」をそっと後押し。</p>
+          <h3 class="ikocca-flow-name">計画する</h3>
+          <p class="ikocca-flow-desc">日付を決めたら旅のしおりへ。Day ごとに割り振り、地図で当日の動きもひと目。</p>
         </div>
         <div class="ikocca-flow-item">
           <p class="ikocca-flow-num">04</p>
@@ -262,28 +426,34 @@
 
       <div class="ikocca-feature-grid">
         <div class="ikocca-feature">
-          <h3>ふたり・グループで共有</h3>
-          <p>招待コードでメンバーを招き、追加・編集はリアルタイムで同期。誰が言い出したかが一目でわかります。</p>
+          <span class="ikocca-feature-kicker">Collect</span>
+          <h3>SNS シェアで、<wbr>そのまま追加</h3>
+          <p>Instagram・TikTok・X の投稿を共有するだけ。AI がキャプションから店名・エリア・ジャンルを読み取って登録します。</p>
         </div>
         <div class="ikocca-feature">
-          <h3>Netflix 風のホーム棚</h3>
-          <p>今月行きたい・ピックアップのまとめ・熱量ランキングなど、横スクロールの棚で「眺めて見つける」体験。</p>
+          <span class="ikocca-feature-kicker">Map</span>
+          <h3>地図リンクも<wbr>ワンタップ</h3>
+          <p>Google マップ / Apple マップ / NAVER（韓国）の URL を貼るだけで、名前も位置も自動で入力されます。</p>
         </div>
         <div class="ikocca-feature">
-          <h3>熱量スコア</h3>
-          <p>行きたい度 × 情報量 × 期限から自動算出。「いま一番アツい場所」をヒーローとして提案します。</p>
+          <span class="ikocca-feature-kicker">Together</span>
+          <h3>ふたり・グループで<wbr>リアルタイム共有</h3>
+          <p>招待コードで招くだけ。追加も編集もその場で同期し、誰が言い出したかも一目でわかります。</p>
         </div>
         <div class="ikocca-feature">
-          <h3>制覇マップ</h3>
-          <p>行った場所を日本地図のピンで可視化。ふたりの足跡が、地図の上で少しずつ広がっていきます。</p>
+          <span class="ikocca-feature-kicker">Discover</span>
+          <h3>眺めて<wbr>見つけるホーム</h3>
+          <p>今月・気分・エリア・ジャンル・季節……横スクロールの棚で次の行き先が自然と目に入る。今日の天気もひと目で。</p>
         </div>
         <div class="ikocca-feature">
-          <h3>ホーム画面ウィジェット</h3>
-          <p>今月期限の行きたい場所を、ホーム画面にひと目で。開かなくても、次の予定が思い出せる。</p>
+          <span class="ikocca-feature-kicker">Publish</span>
+          <h3>まとめを<wbr>リンクで共有</h3>
+          <p>作ったまとめは公開リンクに。アプリを持っていない友だちにも、ブラウザでそのまま送れます。</p>
         </div>
         <div class="ikocca-feature">
-          <h3>重複検出</h3>
-          <p>すでに登録済みの場所を保存前にお知らせ。ふたりで同じ場所を別々に登録してしまう「ありがち」を防ぎます。</p>
+          <span class="ikocca-feature-kicker">Revisit</span>
+          <h3>制覇マップ＆<wbr>ウィジェット</h3>
+          <p>行った場所を地図のピンで可視化（X / 47 都道府県）。ホーム画面ウィジェットには、次の「行きたい」と天気を添えて。</p>
         </div>
       </div>
     </section>
@@ -344,5 +514,35 @@
   </div><!-- /.page-frame -->
 
   <script src="/script.js"></script>
+  <script>
+    (function () {
+      if (!('IntersectionObserver' in window)) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      function reveal(container, itemSel, animClass) {
+        if (!container) return;
+        container.classList.add(animClass);
+        var items = [].slice.call(container.querySelectorAll(itemSel));
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (!e.isIntersecting) return;
+            var el = e.target;
+            var i = items.indexOf(el);
+            el.style.transitionDelay = Math.min(i, 5) * 90 + 'ms';
+            el.classList.add('is-in');
+            el.addEventListener('transitionend', function h() {
+              el.style.transitionDelay = '';
+              el.removeEventListener('transitionend', h);
+            });
+            io.unobserve(el);
+          });
+        }, { threshold: 0.18, rootMargin: '0px 0px -8% 0px' });
+        items.forEach(function (el) { io.observe(el); });
+      }
+
+      reveal(document.querySelector('.ikocca-feature-grid'), '.ikocca-feature', 'ikocca-anim');
+      reveal(document.querySelector('.ikocca-flow-grid'), '.ikocca-flow-item', 'ikocca-flowanim');
+    })();
+  </script>
 </body>
 </html>
