@@ -29,4 +29,13 @@
   if (id !== "indigo") root.dataset.theme = id;
 
   window.siteTheme = { SCHEDULE: SCHEDULE, slotAt: slotAt, jstHour: jstHour };
+
+  // 再読み込みしたら、いつもページの先頭（FV）から表示する。
+  // 「プロダクトを見る」などで URL に付いた #products や、ブラウザのスクロール位置の復元で途中に飛ばないように
+  var nav = window.performance && performance.getEntriesByType ? performance.getEntriesByType("navigation")[0] : null;
+  if (nav && nav.type === "reload") {
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+    window.addEventListener("load", function () { window.scrollTo({ top: 0, left: 0, behavior: "instant" }); });
+  }
 })();

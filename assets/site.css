@@ -937,28 +937,27 @@ h1, h2, h3, p, dl, dd { margin: 0; }
   align-items: flex-start;
 }
 .ppanel-top { display: flex; align-items: center; gap: 12px; margin-bottom: 32px; }
-.ppanel-no {
-  font-family: var(--font);
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  color: var(--p-accent);
-}
+/* 配信状況：バッジにせず、罫線＋文字の見出しラベルとして置く（まもなくリリースは点線） */
 .ppanel-status {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 5px 12px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.75);
-  border: 1px solid rgba(15, 26, 36, 0.06);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.04em;
+  gap: 12px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--p-accent);
 }
-.ppanel-status i { width: 6px; height: 6px; border-radius: 50%; background: var(--ink-3); }
-.ppanel-status--live i { background: #1DB954; box-shadow: 0 0 0 3px rgba(29, 185, 84, 0.18); }
-.ppanel-status--soon i { background: #F2A900; box-shadow: 0 0 0 3px rgba(242, 169, 0, 0.22); }
+.ppanel-status::before {
+  content: "";
+  width: 28px;
+  height: 1.5px;
+  background: currentColor;
+  transition: width .5s var(--ease);
+}
+.ppanel-status--soon::before {
+  background: repeating-linear-gradient(to right, currentColor 0 4px, transparent 4px 7px);
+}
+.ppanel:hover .ppanel-status::before { width: 44px; }
 
 .ppanel-id { display: flex; align-items: center; gap: 18px; }
 .ppanel-icon {
@@ -1083,21 +1082,6 @@ h1, h2, h3, p, dl, dd { margin: 0; }
 .ppanel:hover .device--back { transform: translate(-106%, -47%) rotate(-9deg) scale(0.88); }
 .ppanel:hover .device--front { transform: translate(-24%, -53%) rotate(2deg); }
 
-.ppanel-bignum {
-  position: absolute;
-  right: -0.02em;
-  bottom: -0.22em;
-  z-index: 0;
-  font-family: var(--font);
-  font-size: clamp(160px, 22vw, 320px);
-  font-weight: 600;
-  line-height: 1;
-  letter-spacing: -0.06em;
-  color: var(--p-accent);
-  opacity: 0.08;
-  pointer-events: none;
-}
-
 /* デスクトップ：スクロールで次のパネルが前のパネルに重なる */
 @media (min-width: 961px) {
   .ppanel { position: sticky; top: calc(var(--header-h) + 24px); }
@@ -1139,7 +1123,6 @@ h1, h2, h3, p, dl, dd { margin: 0; }
     linear-gradient(to bottom, var(--line) 1px, transparent 1px) 0 0 / 24px 24px,
     var(--base);
 }
-.psoon-no { font-family: var(--font); font-size: 13px; font-weight: 600; color: var(--ink-3); }
 .psoon-code {
   font-family: var(--font);
   font-size: 13px;
@@ -1179,11 +1162,6 @@ h1, h2, h3, p, dl, dd { margin: 0; }
     margin: 0;
     gap: 8px;
   }
-  .ppanel-no {
-    padding: 5px 10px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.8);
-  }
 
   .fan { top: 64px; width: 34%; border-radius: 14px; }
   .fan--c,
@@ -1202,7 +1180,6 @@ h1, h2, h3, p, dl, dd { margin: 0; }
 
   .ppanel-icon { width: 60px; height: 60px; border-radius: 15px; }
   .ppanel-catch { margin-top: 20px; }
-  .ppanel-bignum { font-size: 140px; top: 4px; right: 12px; bottom: auto; }
 }
 /* スマホ：説明文と機能リストを省いて高さを抑える */
 @media (max-width: 560px) {
@@ -1210,8 +1187,7 @@ h1, h2, h3, p, dl, dd { margin: 0; }
   .psoon-card { padding: 18px 20px; }
   .psoon-code { display: none; }
   .ppanel-desc,
-  .ppanel-features,
-  .ppanel-bignum { display: none; }
+  .ppanel-features { display: none; }
   .ppanel-id { gap: 14px; }
   .ppanel-icon { width: 52px; height: 52px; border-radius: 13px; }
   .ppanel-name { font-size: 26px; }
