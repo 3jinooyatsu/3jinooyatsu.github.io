@@ -4,27 +4,22 @@
   const SVG_NS = "http://www.w3.org/2000/svg";
 
   // ---------- 時間帯で配色が変わる（割り当ては theme.js） ----------
-  const { SCHEDULE, slotAt, jstHour } = window.siteTheme;
-  const themeNameEls = document.querySelectorAll("[data-theme-name]");
+  const { slotAt, jstHour } = window.siteTheme;
   let currentTheme = root.dataset.theme || "indigo";
   let shiftTimer;
 
-  const setTheme = (id, animate) => {
-    if (id !== currentTheme) {
-      if (animate && !reduceMotion) {
-        root.classList.add("is-theme-shifting");
-        clearTimeout(shiftTimer);
-        shiftTimer = setTimeout(() => root.classList.remove("is-theme-shifting"), 1300);
-      }
-      if (id === "indigo") delete root.dataset.theme;
-      else root.dataset.theme = id;
-      currentTheme = id;
+  const setTheme = (id) => {
+    if (id === currentTheme) return;
+    if (!reduceMotion) {
+      root.classList.add("is-theme-shifting");
+      clearTimeout(shiftTimer);
+      shiftTimer = setTimeout(() => root.classList.remove("is-theme-shifting"), 1300);
     }
-    const slot = SCHEDULE.find((s) => s.id === id);
-    themeNameEls.forEach((el) => (el.textContent = `${slot.label} — ${slot.note}`));
+    if (id === "indigo") delete root.dataset.theme;
+    else root.dataset.theme = id;
+    currentTheme = id;
   };
-  setTheme(currentTheme, false);
-  setInterval(() => setTheme(slotAt(jstHour()).id, true), 30 * 1000);
+  setInterval(() => setTheme(slotAt(jstHour()).id), 30 * 1000);
 
   // ---------- Hero: 1文字ずつ分割 ----------
   let i = 0;

@@ -561,8 +561,9 @@ h1, h2, h3, p, dl, dd { margin: 0; }
   padding-top: 40px;
   padding-bottom: 32px;
 }
+/* PCは大きな時計があるので、時刻の文字表示はタブレット・スマホだけ */
 .meta {
-  display: flex;
+  display: none;
   flex-wrap: wrap;
   gap: 0;
   border-top: 1px solid var(--line-strong);
@@ -596,6 +597,7 @@ h1, h2, h3, p, dl, dd { margin: 0; }
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink-3);
+  margin-left: auto;
 }
 .scroll-cue span {
   width: 1px;
@@ -610,7 +612,6 @@ h1, h2, h3, p, dl, dd { margin: 0; }
   100% { background-position: 0 260%; }
 }
 
-.meta-now { display: none; }
 .meta-now dd { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; }
 .meta-now small {
   font-size: 11px;
@@ -654,7 +655,7 @@ h1, h2, h3, p, dl, dd { margin: 0; }
     -webkit-mask-image: radial-gradient(ellipse 70% 35% at 66% 30%, #000 20%, transparent 75%);
   }
   .scroll-cue { display: none; }
-  .meta-now { display: block; }
+  .meta { display: flex; }
 }
 @media (max-width: 560px) {
   .hero-label { margin-bottom: 24px; }
@@ -1460,32 +1461,14 @@ h1, h2, h3, p, dl, dd { margin: 0; }
   align-items: end;
 }
 .recruit-lead {
-  margin: 40px 0 32px;
+  margin: 0 0 32px;
   font-size: clamp(20px, 1.9vw, 24px);
   font-weight: 700;
   line-height: 1.7;
 }
-.roles { border-top: 1px solid var(--line-strong); }
-.roles li { border-bottom: 1px solid var(--line-strong); }
-.roles a {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto auto;
-  align-items: center;
-  gap: 24px;
-  padding: 24px 0;
-  font-family: var(--font);
-  transition: padding .4s var(--ease);
-}
-.roles-name { font-size: clamp(20px, 2vw, 26px); font-weight: 600; letter-spacing: -0.02em; transition: color .25s ease; }
-.roles-type { font-family: var(--font-ja); font-size: 13px; color: var(--ink-3); }
-.roles-arrow { transition: transform .4s var(--ease), color .25s ease; }
-.roles a:hover { padding-left: 12px; }
-.roles a:hover .roles-name,
-.roles a:hover .roles-arrow { color: var(--signal); }
-.roles a:hover .roles-arrow { transform: translateX(4px); }
 
 @media (max-width: 860px) {
-  .recruit { grid-template-columns: 1fr; gap: 48px; }
+  .recruit { grid-template-columns: 1fr; gap: 40px; }
 }
 
 /* =========================================================
