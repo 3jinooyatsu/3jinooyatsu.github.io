@@ -325,6 +325,43 @@
   openRoleFromHash();
   window.addEventListener("hashchange", openRoleFromHash);
 
+  // ---------- 文書ページ：見出しから目次をつくる ----------
+  const docToc = document.querySelector("[data-doc-toc]");
+  const docHeads = [...document.querySelectorAll(".doc-body h2")];
+  if (docToc && docHeads.length) {
+    const list = document.createElement("ol");
+    docHeads.forEach((h, n) => {
+      if (!h.id) h.id = `sec-${n + 1}`;
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.href = `#${h.id}`;
+      a.textContent = h.textContent;
+      li.appendChild(a);
+      list.appendChild(li);
+    });
+    docToc.appendChild(list);
+    const tocLinks = [...list.querySelectorAll("a")];
+    const markActive = () => {
+      let current = docHeads[0];
+      docHeads.forEach((h) => {
+        if (h.getBoundingClientRect().top < innerHeight * 0.3) current = h;
+      });
+      tocLinks.forEach((a) => a.classList.toggle("is-active", a.getAttribute("href") === `#${current.id}`));
+    };
+    window.addEventListener("scroll", markActive, { passive: true });
+    markActive();
+  }
+
+  // ---------- スクリーンショットの横スクロールボタン ----------
+  document.querySelectorAll("[data-shots]").forEach((shots) => {
+    const track = shots.querySelector("[data-shots-track]");
+    shots.querySelectorAll("[data-shots-dir]").forEach((button) => {
+      button.addEventListener("click", () => {
+        track.scrollBy({ left: Number(button.dataset.shotsDir) * track.clientWidth * 0.8, behavior: reduceMotion ? "auto" : "smooth" });
+      });
+    });
+  });
+
   // ---------- スクロールで出現 ----------
   const revealTargets = document.querySelectorAll("[data-reveal]");
   if ("IntersectionObserver" in window && !reduceMotion) {
