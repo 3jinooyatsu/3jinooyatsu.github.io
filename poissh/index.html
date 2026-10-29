@@ -65,16 +65,18 @@
       margin: 0 auto 36px;
       color: var(--poissh-sub);
     }
-    /* まだ配信前なので、バッジではなく状態を書く */
-    .poissh-status {
-      display: inline-block;
-      font-size: 13px;
-      letter-spacing: 0.04em;
-      color: var(--poissh-accent);
-      border: 1px solid rgba(47,124,246,0.3);
-      border-radius: 999px;
-      padding: 10px 22px;
+    .poissh-cta {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      transition: opacity .25s ease, transform .25s ease;
     }
+    .poissh-cta img {
+      display: block;
+      height: 54px;
+      width: auto;
+    }
+    .poissh-cta:hover { opacity: 0.85; transform: translateY(-1px); }
     .poissh-status-note {
       display: block;
       margin-top: 14px;
@@ -257,7 +259,9 @@
         共通ポイントはいつも同じ場所に。<br />
         お店のアプリは、近づくと一番上に出ます。
       </p>
-      <span class="poissh-status">App Store で公開準備中</span>
+      <a class="poissh-cta" href="https://apps.apple.com/jp/app/%E3%83%9D%E3%82%A4%E3%83%83%E3%82%B7%E3%83%A5/id6811892156" target="_blank" rel="noopener" aria-label="App Store でダウンロード">
+        <img src="/ikocca/appstore-badge-ja.svg" alt="App Store でダウンロード" width="180" height="60" />
+      </a>
       <span class="poissh-status-note">iOS 17.0 以降・無料（アプリ内課金なし・広告なし）</span>
     </section>
 
