@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact｜3時のおやつ</title>
+  <meta name="description" content="3時のおやつへのお問い合わせ。開発のご相談、プロダクトについて、採用、取材などはこちらから。" />
+  <link rel="canonical" href="https://3jino-oyatsu.com/contact/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="3時のおやつ" />
+  <meta property="og:title" content="Contact｜3時のおやつ" />
+  <meta property="og:description" content="開発のご相談、プロダクトについて、採用、取材などのお問い合わせはこちらから。" />
+  <meta property="og:url" content="https://3jino-oyatsu.com/contact/" />
+  <meta property="og:image" content="https://3jino-oyatsu.com/logos/3jinooyatsu_logo.png" />
+  <meta name="twitter:card" content="summary" />
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="apple-touch-icon" href="../logos/3jinooyatsu_logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@200..700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/site.css" />
+  <script src="../assets/theme.js"></script>
+</head>
+<body>
+
+  <!-- ========== Header ========== -->
+  <header class="gh" data-gh>
+    <div class="gh-inner">
+      <a href="../" class="gh-logo" aria-label="3時のおやつ トップ">
+        <img src="../logos/3jinooyatsu_logo.png" alt="3時のおやつ" />
+      </a>
+      <nav class="gh-nav" id="gh-nav" aria-label="メイン">
+        <a href="../about/">About</a>
+        <a href="../#products">Products</a>
+        <a href="../#development">Development</a>
+        <a href="../#news">News</a>
+        <a href="../recruit/">Recruit</a>
+        <a href="./" class="gh-nav-cta-sp" aria-current="page">Contact</a>
+      </nav>
+      <a href="./" class="btn btn--primary gh-cta">お問い合わせ<span class="btn-arrow" aria-hidden="true">→</span></a>
+      <button class="gh-toggle" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="gh-nav" data-gh-toggle>
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ========== Page head ========== -->
+    <section class="page-head" aria-labelledby="page-title">
+      <div class="hero-grid-bg" aria-hidden="true"></div>
+      <div class="wrap">
+        <p class="crumb"><a href="../">Home</a><span aria-hidden="true">/</span><span>Contact</span></p>
+        <h1 class="page-title" id="page-title">Contact</h1>
+        <p class="sec-ja">お問い合わせ</p>
+      </div>
+    </section>
+
+    <!-- ========== Form ========== -->
+    <section class="sec sec--tint">
+      <div class="wrap contact-page">
+        <aside class="cp-aside" data-reveal>
+          <p class="cp-lead">プロダクトのご相談、開発のご依頼、採用、取材など、お気軽にご連絡ください。</p>
+          <p class="cp-note">内容を拝見のうえ、1〜2営業日を目安にご返信いたします。</p>
+
+          <ul class="cp-topics">
+            <li><span>01</span>開発のご相談<small>iOS / Webアプリ・システム / LINEミニアプリ</small></li>
+            <li><span>02</span>プロダクトについて<small>いこっか。・ポイッシュへのご質問</small></li>
+            <li><span>03</span>採用について<small>募集職種へのご応募・ご質問</small></li>
+            <li><span>04</span>取材・その他</li>
+          </ul>
+
+          <div class="cp-mail">
+            <p class="cp-mail-label">Email</p>
+            <a href="mailto:info@3jino-oyatsu.com">info@3jino-oyatsu.com</a>
+          </div>
+        </aside>
+
+        <form class="cform" data-contact-form data-to="info@3jino-oyatsu.com" novalidate data-reveal>
+          <fieldset class="cform-row">
+            <legend class="cform-label">お問い合わせ種別 <span class="req">必須</span></legend>
+            <div class="chips">
+              <label class="chip-radio"><input type="radio" name="type" value="development" data-label="開発のご相談" required checked /><span>開発のご相談</span></label>
+              <label class="chip-radio"><input type="radio" name="type" value="product" data-label="プロダクトについて" /><span>プロダクトについて</span></label>
+              <label class="chip-radio"><input type="radio" name="type" value="recruit" data-label="採用について" /><span>採用について</span></label>
+              <label class="chip-radio"><input type="radio" name="type" value="other" data-label="取材・その他" /><span>取材・その他</span></label>
+            </div>
+          </fieldset>
+
+          <div class="cform-grid">
+            <div class="cform-row">
+              <label class="cform-label" for="cf-company">会社名・団体名 <span class="opt">任意</span></label>
+              <input id="cf-company" name="company" type="text" autocomplete="organization" />
+            </div>
+            <div class="cform-row">
+              <label class="cform-label" for="cf-name">お名前 <span class="req">必須</span></label>
+              <input id="cf-name" name="name" type="text" required autocomplete="name" />
+            </div>
+            <div class="cform-row">
+              <label class="cform-label" for="cf-email">メールアドレス <span class="req">必須</span></label>
+              <input id="cf-email" name="email" type="email" required autocomplete="email" />
+            </div>
+            <div class="cform-row">
+              <label class="cform-label" for="cf-phone">電話番号 <span class="opt">任意</span></label>
+              <input id="cf-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" />
+            </div>
+          </div>
+
+          <div class="cform-row">
+            <label class="cform-label" for="cf-message">お問い合わせ内容 <span class="req">必須</span></label>
+            <textarea id="cf-message" name="message" rows="8" required placeholder="ご相談の背景や、ご希望の時期・ご予算感などがあれば、あわせてお書きください。"></textarea>
+          </div>
+
+          <label class="agree">
+            <input type="checkbox" name="agree" required />
+            <span><a href="../privacy.html" target="_blank" rel="noopener">プライバシーポリシー</a>に同意する</span>
+          </label>
+
+          <div class="cform-actions">
+            <button type="submit" class="btn btn--primary btn--lg">内容を確認して送信<span class="btn-arrow" aria-hidden="true">→</span></button>
+            <p class="cform-hint">送信ボタンを押すと、入力内容が入ったメールがメールアプリで開きます。</p>
+          </div>
+          <p class="cform-status" data-form-status role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========== Footer ========== -->
+  <footer class="gf">
+    <div class="wrap">
+      <div class="gf-top">
+        <div class="gf-brand">
+          <img src="../logos/3jinooyatsu_logo.png" alt="3時のおやつ" class="gf-logo" />
+          <p>Product Development Studio</p>
+        </div>
+        <div class="gf-cols">
+          <nav aria-label="フッター：スタジオ">
+            <p class="gf-head">Studio</p>
+            <a href="../about/">About</a>
+            <a href="../#development">Development</a>
+            <a href="../#news">News</a>
+            <a href="../recruit/">Recruit</a>
+          </nav>
+          <nav aria-label="フッター：プロダクト">
+            <p class="gf-head">Products</p>
+            <a href="../ikocca/">いこっか。</a>
+            <a href="../poissh/">ポイッシュ</a>
+          </nav>
+          <nav aria-label="フッター：その他">
+            <p class="gf-head">Support</p>
+            <a href="./">お問い合わせ</a>
+            <a href="../privacy.html">プライバシーポリシー</a>
+          </nav>
+        </div>
+      </div>
+      <div class="gf-bottom">
+        <small>© 2026 3時のおやつ</small>
+        <span class="gf-time" data-clock-small>JST --:--</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/site.js"></script>
+</body>
+</html>

@@ -3,412 +3,426 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>３時のおやつ｜アプリ・システム開発</title>
-  <meta name="description" content="３時のおやつは、日々の暮らしにちょっと嬉しいサービスを作る開発会社です。" />
+  <title>3時のおやつ｜iOS・Web・LINEのプロダクト開発スタジオ</title>
+  <meta name="description" content="3時のおやつは、iOS・Webアプリ・LINEミニアプリを企画から開発・運用まで手がけるプロダクト開発スタジオです。" />
+  <link rel="canonical" href="https://3jino-oyatsu.com/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="3時のおやつ" />
+  <meta property="og:title" content="3時のおやつ｜iOS・Web・LINEのプロダクト開発スタジオ" />
+  <meta property="og:description" content="3時のおやつは、iOS・Webアプリ・LINEミニアプリを企画から開発・運用まで手がけるプロダクト開発スタジオです。" />
+  <meta property="og:url" content="https://3jino-oyatsu.com/" />
+  <meta property="og:image" content="https://3jino-oyatsu.com/logos/3jinooyatsu_logo.png" />
+  <meta name="twitter:card" content="summary" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="apple-touch-icon" href="logos/3jinooyatsu_logo.png" />
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="３時のおやつ" />
-  <meta property="og:title" content="３時のおやつ｜アプリ・システム開発" />
-  <meta property="og:description" content="３時のおやつは、日々の暮らしにちょっと嬉しいサービスを作る開発会社です。" />
-  <meta property="og:image" content="logos/3jinooyatsu_logo.png" />
-  <meta name="twitter:card" content="summary" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@200..700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/site.css" />
+  <script src="assets/theme.js"></script>
 </head>
 <body>
-  <!-- ホバー時に表示する全画面背景 -->
-  <div class="page-bg-hover" data-for="ikokka" aria-hidden="true"></div>
-  <div class="page-bg-hover" data-for="poissh" aria-hidden="true"></div>
 
-  <!-- 左右余白の装飾 -->
-  <aside class="margin-decor margin-decor-left" aria-hidden="true">
-    <span class="margin-decor-vtext">3 : 00 — OYATSU STUDIO — SINCE 2026</span>
-    <span class="margin-decor-dot" style="--d:0s; --x:35%;"></span>
-    <span class="margin-decor-dot" style="--d:-4s; --x:60%;"></span>
-    <span class="margin-decor-dot" style="--d:-9s; --x:20%;"></span>
-  </aside>
-  <aside class="margin-decor margin-decor-right" aria-hidden="true">
-    <span class="margin-decor-vtext">なくても困らない、あったら嬉しい — Sweets for everyday.</span>
-    <span class="margin-decor-dot" style="--d:-2s; --x:50%;"></span>
-    <span class="margin-decor-dot" style="--d:-7s; --x:30%;"></span>
-    <span class="margin-decor-dot" style="--d:-12s; --x:65%;"></span>
-  </aside>
-
-  <div class="page-frame">
-  <header class="site-header">
-    <button class="nav-toggle" aria-label="メニュー" aria-expanded="false" aria-controls="primary-nav">
-      <span class="nav-toggle-text">
-        <span class="nav-toggle-text-open">MENU</span>
-        <span class="nav-toggle-text-close">CLOSE</span>
-      </span>
-    </button>
-    <a href="#" class="logo">
-      <img src="logos/3jinooyatsu_logo.png" alt="３時のおやつ" class="logo-image" />
-    </a>
-    <nav class="site-nav" id="primary-nav">
-      <a href="#apps">Apps</a>
-      <a href="works.html">Works</a>
-      <a href="news.html">News</a>
-      <a href="#about">About</a>
-      <a href="members.html">Members</a>
-      <a href="#contact">Contact</a>
-    </nav>
+  <!-- ========== Header ========== -->
+  <header class="gh" data-gh>
+    <div class="gh-inner">
+      <a href="./" class="gh-logo" aria-label="3時のおやつ トップ">
+        <img src="logos/3jinooyatsu_logo.png" alt="3時のおやつ" />
+      </a>
+      <nav class="gh-nav" id="gh-nav" aria-label="メイン">
+        <a href="about/">About</a>
+        <a href="#products">Products</a>
+        <a href="#development">Development</a>
+        <a href="#news">News</a>
+        <a href="recruit/">Recruit</a>
+        <a href="contact/" class="gh-nav-cta-sp">Contact</a>
+      </nav>
+      <a href="contact/" class="btn btn--primary gh-cta">お問い合わせ<span class="btn-arrow" aria-hidden="true">→</span></a>
+      <button class="gh-toggle" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="gh-nav" data-gh-toggle>
+        <span></span><span></span>
+      </button>
+    </div>
   </header>
 
   <main>
-    <section class="hero">
-      <!-- 背景：薄く大きな時計（3:00を指す） + 外円を回るオレンジ点 -->
-      <svg class="hero-clock" viewBox="0 0 200 200" aria-hidden="true">
-        <g class="hero-clock-dial" fill="none" stroke="currentColor" stroke-linecap="round">
-          <circle cx="100" cy="100" r="96" stroke-width="1.4"/>
-          <line x1="100" y1="10"  x2="100" y2="20"  stroke-width="1.4"/>
-          <line x1="180" y1="100" x2="190" y2="100" stroke-width="1.4"/>
-          <line x1="100" y1="180" x2="100" y2="190" stroke-width="1.4"/>
-          <line x1="10"  y1="100" x2="20"  y2="100" stroke-width="1.4"/>
-          <line class="hero-clock-min"  x1="100" y1="100" x2="100" y2="32" stroke-width="2.4"/>
-          <line class="hero-clock-hour" x1="100" y1="100" x2="148" y2="100" stroke-width="3"/>
-        </g>
-        <circle class="hero-clock-center" cx="100" cy="100" r="4" fill="currentColor"/>
-        <g class="hero-clock-orbit">
-          <circle class="hero-clock-orbit-dot" cx="100" cy="4" r="3.2"/>
-        </g>
-      </svg>
 
-      <div class="hero-inner">
-        <p class="hero-eyebrow">App & System Studio</p>
-        <h1 class="hero-title">
-          <em>おやつ</em>みたいな、<br />
-          サービスを。
-        </h1>
-        <p class="hero-lead">
-          なくても困らない。でも、あったら一日がすこし嬉しくなる。<br />
-          ３時のおやつは、そんなサービスを作っています。
-        </p>
-      </div>
-    </section>
-
-    <div class="section-door" aria-hidden="true">
-      <div class="section-door-inner">
-        <span class="section-door-rule"></span>
-        <h2 class="section-door-title">Our Apps</h2>
-      </div>
-    </div>
-
-    <section id="apps" class="apps">
-      <p class="apps-lead">日々の暮らしにそっと寄り添う、小さなアプリたち。</p>
-      <ol class="catalog">
-        <li class="catalog-item" data-app="ikokka" style="--i:0">
-          <div class="catalog-row" role="button" tabindex="0" aria-expanded="false">
-            <span class="catalog-logo"><img src="logos/ikocca-logo.png" alt="いこっか。" /></span>
-            <div class="catalog-main">
-              <span class="catalog-no">No. 01</span>
-              <h3 class="catalog-name">いこっか。</h3>
-              <p class="catalog-tag">行きたい場所を集めて、次のおでかけを決める。</p>
-            </div>
-            <span class="catalog-category">Lifestyle</span>
-            <span class="catalog-arrow" aria-hidden="true">→</span>
-            <span class="catalog-bignum" aria-hidden="true">01</span>
+    <!-- ========== 00 Hero ========== -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-grid-bg" aria-hidden="true"></div>
+      <div class="wrap hero-inner">
+        <div class="hero-copy">
+          <p class="hero-label"><span class="dot"></span>Product Development Studio</p>
+          <h1 class="hero-title" id="hero-title" data-split>
+            <span class="hero-line">ひと息を、</span>
+            <span class="hero-line">実装する。</span>
+          </h1>
+          <p class="hero-en">Engineering the 3 o'clock moments of everyday life.</p>
+          <p class="hero-lead">
+            3時のおやつは、iOS・Web・LINE のプロダクトを<br class="br-pc" />企画から開発・運用まで手がける開発スタジオです。
+          </p>
+          <div class="hero-actions">
+            <a href="#products" class="btn btn--primary">プロダクトを見る<span class="btn-arrow" aria-hidden="true">→</span></a>
+            <a href="#development" class="btn btn--ghost">開発のご相談<span class="btn-arrow" aria-hidden="true">→</span></a>
           </div>
-          <div class="catalog-detail">
-            <div class="catalog-detail-inner">
-              <p class="catalog-detail-desc">「ここ行ってみたい」を、思いついたその瞬間に記録。カップルでも、グループでも、ひとりでも。明日の予定、週末のおでかけ、特別な日のお出かけ先を、集めた場所の中から提案してくれます。</p>
-              <ul class="catalog-detail-tags">
-                <li>iOS</li>
-              </ul>
-              <a href="/ikocca/" class="catalog-detail-link">サービスを見る →</a>
-            </div>
-          </div>
-        </li>
-
-        <li class="catalog-item" data-app="poissh" style="--i:1">
-          <div class="catalog-row" role="button" tabindex="0" aria-expanded="false">
-            <span class="catalog-logo"><img src="logos/poissh-logo.png" alt="ポイッシュ" /></span>
-            <div class="catalog-main">
-              <span class="catalog-no">No. 02</span>
-              <h3 class="catalog-name">ポイッシュ</h3>
-              <p class="catalog-tag">レジでポイントカードを、探さずに出す。</p>
-            </div>
-            <span class="catalog-category">Utility</span>
-            <span class="catalog-arrow" aria-hidden="true">→</span>
-            <span class="catalog-bignum" aria-hidden="true">02</span>
-          </div>
-          <div class="catalog-detail">
-            <div class="catalog-detail-inner">
-              <p class="catalog-detail-desc">レジの前で「どのアプリだっけ」と探す時間をなくすアプリ。共通ポイントはホームの決まった場所に固定で並び、お店のアプリは近づくと一番上に出ます。アカウント登録は不要です。</p>
-              <ul class="catalog-detail-tags">
-                <li>iOS</li>
-              </ul>
-              <a href="/poissh/" class="catalog-detail-link">サービスを見る →</a>
-            </div>
-          </div>
-        </li>
-
-        <li class="catalog-item" style="--i:2">
-          <div class="catalog-row" role="button" tabindex="0" aria-expanded="false">
-            <span class="catalog-logo"><img src="logos/app-04.svg" alt="" /></span>
-            <div class="catalog-main">
-              <span class="catalog-no">No. 03</span>
-              <h3 class="catalog-name">App Four</h3>
-              <p class="catalog-tag">チームの空気をやわらかくする、社内システム。</p>
-            </div>
-            <span class="catalog-category">Internal</span>
-            <span class="catalog-arrow" aria-hidden="true">→</span>
-            <span class="catalog-bignum" aria-hidden="true">03</span>
-          </div>
-          <div class="catalog-detail">
-            <div class="catalog-detail-inner">
-              <p class="catalog-detail-desc">チームの「ちょっとした共有」をなめらかに。雑談からタスクまで、空気感を保ったままやり取りできる社内ツール。</p>
-              <ul class="catalog-detail-tags">
-                <li>Web</li><li>SaaS</li>
-              </ul>
-              <a href="#" class="catalog-detail-link">サービスを見る →</a>
-            </div>
-          </div>
-        </li>
-
-        <li class="catalog-item" style="--i:3">
-          <div class="catalog-row" role="button" tabindex="0" aria-expanded="false">
-            <span class="catalog-logo"><img src="logos/app-05.svg" alt="" /></span>
-            <div class="catalog-main">
-              <span class="catalog-no">No. 04</span>
-              <h3 class="catalog-name">App Five</h3>
-              <p class="catalog-tag">こだわりを共有する、レビュー型コミュニティ。</p>
-            </div>
-            <span class="catalog-category">Community</span>
-            <span class="catalog-arrow" aria-hidden="true">→</span>
-            <span class="catalog-bignum" aria-hidden="true">04</span>
-          </div>
-          <div class="catalog-detail">
-            <div class="catalog-detail-inner">
-              <p class="catalog-detail-desc">「これ、いいよ」を共有するためのコミュニティ。お気に入りを語り合うレビュープラットフォームです。</p>
-              <ul class="catalog-detail-tags">
-                <li>Web</li><li>iOS</li>
-              </ul>
-              <a href="#" class="catalog-detail-link">サービスを見る →</a>
-            </div>
-          </div>
-        </li>
-
-        <li class="catalog-item" style="--i:4">
-          <div class="catalog-row" role="button" tabindex="0" aria-expanded="false">
-            <span class="catalog-logo"><img src="logos/app-06.svg" alt="" /></span>
-            <div class="catalog-main">
-              <span class="catalog-no">No. 05</span>
-              <h3 class="catalog-name">App Six</h3>
-              <p class="catalog-tag">請求や見積もりを甘く扱う、業務支援ツール。</p>
-            </div>
-            <span class="catalog-category">Business</span>
-            <span class="catalog-arrow" aria-hidden="true">→</span>
-            <span class="catalog-bignum" aria-hidden="true">05</span>
-          </div>
-          <div class="catalog-detail">
-            <div class="catalog-detail-inner">
-              <p class="catalog-detail-desc">数字仕事をすこし甘く。請求書から見積もりまで、苦手を肩代わりする業務支援ツール。</p>
-              <ul class="catalog-detail-tags">
-                <li>Web</li><li>B2B</li>
-              </ul>
-              <a href="#" class="catalog-detail-link">サービスを見る →</a>
-            </div>
-          </div>
-        </li>
-      </ol>
-    </section>
-
-    <div class="section-door" aria-hidden="true">
-      <div class="section-door-inner">
-        <span class="section-door-rule"></span>
-        <h2 class="section-door-title">Our Story</h2>
-      </div>
-    </div>
-
-    <section id="about" class="about">
-      <div class="about-dial">
-        <div class="about-clock-row">
-          <span class="about-side-mark about-side-mark--left" aria-hidden="true">Est. 2026</span>
-
-          <div class="about-clock" aria-hidden="true">
-            <svg class="about-clock-svg" viewBox="0 0 200 200">
-              <circle class="about-clock-rim-outer" cx="100" cy="100" r="98"/>
-              <circle class="about-clock-rim" cx="100" cy="100" r="92"/>
-              <g class="about-clock-tick-minor">
-                <line x1="146" y1="20.3" x2="142" y2="27.3"/>
-                <line x1="179.7" y1="54" x2="172.7" y2="58"/>
-                <line x1="179.7" y1="146" x2="172.7" y2="142"/>
-                <line x1="146" y1="179.7" x2="142" y2="172.7"/>
-                <line x1="54" y1="179.7" x2="58" y2="172.7"/>
-                <line x1="20.3" y1="146" x2="27.3" y2="142"/>
-                <line x1="20.3" y1="54" x2="27.3" y2="58"/>
-                <line x1="54" y1="20.3" x2="58" y2="27.3"/>
-              </g>
-              <g class="about-clock-tick-major">
-                <line x1="100" y1="8" x2="100" y2="18"/>
-                <line x1="192" y1="100" x2="182" y2="100"/>
-                <line x1="100" y1="192" x2="100" y2="182"/>
-                <line x1="8" y1="100" x2="18" y2="100"/>
-              </g>
-              <line class="about-clock-min" x1="100" y1="100" x2="100" y2="30"/>
-              <line class="about-clock-hour" x1="100" y1="100" x2="100" y2="55"/>
-              <circle class="about-clock-center-ring" cx="100" cy="100" r="5"/>
-              <circle class="about-clock-center-pip" cx="100" cy="100" r="2.5"/>
-            </svg>
-          </div>
-
-          <span class="about-side-mark about-side-mark--right" aria-hidden="true">3 : 00 PM</span>
         </div>
 
-        <div class="about-content">
-          <p class="about-text">
-            ３時のおやつは、サービス開発を通じて<br />
-            日々の暮らしや仕事に<span class="about-highlight">「ちょっと嬉しい」</span>を届ける開発スタジオです。
+        <div class="hero-dial" aria-hidden="true">
+          <svg class="dial" viewBox="-320 -320 640 640" data-dial>
+            <circle class="dial-ring" r="300" />
+            <circle class="dial-ring dial-ring--inner" r="236" />
+            <g class="dial-ticks" data-dial-ticks></g>
+            <g class="dial-nums" data-dial-nums></g>
+            <path class="dial-arc" data-dial-arc />
+            <g class="dial-marker" transform="rotate(90)">
+              <circle cx="0" cy="-268" r="6" />
+            </g>
+            <text class="dial-marker-label" x="244" y="0">15:00</text>
+            <line class="dial-hand dial-hand--h" y1="18" y2="-150" data-hand="h" />
+            <line class="dial-hand dial-hand--m" y1="22" y2="-218" data-hand="m" />
+            <g data-hand="s">
+              <line class="dial-hand dial-hand--s" y1="40" y2="-262" />
+            </g>
+            <circle class="dial-pin" r="5" />
+            <g class="dial-readout">
+              <rect class="dial-readout-plate" x="-112" y="76" width="224" height="108" rx="16" />
+              <text class="dial-readout-zone" y="102">JST</text>
+              <text class="dial-readout-time" y="138" data-clock>--:--:--</text>
+              <text class="dial-readout-next" y="166" data-countdown>next 15:00 in --:--:--</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <div class="wrap hero-meta">
+        <dl class="meta">
+          <div class="meta-now"><dt>Now · JST</dt><dd><span data-clock>--:--:--</span><small data-countdown>next 15:00 in --:--:--</small></dd></div>
+          <div><dt>Focus</dt><dd>iOS / Web / LINE</dd></div>
+          <div><dt>Products</dt><dd>2 Apps · 2 In Dev</dd></div>
+          <div><dt>Color</dt><dd data-theme-name>Indigo — 夜</dd></div>
+        </dl>
+        <a href="#about" class="scroll-cue">Scroll<span aria-hidden="true"></span></a>
+      </div>
+    </section>
+
+    <!-- ========== 01 About ========== -->
+    <section class="sec" id="about" aria-labelledby="about-title">
+      <div class="wrap">
+        <header class="sec-head" data-reveal>
+          <span class="sec-index">01 /</span>
+          <h2 class="sec-title" id="about-title">About</h2>
+          <p class="sec-ja">私たちについて</p>
+        </header>
+
+        <div class="about-body">
+          <p class="about-statement" data-reveal>
+            毎日に、<br />
+            ちょうどいい余白をつくる<br />
+            ソフトウェアを。
           </p>
-          <span class="about-divider" aria-hidden="true"></span>
-          <p class="about-text">
-            受託開発から自社プロダクトまで、<br />
-            小さく丁寧に、<span class="about-highlight">心地よい体験</span>を作ります。
-          </p>
+          <div class="about-text" data-reveal>
+            <p>
+              なくても困らない。でも、あったら一日がすこし楽になる。
+              私たちは、そんな「3時のおやつ」のような存在のプロダクトを、自社で企画し、開発し、届けています。
+            </p>
+            <p>
+              自社プロダクトで積み重ねた設計と実装の知見は、受託開発にもそのまま活かしています。
+              つくるだけでなく、使われ続けるところまで。小さなチームで、ていねいに。
+            </p>
+            <a href="about/" class="link-arrow">About us<span aria-hidden="true">→</span></a>
+          </div>
         </div>
       </div>
     </section>
 
-    <div class="section-door" aria-hidden="true">
-      <div class="section-door-inner">
-        <span class="section-door-rule"></span>
-        <h2 class="section-door-title">Journal</h2>
-      </div>
-    </div>
+    <!-- ========== 02 Products ========== -->
+    <section class="sec sec--tint" id="products" aria-labelledby="products-title">
+      <div class="wrap">
+        <header class="sec-head sec-head--split" data-reveal>
+          <div>
+            <span class="sec-index">02 /</span>
+            <h2 class="sec-title" id="products-title">Products</h2>
+            <p class="sec-ja">自社プロダクト</p>
+          </div>
+          <p class="sec-desc">
+            暮らしの「ちょっと面倒」を、ひとつずつソフトウェアで解いていく。<br class="br-pc" />企画からデザイン、開発、運用まで、すべて自社で手がけています。
+          </p>
+        </header>
 
-    <section id="news" class="news">
-      <ul class="news-list">
-        <li class="news-item">
-          <a href="ikocca/index.html" class="news-link">
-            <div class="news-head">
-              <time class="news-datestamp" datetime="2026-06-26">
-                <span class="news-monthyear">Jun 2026</span>
-                <span class="news-day">26</span>
-              </time>
-              <span class="news-cat news-cat--product">Product</span>
+        <div class="pstack">
+          <article class="ppanel ppanel--ikocca" aria-labelledby="p-ikocca">
+            <div class="ppanel-info">
+              <div class="ppanel-top">
+                <span class="ppanel-no">No. 01</span>
+                <span class="ppanel-status ppanel-status--live"><i></i>App Store で配信中</span>
+              </div>
+              <div class="ppanel-id">
+                <img class="ppanel-icon" src="logos/ikocca-logo.png" alt="" />
+                <div>
+                  <h3 class="ppanel-name" id="p-ikocca">いこっか。</h3>
+                  <p class="ppanel-cat">Travel · iOS</p>
+                </div>
+              </div>
+              <p class="ppanel-catch">集めて、まとめて、でかける。</p>
+              <p class="ppanel-desc">SNSで見つけた「ここ行きたい」を、思いついたその瞬間に。ふたり・グループで行きたい場所を溜めて、次のおでかけを決められます。</p>
+              <ul class="ppanel-features">
+                <li>SNS シェアで、そのまま追加</li>
+                <li>ふたり・グループでリアルタイム共有</li>
+                <li>制覇マップ＆ウィジェット</li>
+              </ul>
+              <div class="ppanel-actions">
+                <a href="ikocca/" class="btn btn--ink">詳しく見る<span class="btn-arrow" aria-hidden="true">→</span></a>
+                <a href="https://apps.apple.com/app/id6775837994" class="ppanel-store" target="_blank" rel="noopener">
+                  <img src="ikocca/appstore-badge-ja.svg" alt="App Store からダウンロード" />
+                </a>
+              </div>
             </div>
-            <h3 class="news-title">「いこっか。」アプリをリリースしました</h3>
-            <p class="news-excerpt">SNSで見つけた「ここ行ってみたい」を溜めて、次のおでかけを決められるiOSアプリ「いこっか。」を6月26日にリリースしました。App Storeにて配信中です。</p>
-          </a>
-        </li>
-
-        <li class="news-item">
-          <a href="news.html" class="news-link">
-            <div class="news-head">
-              <time class="news-datestamp" datetime="2026-05-20">
-                <span class="news-monthyear">May 2026</span>
-                <span class="news-day">20</span>
-              </time>
-              <span class="news-cat news-cat--notice">Notice</span>
+            <div class="ppanel-visual ppanel-visual--fan" aria-hidden="true">
+              <img class="fan fan--l" src="ikocca/shots/02.jpg" alt="" loading="lazy" />
+              <img class="fan fan--r" src="ikocca/shots/05.jpg" alt="" loading="lazy" />
+              <img class="fan fan--c" src="ikocca/shots/04.jpg" alt="" loading="lazy" />
             </div>
-            <h3 class="news-title">ゴールデンウィーク期間のお問い合わせ対応について</h3>
-            <p class="news-excerpt">5月3日〜5月6日はお問い合わせへの返信を一時休止いたします。期間中のご連絡は、5月7日以降に順次ご対応いたします。</p>
-          </a>
-        </li>
+            <span class="ppanel-bignum" aria-hidden="true">01</span>
+          </article>
 
-        <li class="news-item">
-          <a href="news.html" class="news-link">
-            <div class="news-head">
-              <time class="news-datestamp" datetime="2026-05-10">
-                <span class="news-monthyear">May 2026</span>
-                <span class="news-day">10</span>
-              </time>
-              <span class="news-cat news-cat--journal">Journal</span>
+          <article class="ppanel ppanel--poissh" aria-labelledby="p-poissh">
+            <div class="ppanel-info">
+              <div class="ppanel-top">
+                <span class="ppanel-no">No. 02</span>
+                <span class="ppanel-status ppanel-status--live"><i></i>App Store で配信中</span>
+              </div>
+              <div class="ppanel-id">
+                <img class="ppanel-icon" src="logos/poissh-logo.png" alt="" />
+                <div>
+                  <h3 class="ppanel-name" id="p-poissh">ポイッシュ</h3>
+                  <p class="ppanel-cat">Wallet · iOS</p>
+                </div>
+              </div>
+              <p class="ppanel-catch">探さずに、シュッと出す。</p>
+              <p class="ppanel-desc">レジの前で「どのアプリだっけ」と探す時間をなくすアプリ。お店に近づくと、使うポイントアプリが一番上に並びます。</p>
+              <ul class="ppanel-features">
+                <li>共通ポイントは、いつも同じ場所</li>
+                <li>近くのお店が、一番上に</li>
+                <li>アカウント不要。端末の中だけ</li>
+              </ul>
+              <div class="ppanel-actions">
+                <a href="poissh/" class="btn btn--ink">詳しく見る<span class="btn-arrow" aria-hidden="true">→</span></a>
+                <a href="https://apps.apple.com/jp/app/%E3%83%9D%E3%82%A4%E3%83%83%E3%82%B7%E3%83%A5/id6811892156" class="ppanel-store" target="_blank" rel="noopener">
+                  <img src="ikocca/appstore-badge-ja.svg" alt="App Store からダウンロード" />
+                </a>
+              </div>
             </div>
-            <h3 class="news-title">受託開発で大切にしている3つのこと</h3>
-            <p class="news-excerpt">良いプロダクトは「目的の共有」「ちいさな試行」「気持ちの設計」から生まれる、と私たちは考えています。</p>
-          </a>
-        </li>
+            <div class="ppanel-visual ppanel-visual--devices" aria-hidden="true">
+              <div class="device device--back"><img src="poissh/shots/02.jpg" alt="" loading="lazy" /></div>
+              <div class="device device--front"><img src="poissh/shots/01.jpg" alt="" loading="lazy" /></div>
+            </div>
+            <span class="ppanel-bignum" aria-hidden="true">02</span>
+          </article>
+        </div>
 
-      </ul>
-
-      <div class="news-section-cta">
-        <a href="news.html" class="news-section-link">他の記事を読む</a>
+        <div class="psoon" data-reveal>
+          <div class="psoon-card">
+            <span class="psoon-no">No. 03</span>
+            <span class="psoon-code" aria-hidden="true">build --product=03<b>_</b></span>
+            <span class="psoon-label">Coming soon</span>
+          </div>
+          <div class="psoon-card">
+            <span class="psoon-no">No. 04</span>
+            <span class="psoon-code" aria-hidden="true">build --product=04<b>_</b></span>
+            <span class="psoon-label">Coming soon</span>
+          </div>
+        </div>
       </div>
     </section>
 
-    <div class="section-door" aria-hidden="true">
-      <div class="section-door-inner">
-        <span class="section-door-rule"></span>
-        <h2 class="section-door-title">Contact</h2>
-      </div>
-    </div>
+    <!-- ========== 03 Development ========== -->
+    <section class="sec sec--dark" id="development" aria-labelledby="dev-title">
+      <div class="wrap">
+        <header class="sec-head sec-head--split" data-reveal>
+          <div>
+            <span class="sec-index">03 /</span>
+            <h2 class="sec-title" id="dev-title">Development</h2>
+            <p class="sec-ja">受託開発</p>
+          </div>
+          <p class="sec-desc">
+            自社プロダクトで培った設計と実装の知見を、あなたの事業に。<br class="br-pc" />企画の整理から、リリース後の改善まで伴走します。
+          </p>
+        </header>
 
-    <section id="contact" class="contact">
-      <div class="contact-inner">
-        <h2 class="contact-display">Let's have <em>a tea.</em></h2>
-        <p class="contact-lead">
-          お仕事のご依頼も、ちょっとした世間話も。<br />
-          メッセージひとつで、いつでもどうぞ。
-        </p>
+        <div class="caps">
+          <article class="cap" data-reveal>
+            <h3 class="cap-title">iOS App</h3>
+            <p class="cap-ja">iOSアプリ開発</p>
+            <p class="cap-desc">SwiftUI によるネイティブアプリ開発。ウィジェット、共有メニュー、通知など、OSの機能を活かした体験を設計します。</p>
+            <ul class="tags tags--dark"><li>Swift</li><li>SwiftUI</li><li>WidgetKit</li></ul>
+          </article>
+          <article class="cap" data-reveal>
+            <h3 class="cap-title">Web App &amp; System</h3>
+            <p class="cap-ja">Webアプリ・システム開発</p>
+            <p class="cap-desc">業務システム、SaaS、管理画面まで。小さく作って、運用しながら育てていく開発スタイルです。</p>
+            <ul class="tags tags--dark"><li>TypeScript</li><li>React</li><li>Supabase</li></ul>
+          </article>
+          <article class="cap" data-reveal>
+            <h3 class="cap-title">LINE Mini App</h3>
+            <p class="cap-ja">LINEミニアプリ開発</p>
+            <p class="cap-desc">予約、注文、会員証などを LINE の中で完結。友だち追加から利用までの導線を、できるだけ短くします。</p>
+            <ul class="tags tags--dark"><li>LIFF</li><li>Messaging API</li></ul>
+          </article>
+        </div>
 
-        <a class="contact-button" href="contact.html">
-          <span>お問い合わせフォームへ</span>
-          <span class="contact-button-arrow" aria-hidden="true">→</span>
-        </a>
+        <div class="principles" data-reveal>
+          <div class="principles-head">
+            <h3 class="sub-title">How we work<span>大切にしている3つのこと</span></h3>
+            <p class="principles-lead">良いプロダクトは、この3つの積み重ねから生まれると考えています。</p>
+          </div>
+          <ol class="principle-list">
+            <li>
+              <span class="pl-no">01</span>
+              <div class="pl-head"><strong>目的の共有</strong><em>Align on why</em></div>
+              <p>何をつくるかの前に、なぜつくるかを揃える。事業のゴールと優先順位を言葉にしてから、手を動かします。</p>
+            </li>
+            <li>
+              <span class="pl-no">02</span>
+              <div class="pl-head"><strong>ちいさな試行</strong><em>Ship small, learn fast</em></div>
+              <p>動くものを早く触って、早く直す。大きな仕様書よりも、触れるプロトタイプで判断します。</p>
+            </li>
+            <li>
+              <span class="pl-no">03</span>
+              <div class="pl-head"><strong>気持ちの設計</strong><em>Design the feeling</em></div>
+              <p>使っていて気持ちいいか、まで設計する。操作の手触りや言葉づかいの細部まで詰めます。</p>
+            </li>
+          </ol>
+        </div>
+
+        <div class="flow" data-reveal>
+          <h3 class="sub-title">Process<span>開発の流れ</span></h3>
+          <ol class="flow-list">
+            <li><span>01</span>ヒアリング<small>課題と目的の整理</small></li>
+            <li><span>02</span>設計・プロトタイプ<small>触れる形で合意する</small></li>
+            <li><span>03</span>開発<small>短いサイクルで実装</small></li>
+            <li><span>04</span>リリース・運用<small>数字を見ながら改善</small></li>
+          </ol>
+        </div>
+
+        <div class="dev-cta" data-reveal>
+          <a href="contact/?type=development" class="btn btn--light">開発のご相談<span class="btn-arrow" aria-hidden="true">→</span></a>
+        </div>
       </div>
     </section>
+
+    <!-- ========== 04 News ========== -->
+    <section class="sec" id="news" aria-labelledby="news-title">
+      <div class="wrap">
+        <header class="sec-head sec-head--split" data-reveal>
+          <div>
+            <span class="sec-index">04 /</span>
+            <h2 class="sec-title" id="news-title">News</h2>
+            <p class="sec-ja">お知らせ</p>
+          </div>
+          <a href="news.html" class="link-arrow">View all<span aria-hidden="true">→</span></a>
+        </header>
+
+        <ul class="news-rows" data-reveal>
+          <li>
+            <a href="news.html">
+              <time datetime="2026-06-26">2026.06.26</time>
+              <span class="chip">Product</span>
+              <span class="news-rows-title">「いこっか。」アプリをリリースしました</span>
+              <span class="news-rows-arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+          <li>
+            <a href="news.html">
+              <time datetime="2026-05-20">2026.05.20</time>
+              <span class="chip">Notice</span>
+              <span class="news-rows-title">ゴールデンウィーク期間のお問い合わせ対応について</span>
+              <span class="news-rows-arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+          <li>
+            <a href="news.html">
+              <time datetime="2026-05-10">2026.05.10</time>
+              <span class="chip">Journal</span>
+              <span class="news-rows-title">受託開発で大切にしている3つのこと</span>
+              <span class="news-rows-arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ========== 05 Recruit ========== -->
+    <section class="sec sec--tint" id="recruit" aria-labelledby="recruit-title">
+      <div class="wrap">
+        <div class="recruit" data-reveal>
+          <div class="recruit-copy">
+            <span class="sec-index">05 /</span>
+            <h2 class="sec-title" id="recruit-title">Join Us</h2>
+            <p class="sec-ja">採用情報</p>
+            <p class="recruit-lead">
+              プロダクトも、受託開発も。<br />
+              つくることを一緒に楽しめる仲間を探しています。
+            </p>
+            <a href="recruit/" class="btn btn--primary">採用情報を見る<span class="btn-arrow" aria-hidden="true">→</span></a>
+          </div>
+          <ul class="roles">
+            <li><a href="recruit/#ios"><span class="roles-name">iOS Engineer</span><span class="roles-type">iOSエンジニア</span><span class="roles-arrow" aria-hidden="true">→</span></a></li>
+            <li><a href="recruit/#web"><span class="roles-name">Web Engineer</span><span class="roles-type">Webエンジニア</span><span class="roles-arrow" aria-hidden="true">→</span></a></li>
+            <li><a href="recruit/#designer"><span class="roles-name">Product Designer</span><span class="roles-type">プロダクトデザイナー</span><span class="roles-arrow" aria-hidden="true">→</span></a></li>
+            <li><a href="recruit/#sales"><span class="roles-name">Sales</span><span class="roles-type">法人営業</span><span class="roles-arrow" aria-hidden="true">→</span></a></li>
+            <li><a href="recruit/#marketing"><span class="roles-name">Marketing</span><span class="roles-type">マーケティング</span><span class="roles-arrow" aria-hidden="true">→</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 06 Contact ========== -->
+    <section class="contact" id="contact" aria-labelledby="contact-title">
+      <a href="contact/" class="contact-link">
+        <div class="wrap contact-inner">
+          <p class="contact-label">06 / お問い合わせ</p>
+          <h2 class="contact-title" id="contact-title">Contact<span class="contact-arrow" aria-hidden="true">→</span></h2>
+          <p class="contact-text">プロダクトのご相談、開発のご依頼、取材など、お気軽にご連絡ください。</p>
+        </div>
+      </a>
+    </section>
+
   </main>
 
-  <footer class="site-footer">
-    <div class="footer-top">
-      <a href="index.html" class="footer-logo" aria-label="３時のおやつ">
-        <img src="logos/3jinooyatsu_logo.png" alt="３時のおやつ" />
-      </a>
-      <p class="footer-tagline">なくても困らない、あったら嬉しい。</p>
+  <!-- ========== Footer ========== -->
+  <footer class="gf">
+    <div class="wrap">
+      <div class="gf-top">
+        <div class="gf-brand">
+          <img src="logos/3jinooyatsu_logo.png" alt="3時のおやつ" class="gf-logo" />
+          <p>Product Development Studio</p>
+        </div>
+        <div class="gf-cols">
+          <nav aria-label="フッター：会社">
+            <p class="gf-head">Studio</p>
+            <a href="about/">About</a>
+            <a href="#development">Development</a>
+            <a href="#news">News</a>
+            <a href="recruit/">Recruit</a>
+          </nav>
+          <nav aria-label="フッター：プロダクト">
+            <p class="gf-head">Products</p>
+            <a href="ikocca/">いこっか。</a>
+            <a href="poissh/">ポイッシュ</a>
+          </nav>
+          <nav aria-label="フッター：その他">
+            <p class="gf-head">Support</p>
+            <a href="contact/">お問い合わせ</a>
+            <a href="privacy.html">プライバシーポリシー</a>
+          </nav>
+        </div>
+      </div>
+      <div class="gf-bottom">
+        <small>© 2026 3時のおやつ</small>
+        <span class="gf-time" data-clock-small>JST --:--</span>
+      </div>
     </div>
-
-    <nav class="footer-nav" aria-label="Main">
-      <a href="index.html#apps">Apps</a>
-      <a href="works.html">Works</a>
-      <a href="news.html">News</a>
-      <a href="index.html#about">About</a>
-      <a href="members.html">Members</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-
-    <nav class="footer-sns" aria-label="SNS">
-      <a href="#" class="footer-sns-link" aria-label="X (Twitter)">
-        <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
-          <path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-        </svg>
-      </a>
-      <a href="#" class="footer-sns-link" aria-label="Instagram">
-        <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6">
-          <rect x="3" y="3" width="18" height="18" rx="5"/>
-          <circle cx="12" cy="12" r="4"/>
-          <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
-        </svg>
-      </a>
-      <a href="#" class="footer-sns-link" aria-label="GitHub">
-        <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
-          <path fill="currentColor" d="M12 1.5C6.2 1.5 1.5 6.2 1.5 12c0 4.65 3 8.59 7.18 9.98.52.1.7-.23.7-.5v-1.95c-2.92.63-3.54-1.4-3.54-1.4-.47-1.2-1.16-1.52-1.16-1.52-.95-.65.07-.64.07-.64 1.05.07 1.6 1.08 1.6 1.08.94 1.61 2.45 1.15 3.05.88.1-.68.37-1.15.67-1.41-2.33-.26-4.78-1.17-4.78-5.18 0-1.14.41-2.07 1.07-2.8-.11-.27-.46-1.33.1-2.77 0 0 .88-.28 2.87 1.07.83-.23 1.72-.34 2.6-.35.88.01 1.77.12 2.6.35 1.99-1.35 2.86-1.07 2.86-1.07.57 1.44.21 2.5.1 2.77.67.73 1.07 1.66 1.07 2.8 0 4.02-2.46 4.91-4.8 5.17.38.32.71.96.71 1.94v2.88c0 .28.18.61.71.51A10.5 10.5 0 0022.5 12C22.5 6.2 17.8 1.5 12 1.5z"/>
-        </svg>
-      </a>
-      <a href="#" class="footer-sns-link" aria-label="note">
-        <span class="footer-sns-text">note</span>
-      </a>
-    </nav>
-
-    <nav class="footer-meta" aria-label="Sub">
-      <a href="privacy.html">プライバシーポリシー</a>
-    </nav>
-
-    <small>© 2026 ３時のおやつ</small>
   </footer>
-  </div><!-- /.page-frame -->
 
-  <!-- ページインジケーター -->
-  <div class="page-indicator" aria-hidden="true">
-    <span class="page-current">01</span><span class="page-divider"> / </span><span class="page-total">04</span>
-  </div>
-
-  <!-- 3時のイースターエッグ用バナー -->
-  <div id="three-oclock" class="three-oclock" hidden>
-    <span>🍵 ちょうど３時です。いただきます。</span>
-  </div>
-
-  <script src="script.js"></script>
+  <script src="assets/site.js"></script>
 </body>
 </html>
