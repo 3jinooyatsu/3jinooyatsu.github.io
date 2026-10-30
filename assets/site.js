@@ -357,6 +357,70 @@
     });
   });
 
+  // ---------- Products：カードの出方・カーソルへの反応・カードごとの小さな動き ----------
+  const pcards = document.querySelectorAll("[data-pcard]");
+
+  // ジブンゴ：英語の吹き出しを1文字ずつ打つ
+  const typeText = (el) => {
+    const text = el.dataset.type;
+    const bubble = el.closest(".pv-bubble");
+    if (reduceMotion) return;
+    let n = 0;
+    el.textContent = "";
+    bubble.classList.add("is-typing");
+    setTimeout(function tick() {
+      el.textContent = text.slice(0, ++n);
+      if (n < text.length) setTimeout(tick, 55);
+      else setTimeout(() => bubble.classList.remove("is-typing"), 1200);
+    }, 900);
+  };
+
+  const playCard = (card) => {
+    card.querySelectorAll("[data-type]").forEach(typeText);
+  };
+
+  if ("IntersectionObserver" in window && !reduceMotion) {
+    const cardObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          e.target.classList.add("is-shown");
+          playCard(e.target);
+          cardObserver.unobserve(e.target);
+        });
+      },
+      { rootMargin: "0px 0px -15% 0px", threshold: 0.2 }
+    );
+    pcards.forEach((card) => cardObserver.observe(card));
+  } else {
+    pcards.forEach((card) => card.classList.add("is-shown"));
+  }
+
+  // マウスのときだけ：カードがカーソルの方へ少し傾き、光が追いかけ、画面イメージが逆に動く
+  if (window.matchMedia("(hover: hover) and (pointer: fine)").matches && !reduceMotion) {
+    pcards.forEach((card) => {
+      let frame;
+      card.addEventListener("pointermove", (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width;
+        const y = (e.clientY - rect.top) / rect.height;
+        cancelAnimationFrame(frame);
+        frame = requestAnimationFrame(() => {
+          card.style.setProperty("--mx", `${(x * 100).toFixed(1)}%`);
+          card.style.setProperty("--my", `${(y * 100).toFixed(1)}%`);
+          card.style.setProperty("--px", ((x - 0.5) * 2).toFixed(3));
+          card.style.setProperty("--py", ((y - 0.5) * 2).toFixed(3));
+          card.style.setProperty("--rx", `${((0.5 - y) * 4).toFixed(2)}deg`);
+          card.style.setProperty("--ry", `${((x - 0.5) * 5).toFixed(2)}deg`);
+        });
+      });
+      card.addEventListener("pointerleave", () => {
+        cancelAnimationFrame(frame);
+        ["--px", "--py", "--rx", "--ry"].forEach((name) => card.style.removeProperty(name));
+      });
+    });
+  }
+
   // ---------- スクロールで出現 ----------
   const revealTargets = document.querySelectorAll("[data-reveal]");
   if ("IntersectionObserver" in window && !reduceMotion) {

@@ -783,46 +783,221 @@ h1, h2, h3, p, dl, dd { margin: 0; }
 }
 
 /* =========================================================
-   02 Products — プロダクトごとにブランドカラーのパネル
+   02 Products — 2×2 の横長カード。カーソルに合わせて傾き、光が追いかける
    ========================================================= */
-.pstack { display: flex; flex-direction: column; gap: 24px; }
-
-.ppanel {
-  --p-accent: var(--signal);
-  --p-soft: var(--signal-soft);
-  --p-bg: var(--paper);
-  position: relative;
-  isolation: isolate;
-  display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-  align-items: center;
-  gap: clamp(32px, 5vw, 72px);
-  min-height: min(680px, calc(100svh - var(--header-h) - 64px));
-  padding: clamp(28px, 4.5vw, 64px);
-  border-radius: 32px;
-  background: var(--p-bg);
-  border: 1px solid rgba(15, 26, 36, 0.06);
-  overflow: hidden;
-  transform-origin: 50% 0;
-}
-.ppanel--ikocca,
+.pcard--ikocca,
 .plp--ikocca {
   --p-accent: #C2603F;
   --p-soft: rgba(194, 96, 63, 0.16);
   --p-bg: linear-gradient(150deg, #FCF7F1 0%, #F5E8DA 100%);
 }
-.ppanel--poissh,
+.pcard--poissh,
 .plp--poissh {
   --p-accent: #2F7CF6;
   --p-soft: rgba(15, 198, 160, 0.18);
   --p-bg: linear-gradient(150deg, #F3F8FF 0%, #E4F6F1 100%);
 }
-.ppanel--jibungo,
+.pcard--jibungo,
 .plp--jibungo {
   --p-accent: #1A6FE0;
   --p-soft: rgba(255, 210, 90, 0.45);
   --p-bg: linear-gradient(150deg, #F1F6FF 0%, #FFF3D6 100%);
 }
+.pcard--another,
+.plp--another {
+  --p-accent: #6F5FB8;
+  --p-soft: rgba(138, 118, 204, 0.22);
+  --p-bg: linear-gradient(150deg, #F7F5FC 0%, #E8E2F5 100%);
+}
+
+.pgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+
+.pcard {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.82fr);
+  min-height: 340px;
+  border-radius: 28px;
+  background: var(--p-bg);
+  border: 1px solid rgba(15, 26, 36, 0.06);
+  overflow: hidden;
+  transform: perspective(1200px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform .6s var(--ease), box-shadow .6s var(--ease), opacity .9s ease, translate 1s var(--ease);
+  transition-delay: 0s, 0s, var(--d, 0ms), var(--d, 0ms);
+}
+.pcard:hover { box-shadow: 0 48px 80px -56px rgba(15, 26, 36, 0.55); }
+/* カーソルの位置に光をあてる */
+.pcard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.7), transparent 70%);
+  opacity: 0;
+  transition: opacity .5s ease;
+  pointer-events: none;
+}
+.pcard:hover::before { opacity: 1; }
+.pcard:has(.pcard-link:focus-visible) { outline: 2px solid var(--p-accent); outline-offset: 4px; }
+
+.pcard-body {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 28px 8px 28px 30px;
+}
+.pcard-id { display: flex; align-items: center; gap: 14px; margin-top: 16px; }
+.pcard-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  box-shadow: 0 10px 20px -12px rgba(15, 26, 36, 0.4), inset 0 0 0 1px rgba(15, 26, 36, 0.06);
+}
+.pcard-name { font-size: clamp(22px, 2vw, 28px); font-weight: 700; line-height: 1.25; letter-spacing: 0.01em; }
+.pcard-name--en { font-family: var(--font); font-size: clamp(20px, 1.7vw, 25px); font-weight: 600; letter-spacing: -0.02em; white-space: nowrap; }
+/* カード全体を押せるように、リンクの当たり判定をカードいっぱいに広げる */
+.pcard-link::after { content: ""; position: absolute; inset: 0; z-index: 5; }
+.pcard-cat {
+  margin-top: 2px;
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--ink-3);
+}
+.pcard-catch { margin-top: 14px; font-size: clamp(17px, 1.45vw, 20px); font-weight: 700; line-height: 1.55; color: var(--p-accent); }
+.pcard-desc { margin-top: 8px; font-size: 13px; line-height: 1.85; color: var(--ink-2); }
+.pcard-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 16px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.pcard-more i {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+  font-style: normal;
+  transition: transform .5s var(--ease), background-color .3s ease;
+}
+.pcard:hover .pcard-more i { transform: translateX(4px); background: var(--p-accent); }
+.pcard:hover .ppanel-status::before { width: 44px; }
+
+/* 画面イメージ：カーソルと逆に少し動き（奥行き）、下はカードの縁で切る */
+.pcard-visual { position: relative; z-index: 2; }
+.pv-stage {
+  position: absolute;
+  inset: 0;
+  transform: translate(calc(var(--px, 0) * -10px), calc(var(--py, 0) * -8px));
+  transition: transform .6s var(--ease);
+}
+.pv-stage > * {
+  position: absolute;
+  transition: transform .8s var(--ease), translate 1.1s cubic-bezier(.34, 1.4, .64, 1), opacity .6s ease;
+  transition-delay: 0s, calc(var(--d, 0ms) + 200ms + var(--i) * 120ms), calc(var(--d, 0ms) + 200ms + var(--i) * 120ms);
+}
+
+.pv-shot {
+  top: 34px;
+  width: 44%;
+  max-width: 156px;
+  aspect-ratio: 720 / 1557;
+  object-fit: cover;
+  border-radius: 18px;
+  box-shadow: 0 28px 48px -26px rgba(43, 33, 24, 0.55), 0 0 0 1px rgba(43, 33, 24, 0.06);
+}
+.pv-shot--c { z-index: 3; left: 30%; }
+.pv-shot--l { z-index: 1; left: 4%; top: 62px; transform: rotate(-9deg) scale(0.9); }
+.pv-shot--r { z-index: 2; left: 56%; top: 62px; transform: rotate(9deg) scale(0.9); }
+.pcard:hover .pv-shot--c { transform: translateY(-10px); }
+.pcard:hover .pv-shot--l { transform: translate(-10px, -4px) rotate(-13deg) scale(0.9); }
+.pcard:hover .pv-shot--r { transform: translate(10px, -4px) rotate(13deg) scale(0.9); }
+
+.pv-phone {
+  width: 50%;
+  max-width: 172px;
+  padding: 5px;
+  border-radius: 30px;
+  background: var(--ink);
+  box-shadow: 0 36px 60px -32px rgba(15, 26, 36, 0.6), inset 0 0 0 1.5px rgba(255, 255, 255, 0.08);
+}
+.pv-phone img { display: block; width: 100%; border-radius: 25px; }
+/* 端末の枠ごと描かれた画像（Another Contact）は、枠を足さずに影だけ付ける */
+.pv-phone--framed { padding: 0; border-radius: 0; background: none; box-shadow: none; filter: drop-shadow(0 26px 30px rgba(36, 34, 44, 0.32)); }
+.pv-phone--back { z-index: 1; left: 6%; top: 70px; transform: rotate(-8deg) scale(0.9); }
+.pv-phone--front { z-index: 2; left: 40%; top: 34px; transform: rotate(4deg); }
+.pcard:hover .pv-phone--back { transform: translate(-8px, -6px) rotate(-11deg) scale(0.9); }
+.pcard:hover .pv-phone--front { transform: translateY(-12px) rotate(2deg); }
+
+/* ジブンゴ：メモ → 英語（英語は1文字ずつ打たれる） */
+.pv-mascot {
+  left: 50%;
+  bottom: -6%;
+  width: 84%;
+  max-width: 260px;
+  transform: translateX(-50%);
+  filter: drop-shadow(0 20px 28px rgba(15, 26, 36, 0.18));
+}
+.pcard:hover .pv-mascot { transform: translateX(-50%) translateY(-8px) rotate(-2deg); }
+.pv-bubble {
+  z-index: 3;
+  padding: 9px 14px;
+  border-radius: 16px;
+  background: var(--paper);
+  box-shadow: 0 14px 28px -14px rgba(15, 26, 36, 0.35);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+.pv-bubble small {
+  display: block;
+  font-family: var(--font);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.pv-bubble--ja { top: 30px; left: 0; border-bottom-left-radius: 4px; }
+.pv-bubble--en {
+  top: 92px;
+  right: 18px;
+  min-width: 10.5em;
+  border-bottom-right-radius: 4px;
+  background: var(--p-accent);
+  color: #fff;
+  font-family: var(--font);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.pv-bubble--en small { color: rgba(255, 255, 255, 0.72); }
+.pv-bubble--en.is-typing span::after {
+  content: "";
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 2px;
+  vertical-align: -2px;
+  background: currentColor;
+  animation: blink 1s steps(1) infinite;
+}
+
+/* 出てくるとき：カードがせり上がり、画面イメージが下からばねのように出る */
+.js .pcard:not(.is-shown) { opacity: 0; translate: 0 40px; }
+.js .pcard:not(.is-shown) .pv-stage > * { opacity: 0; translate: 0 90px; }
 
 /* ジブンゴ：キャラクターと吹き出し（メモ → 英語） */
 .mascot {
@@ -929,14 +1104,6 @@ h1, h2, h3, p, dl, dd { margin: 0; }
   .phrases { grid-template-columns: 1fr; }
 }
 
-.ppanel-info {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-.ppanel-top { display: flex; align-items: center; gap: 12px; margin-bottom: 32px; }
 /* 配信状況：バッジにせず、罫線＋文字の見出しラベルとして置く（まもなくリリースは点線） */
 .ppanel-status {
   display: inline-flex;
@@ -957,92 +1124,9 @@ h1, h2, h3, p, dl, dd { margin: 0; }
 .ppanel-status--soon::before {
   background: repeating-linear-gradient(to right, currentColor 0 4px, transparent 4px 7px);
 }
-.ppanel:hover .ppanel-status::before { width: 44px; }
-
-.ppanel-id { display: flex; align-items: center; gap: 18px; }
-.ppanel-icon {
-  width: 72px;
-  height: 72px;
-  border-radius: 18px;
-  box-shadow: 0 12px 24px -12px rgba(15, 26, 36, 0.35), inset 0 0 0 1px rgba(15, 26, 36, 0.06);
-}
-.ppanel-name {
-  font-size: clamp(30px, 3.4vw, 44px);
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: 0.01em;
-}
-.ppanel-cat {
-  margin-top: 4px;
-  font-family: var(--font);
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  color: var(--ink-3);
-}
-.ppanel-catch {
-  margin-top: 32px;
-  font-size: clamp(20px, 2vw, 26px);
-  font-weight: 700;
-  line-height: 1.5;
-  color: var(--p-accent);
-}
-.ppanel-desc {
-  margin-top: 12px;
-  max-width: 30em;
-  font-size: 15px;
-  line-height: 1.9;
-  color: var(--ink-2);
-}
-.ppanel-features {
-  margin-top: 24px;
-  display: grid;
-  gap: 8px;
-  width: 100%;
-  max-width: 30em;
-}
-.ppanel-features li {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 12px 16px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.6);
-  border: 1px solid rgba(15, 26, 36, 0.05);
-  font-size: 14px;
-  font-weight: 500;
-}
-.ppanel-features li::before {
-  content: "";
-  flex: none;
-  width: 6px;
-  height: 11px;
-  margin: 0 3px 4px 5px;
-  border: solid var(--p-accent);
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
-}
-.ppanel-actions { margin-top: 32px; display: flex; align-items: center; flex-wrap: wrap; gap: 16px; }
-.btn--ink { background: var(--ink); color: #fff; }
-.btn--ink:hover { background: color-mix(in srgb, var(--ink) 85%, #fff); }
 .ppanel-store { display: block; transition: opacity .25s ease; }
 .ppanel-store:hover { opacity: 0.75; }
 .ppanel-store img { height: 48px; width: auto; }
-
-.ppanel-visual {
-  position: relative;
-  z-index: 1;
-  align-self: stretch;
-  min-height: 520px;
-}
-.ppanel-visual::before {
-  content: "";
-  position: absolute;
-  inset: 8% 4%;
-  border-radius: 50%;
-  background: radial-gradient(closest-side, var(--p-soft), transparent);
-}
-
 /* いこっか。：ストア画像を扇状に */
 .fan {
   position: absolute;
@@ -1059,10 +1143,6 @@ h1, h2, h3, p, dl, dd { margin: 0; }
 .fan--c { z-index: 3; transform: translate(-50%, -50%); }
 .fan--l { z-index: 1; transform: translate(-112%, -46%) rotate(-8deg) scale(0.9); }
 .fan--r { z-index: 2; transform: translate(12%, -46%) rotate(8deg) scale(0.9); }
-.ppanel:hover .fan--c { transform: translate(-50%, -53%); }
-.ppanel:hover .fan--l { transform: translate(-122%, -47%) rotate(-11deg) scale(0.9); }
-.ppanel:hover .fan--r { transform: translate(22%, -47%) rotate(11deg) scale(0.9); }
-
 /* ポイッシュ：iPhone フレーム2台 */
 .device {
   position: absolute;
@@ -1079,30 +1159,6 @@ h1, h2, h3, p, dl, dd { margin: 0; }
 .device img { width: 100%; border-radius: 33px; }
 .device--back { z-index: 1; transform: translate(-96%, -46%) rotate(-7deg) scale(0.88); }
 .device--front { z-index: 2; transform: translate(-26%, -50%) rotate(3deg); }
-.ppanel:hover .device--back { transform: translate(-106%, -47%) rotate(-9deg) scale(0.88); }
-.ppanel:hover .device--front { transform: translate(-24%, -53%) rotate(2deg); }
-
-/* デスクトップ：スクロールで次のパネルが前のパネルに重なる */
-@media (min-width: 961px) {
-  .ppanel { position: sticky; top: calc(var(--header-h) + 24px); }
-  .ppanel:nth-child(n + 2) { box-shadow: 0 -32px 64px -40px rgba(15, 26, 36, 0.35); }
-  .ppanel:nth-child(2) { top: calc(var(--header-h) + 40px); }
-  .ppanel:nth-child(3) { top: calc(var(--header-h) + 56px); }
-  @supports (animation-timeline: view()) {
-    .pstack { timeline-scope: --pp2, --pp3; }
-    .ppanel:nth-child(2) { view-timeline-name: --pp2; }
-    .ppanel:nth-child(3) { view-timeline-name: --pp3; }
-    .ppanel:nth-child(1),
-    .ppanel:nth-child(2) {
-      animation: ppanel-recede linear both;
-      animation-range: entry 0% entry 100%;
-    }
-    .ppanel:nth-child(1) { animation-timeline: --pp2; }
-    .ppanel:nth-child(2) { animation-timeline: --pp3; }
-  }
-}
-@keyframes ppanel-recede { to { transform: scale(0.95); filter: brightness(0.96); } }
-
 /* Coming soon */
 .psoon {
   margin-top: 24px;
@@ -1137,64 +1193,50 @@ h1, h2, h3, p, dl, dd { margin: 0; }
 @keyframes blink { 50% { opacity: 0; } }
 .psoon-label { font-family: var(--font); font-size: 15px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink-2); }
 
-/* タブレット・スマホ：画面イメージは上部で端末が覗く形にトリミング */
-@media (max-width: 960px) {
-  .ppanel {
-    grid-template-columns: 1fr;
-    gap: 24px;
-    min-height: 0;
-    padding: 24px;
-    border-radius: 24px;
-  }
-  .ppanel-visual {
-    order: -1;
-    height: 240px;
-    min-height: 0;
-    margin: -24px -24px 0;
-    overflow: hidden;
-  }
-  .ppanel-info { position: static; }
-  .ppanel-top {
-    position: absolute;
-    top: 16px;
-    left: 16px;
-    z-index: 4;
-    margin: 0;
-    gap: 8px;
-  }
 
+/* タブレット：1列にして横長のまま */
+@media (max-width: 1099px) {
+  .pgrid { grid-template-columns: 1fr; }
+  .pcard { min-height: 320px; grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr); }
+}
+/* スマホ：画面イメージを上に置いて覗かせる */
+@media (max-width: 640px) {
+  .pgrid { gap: 16px; }
+  .pcard { grid-template-columns: 1fr; min-height: 0; border-radius: 24px; }
+  .pcard-visual { order: -1; height: 190px; overflow: hidden; }
+  .pcard-body { padding: 18px 24px 22px; }
+  .pcard-desc { display: none; }
+  .pcard-id { margin-top: 16px; }
+  .pcard-icon { width: 52px; height: 52px; border-radius: 13px; }
+  .pcard-catch { margin-top: 14px; font-size: 18px; }
+  .pv-shot { width: 32%; }
+  .pv-shot--c { left: 34%; }
+  .pv-shot--l { left: 10%; }
+  .pv-shot--r { left: 58%; }
+  .pv-phone { width: 38%; }
+  .pv-phone--back { left: 16%; }
+  .pv-phone--front { left: 46%; }
+  .pv-mascot { width: 54%; bottom: auto; top: 26px; }
+  .pv-bubble--ja { top: 46px; left: 16px; }
+  .pv-bubble--en { top: 110px; right: 16px; }
+}
+
+/* 紹介ページ（いこっか。・ポイッシュ）：画面イメージは上部で端末が覗く形にトリミング */
+@media (max-width: 960px) {
   .fan { top: 64px; width: 34%; border-radius: 14px; }
-  .fan--c,
-  .ppanel:hover .fan--c { transform: translate(-50%, 0); }
-  .fan--l,
-  .ppanel:hover .fan--l { transform: translate(-110%, 22px) rotate(-8deg) scale(0.9); }
-  .fan--r,
-  .ppanel:hover .fan--r { transform: translate(10%, 22px) rotate(8deg) scale(0.9); }
+  .fan--c { transform: translate(-50%, 0); }
+  .fan--l { transform: translate(-110%, 22px) rotate(-8deg) scale(0.9); }
+  .fan--r { transform: translate(10%, 22px) rotate(8deg) scale(0.9); }
 
   .device { top: 64px; width: 36%; border-radius: 28px; padding: 5px; }
   .device img { border-radius: 23px; }
-  .device--back,
-  .ppanel:hover .device--back { transform: translate(-94%, 24px) rotate(-7deg) scale(0.88); }
-  .device--front,
-  .ppanel:hover .device--front { transform: translate(-28%, 0) rotate(3deg); }
-
-  .ppanel-icon { width: 60px; height: 60px; border-radius: 15px; }
-  .ppanel-catch { margin-top: 20px; }
+  .device--back { transform: translate(-94%, 24px) rotate(-7deg) scale(0.88); }
+  .device--front { transform: translate(-28%, 0) rotate(3deg); }
 }
-/* スマホ：説明文と機能リストを省いて高さを抑える */
 @media (max-width: 560px) {
   .psoon { grid-template-columns: 1fr; gap: 12px; }
   .psoon-card { padding: 18px 20px; }
   .psoon-code { display: none; }
-  .ppanel-desc,
-  .ppanel-features { display: none; }
-  .ppanel-id { gap: 14px; }
-  .ppanel-icon { width: 52px; height: 52px; border-radius: 13px; }
-  .ppanel-name { font-size: 26px; }
-  .ppanel-catch { margin-top: 14px; font-size: 18px; }
-  .ppanel-actions { margin-top: 20px; flex-wrap: nowrap; gap: 12px; }
-  .ppanel-actions .btn { flex: 1; justify-content: center; height: 44px; }
-  .ppanel-store img { height: 44px; }
 }
 
 /* =========================================================
