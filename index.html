@@ -50,9 +50,9 @@
       </a>
       <nav class="gh-nav" id="gh-nav" aria-label="メイン">
         <a href="about/">About</a>
-        <a href="#products">Products</a>
-        <a href="#development">Development</a>
-        <a href="#news">News</a>
+        <a href="products/">Products</a>
+        <a href="development/">Development</a>
+        <a href="news.html">News</a>
         <a href="recruit/">Recruit</a>
         <a href="contact/" class="gh-nav-cta-sp">Contact</a>
       </nav>
@@ -70,10 +70,10 @@
       <div class="hero-grid-bg" aria-hidden="true"></div>
       <div class="wrap hero-inner">
         <div class="hero-copy">
-          <p class="hero-label"><span class="dot"></span>Product Development Studio</p>
-          <h1 class="hero-title" id="hero-title" data-split>
-            <span class="hero-line">ひと息を、</span>
-            <span class="hero-line">実装する。</span>
+          <p class="hero-label"><span>Product Development Studio</span></p>
+          <h1 class="hero-title" id="hero-title" aria-label="あったらいいなを開発する" data-split>
+            <span class="hero-line">あったらいいな</span>
+            <span class="hero-line hero-line--sm">を開発する</span>
           </h1>
           <p class="hero-en">Engineering the 3 o'clock moments of everyday life.</p>
           <p class="hero-lead">
@@ -131,13 +131,12 @@
 
         <div class="about-body">
           <p class="about-statement" data-reveal>
-            毎日に、<br />
-            ちょうどいい余白をつくる<br />
-            ソフトウェアを。
+            なくても困らない。<br />
+            でも、あったら一日が<br />
+            すこし嬉しくなる。
           </p>
           <div class="about-text" data-reveal>
             <p>
-              なくても困らない。でも、あったら一日がすこし楽になる。
               私たちは、そんな「3時のおやつ」のような存在のプロダクトを、自社で企画し、開発し、届けています。
             </p>
             <p>
@@ -159,36 +158,60 @@
             <h2 class="sec-title" id="products-title">Products</h2>
             <p class="sec-ja">自社プロダクト</p>
           </div>
-          <p class="sec-desc">
-            暮らしの「ちょっと面倒」を、ひとつずつソフトウェアで解いていく。<br class="br-pc" />企画からデザイン、開発、運用まで、すべて自社で手がけています。
-          </p>
+          <div class="sec-head-side">
+            <p class="sec-desc">
+              暮らしの「ちょっと面倒」を、ひとつずつソフトウェアで解いていく。<br class="br-pc" />企画からデザイン、開発、運用まで、すべて自社で手がけています。
+            </p>
+            <a href="products/" class="link-arrow">View all<span aria-hidden="true">→</span></a>
+          </div>
         </header>
 
         <div class="pgrid">
-          <article class="pcard pcard--ikocca" data-pcard>
+          <article class="pcard pcard--another" data-pcard>
             <div class="pcard-body">
-              <span class="ppanel-status ppanel-status--live">App Store で配信中</span>
+              <span class="ppanel-status ppanel-status--soon">まもなくリリース</span>
               <div class="pcard-id">
-                <img class="pcard-icon" src="logos/ikocca-logo.png" alt="" />
+                <img class="pcard-icon" src="logos/another-contact-logo.png" alt="" />
                 <div>
-                  <h3 class="pcard-name"><a class="pcard-link" href="ikocca/">いこっか。</a></h3>
-                  <p class="pcard-cat">Travel · iOS</p>
+                  <h3 class="pcard-name pcard-name--en"><a class="pcard-link" href="https://anothercontact.com/" target="_blank" rel="noopener">Another Contact</a></h3>
+                  <p class="pcard-cat">Privacy · iOS</p>
                 </div>
               </div>
-              <p class="pcard-catch">集めて、まとめて、でかける。</p>
-              <p class="pcard-desc">SNSで見つけた「ここ行きたい」を、ふたりやグループで溜めて、次のおでかけを決めるアプリ。</p>
-              <span class="pcard-more" aria-hidden="true">詳しく見る<i>→</i></span>
+              <p class="pcard-catch">気軽に使える、<br />もうひとつの連絡先。</p>
+              <p class="pcard-desc">登録も、予約も、初対面も。本当の連絡先を渡さずに、受け取って、返して、止められるアプリ。</p>
+              <span class="pcard-more" aria-hidden="true">サイトを見る<i>↗</i></span>
             </div>
             <div class="pcard-visual" aria-hidden="true">
               <div class="pv-stage">
-                <img class="pv-shot pv-shot--l" src="ikocca/shots/02.jpg" alt="" loading="lazy" style="--i: 1" />
-                <img class="pv-shot pv-shot--r" src="ikocca/shots/05.jpg" alt="" loading="lazy" style="--i: 2" />
-                <img class="pv-shot pv-shot--c" src="ikocca/shots/04.jpg" alt="" loading="lazy" style="--i: 0" />
+                <img class="pv-phone pv-phone--framed pv-phone--back" src="another-contact/shots/thread.png" alt="" loading="lazy" style="--i: 1" />
+                <img class="pv-phone pv-phone--framed pv-phone--front" src="another-contact/shots/home.png" alt="" loading="lazy" style="--i: 0" />
               </div>
             </div>
           </article>
 
-          <article class="pcard pcard--poissh" data-pcard style="--d: 80ms">
+          <article class="pcard pcard--jibungo" data-pcard style="--d: 80ms">
+            <div class="pcard-body">
+              <span class="ppanel-status ppanel-status--soon">まもなくリリース</span>
+              <div class="pcard-id">
+                <img class="pcard-icon" src="logos/jibungo-logo.png" alt="" />
+                <div>
+                  <h3 class="pcard-name"><a class="pcard-link" href="jibungo/">ジブンゴ</a></h3>
+                  <p class="pcard-cat">Education · iOS</p>
+                </div>
+              </div>
+              <p class="pcard-catch">今日言いたかったこと、<br />英語で言えますか？</p>
+              <p class="pcard-desc">思いついた一言をメモすると、ネイティブが使う英語に。言えるようになるまで練習できるアプリ。</p>
+              <span class="pcard-more" aria-hidden="true">詳しく見る<i>→</i></span>
+            </div>
+            <div class="pcard-visual" aria-hidden="true">
+              <div class="pv-stage">
+                <img class="pv-phone pv-phone--framed pv-phone--back" src="jibungo/shots/phone-usage.png" alt="" loading="lazy" style="--i: 1" />
+                <img class="pv-phone pv-phone--framed pv-phone--front" src="jibungo/shots/phone-memo.png" alt="" loading="lazy" style="--i: 0" />
+              </div>
+            </div>
+          </article>
+
+          <article class="pcard pcard--poissh" data-pcard>
             <div class="pcard-body">
               <span class="ppanel-status ppanel-status--live">App Store で配信中</span>
               <div class="pcard-id">
@@ -210,47 +233,24 @@
             </div>
           </article>
 
-          <article class="pcard pcard--jibungo" data-pcard>
+          <article class="pcard pcard--ikocca" data-pcard style="--d: 80ms">
             <div class="pcard-body">
-              <span class="ppanel-status ppanel-status--soon">まもなくリリース</span>
+              <span class="ppanel-status ppanel-status--live">App Store で配信中</span>
               <div class="pcard-id">
-                <img class="pcard-icon" src="logos/jibungo-logo.png" alt="" />
+                <img class="pcard-icon" src="logos/ikocca-logo.png" alt="" />
                 <div>
-                  <h3 class="pcard-name"><a class="pcard-link" href="jibungo/">ジブンゴ</a></h3>
-                  <p class="pcard-cat">Education · iOS</p>
+                  <h3 class="pcard-name"><a class="pcard-link" href="ikocca/">いこっか。</a></h3>
+                  <p class="pcard-cat">Travel · iOS</p>
                 </div>
               </div>
-              <p class="pcard-catch">今日言いたかったこと、<br />英語で言えますか？</p>
-              <p class="pcard-desc">思いついた一言をメモすると、ネイティブが使う英語に。言えるようになるまで練習できるアプリ。</p>
+              <p class="pcard-catch">集めて、まとめて、でかける。</p>
+              <p class="pcard-desc">SNSで見つけた「ここ行きたい」を、ふたりやグループで溜めて、次のおでかけを決めるアプリ。</p>
               <span class="pcard-more" aria-hidden="true">詳しく見る<i>→</i></span>
             </div>
             <div class="pcard-visual" aria-hidden="true">
               <div class="pv-stage">
-                <img class="pv-mascot" src="jibungo/gorilla_listen.png" alt="" loading="lazy" style="--i: 0" />
-                <p class="pv-bubble pv-bubble--ja" style="--i: 1"><small>メモ</small>今日めっちゃ疲れた</p>
-                <p class="pv-bubble pv-bubble--en" style="--i: 2"><small>English</small><span data-type="I&#39;m totally wiped out.">I&#39;m totally wiped out.</span></p>
-              </div>
-            </div>
-          </article>
-
-          <article class="pcard pcard--another" data-pcard style="--d: 80ms">
-            <div class="pcard-body">
-              <span class="ppanel-status ppanel-status--soon">まもなくリリース</span>
-              <div class="pcard-id">
-                <img class="pcard-icon" src="logos/another-contact-logo.png" alt="" />
-                <div>
-                  <h3 class="pcard-name pcard-name--en"><a class="pcard-link" href="https://anothercontact.com/" target="_blank" rel="noopener">Another Contact</a></h3>
-                  <p class="pcard-cat">Privacy · iOS</p>
-                </div>
-              </div>
-              <p class="pcard-catch">気軽に使える、<br />もうひとつの連絡先。</p>
-              <p class="pcard-desc">登録も、予約も、初対面も。本当の連絡先を渡さずに、受け取って、返して、止められるアプリ。</p>
-              <span class="pcard-more" aria-hidden="true">サイトを見る<i>↗</i></span>
-            </div>
-            <div class="pcard-visual" aria-hidden="true">
-              <div class="pv-stage">
-                <img class="pv-phone pv-phone--framed pv-phone--back" src="another-contact/shots/thread.png" alt="" loading="lazy" style="--i: 1" />
-                <img class="pv-phone pv-phone--framed pv-phone--front" src="another-contact/shots/home.png" alt="" loading="lazy" style="--i: 0" />
+                <img class="pv-phone pv-phone--framed pv-phone--back" src="ikocca/shots/phone-map.png" alt="" loading="lazy" style="--i: 1" />
+                <img class="pv-phone pv-phone--framed pv-phone--front" src="ikocca/shots/phone-home.png" alt="" loading="lazy" style="--i: 0" />
               </div>
             </div>
           </article>
@@ -274,9 +274,12 @@
             <h2 class="sec-title" id="dev-title">Development</h2>
             <p class="sec-ja">受託開発</p>
           </div>
-          <p class="sec-desc">
-            自社プロダクトで培った設計と実装の知見を、あなたの事業に。<br class="br-pc" />企画の整理から、リリース後の改善まで伴走します。
-          </p>
+          <div class="sec-head-side">
+            <p class="sec-desc">
+              自社プロダクトで培った設計と実装の知見を、あなたの事業に。<br class="br-pc" />企画の整理から、リリース後の改善まで伴走します。
+            </p>
+            <a href="development/" class="link-arrow">View all<span aria-hidden="true">→</span></a>
+          </div>
         </header>
 
         <div class="caps">
@@ -300,42 +303,16 @@
           </article>
         </div>
 
-        <div class="principles" data-reveal>
-          <div class="principles-head">
-            <h3 class="sub-title">How we work<span>大切にしている3つのこと</span></h3>
-            <p class="principles-lead">良いプロダクトは、この3つの積み重ねから生まれると考えています。</p>
-          </div>
-          <ol class="principle-list">
-            <li>
-              <span class="pl-no">01</span>
-              <div class="pl-head"><strong>目的の共有</strong><em>Align on why</em></div>
-              <p>何をつくるかの前に、なぜつくるかを揃える。事業のゴールと優先順位を言葉にしてから、手を動かします。</p>
-            </li>
-            <li>
-              <span class="pl-no">02</span>
-              <div class="pl-head"><strong>ちいさな試行</strong><em>Ship small, learn fast</em></div>
-              <p>動くものを早く触って、早く直す。大きな仕様書よりも、触れるプロトタイプで判断します。</p>
-            </li>
-            <li>
-              <span class="pl-no">03</span>
-              <div class="pl-head"><strong>気持ちの設計</strong><em>Design the feeling</em></div>
-              <p>使っていて気持ちいいか、まで設計する。操作の手触りや言葉づかいの細部まで詰めます。</p>
-            </li>
-          </ol>
+        <div class="dev-offer" data-reveal>
+          <p class="dev-offer-msg">どんな規模の事業でも、<br />始めやすく。</p>
+          <dl class="dev-offer-price">
+            <div><dt>初期費用</dt><dd>無料</dd></div>
+            <div><dt>月額</dt><dd>2,980<small>円〜</small></dd></div>
+          </dl>
         </div>
-
-        <div class="flow" data-reveal>
-          <h3 class="sub-title">Process<span>開発の流れ</span></h3>
-          <ol class="flow-list">
-            <li><span>01</span>ヒアリング<small>課題と目的の整理</small></li>
-            <li><span>02</span>設計・プロトタイプ<small>触れる形で合意する</small></li>
-            <li><span>03</span>開発<small>短いサイクルで実装</small></li>
-            <li><span>04</span>リリース・運用<small>数字を見ながら改善</small></li>
-          </ol>
-        </div>
-
         <div class="dev-cta" data-reveal>
           <a href="contact/?type=development" class="btn btn--light">開発のご相談<span class="btn-arrow" aria-hidden="true">→</span></a>
+          <a href="development/#cases" class="link-arrow">制作例と費用の目安<span aria-hidden="true">→</span></a>
         </div>
       </div>
     </section>
@@ -356,7 +333,7 @@
           <li>
             <a href="news.html">
               <time datetime="2026-06-26">2026.06.26</time>
-              <span class="chip">Product</span>
+              <span class="chip chip--product">Product</span>
               <span class="news-rows-title">「いこっか。」アプリをリリースしました</span>
               <span class="news-rows-arrow" aria-hidden="true">→</span>
             </a>
@@ -364,7 +341,7 @@
           <li>
             <a href="news.html">
               <time datetime="2026-05-20">2026.05.20</time>
-              <span class="chip">Notice</span>
+              <span class="chip chip--notice">Notice</span>
               <span class="news-rows-title">ゴールデンウィーク期間のお問い合わせ対応について</span>
               <span class="news-rows-arrow" aria-hidden="true">→</span>
             </a>
@@ -372,7 +349,7 @@
           <li>
             <a href="news.html">
               <time datetime="2026-05-10">2026.05.10</time>
-              <span class="chip">Journal</span>
+              <span class="chip chip--journal">Journal</span>
               <span class="news-rows-title">受託開発で大切にしている3つのこと</span>
               <span class="news-rows-arrow" aria-hidden="true">→</span>
             </a>
@@ -433,18 +410,19 @@
         </div>
         <div class="gf-cols">
           <nav aria-label="フッター：会社">
-            <p class="gf-head">Studio</p>
+            <p class="gf-head">Company</p>
             <a href="about/">About</a>
-            <a href="#development">Development</a>
-            <a href="#news">News</a>
+            <a href="development/">Development</a>
+            <a href="news.html">News</a>
             <a href="recruit/">Recruit</a>
           </nav>
           <nav aria-label="フッター：プロダクト">
             <p class="gf-head">Products</p>
-            <a href="ikocca/">いこっか。</a>
-            <a href="poissh/">ポイッシュ</a>
-            <a href="jibungo/">ジブンゴ</a>
+            <a href="products/">すべてのプロダクト</a>
             <a href="https://anothercontact.com/" target="_blank" rel="noopener">Another Contact</a>
+            <a href="jibungo/">ジブンゴ</a>
+            <a href="poissh/">ポイッシュ</a>
+            <a href="ikocca/">いこっか。</a>
           </nav>
           <nav aria-label="フッター：その他">
             <p class="gf-head">Support</p>

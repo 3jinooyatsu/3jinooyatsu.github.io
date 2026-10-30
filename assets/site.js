@@ -184,48 +184,76 @@
     dialObserver.observe(animDial);
   }
 
-  // ---------- お問い合わせフォーム：メールアプリで送信 ----------
-  const contactForm = document.querySelector("[data-contact-form]");
-  if (contactForm) {
-    const status = contactForm.querySelector("[data-form-status]");
-    const params = new URLSearchParams(location.search);
+  // ---------- お問い合わせ：「開発相談・見積もり」と「その他」をタブで切り替え ----------
+  const contactTabs = document.querySelector("[data-contact-tabs]");
+  if (contactTabs) {
+    const tabs = [...contactTabs.querySelectorAll('[role="tab"]')];
+    const panels = tabs.map((tab) => document.getElementById(tab.getAttribute("aria-controls")));
+    const showTab = (index, focus) => {
+      tabs.forEach((tab, n) => {
+        const on = n === index;
+        tab.setAttribute("aria-selected", String(on));
+        tab.tabIndex = on ? 0 : -1;
+        panels[n].hidden = !on;
+      });
+      if (focus) tabs[index].focus();
+    };
+    tabs.forEach((tab, n) => {
+      tab.addEventListener("click", () => showTab(n));
+      tab.addEventListener("keydown", (e) => {
+        const step = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+        if (!step) return;
+        e.preventDefault();
+        showTab((n + step + tabs.length) % tabs.length, true);
+      });
+    });
 
-    const presetType = contactForm.querySelector(`input[name="type"][value="${CSS.escape(params.get("type") || "")}"]`);
-    if (presetType) presetType.checked = true;
+    // ?type=development は見積もり、それ以外の種別は「その他」を開いて、その種別を選ぶ
+    const params = new URLSearchParams(location.search);
+    const type = params.get("type");
+    const general = document.getElementById("panel-general");
+    const presetType = type && general.querySelector(`input[name="type"][value="${CSS.escape(type)}"]`);
+    if (presetType) {
+      presetType.checked = true;
+      showTab(tabs.findIndex((tab) => tab.getAttribute("aria-controls") === "panel-general"));
+    }
+    const activeForm = panels.find((panel) => !panel.hidden).querySelector("form");
     const role = params.get("role");
     const topic = params.get("topic");
-    if (role) contactForm.elements.message.value = `【応募職種】${role}\n\n`;
-    else if (topic) contactForm.elements.message.value = `【ご希望】${topic}\n\n`;
+    if (role) activeForm.elements.message.value = `【応募職種】${role}\n\n`;
+    else if (topic) activeForm.elements.message.value = `【ご希望】${topic}\n\n`;
+  }
 
-    contactForm.addEventListener("submit", (e) => {
+  // ---------- お問い合わせフォーム：入力内容をメールアプリで開く ----------
+  document.querySelectorAll("[data-contact-form]").forEach((form) => {
+    const status = form.querySelector("[data-form-status]");
+    form.addEventListener("submit", (e) => {
       e.preventDefault();
-      if (!contactForm.checkValidity()) {
+      if (!form.checkValidity()) {
         status.dataset.state = "error";
         status.textContent = "未入力の必須項目があります。";
-        contactForm.reportValidity();
+        form.reportValidity();
         return;
       }
 
-      const data = new FormData(contactForm);
-      const typeLabel = contactForm.querySelector('input[name="type"]:checked').dataset.label;
-      const body = [
-        `お問い合わせ種別：${typeLabel}`,
-        `会社名・団体名：${data.get("company") || "-"}`,
-        `お名前：${data.get("name")}`,
-        `メールアドレス：${data.get("email")}`,
-        `電話番号：${data.get("phone") || "-"}`,
-        "",
-        "お問い合わせ内容：",
-        data.get("message"),
-      ].join("\n");
-      const subject = `【お問い合わせ】${typeLabel}｜${data.get("name")}様`;
-      const to = contactForm.dataset.to;
+      // data-mail-label の付いた項目を、上から順に本文へ
+      const lines = [];
+      form.querySelectorAll("[data-mail-label]").forEach((field) => {
+        const label = field.dataset.mailLabel;
+        const value = field.tagName === "FIELDSET" ? field.querySelector("input:checked")?.dataset.label : field.value.trim();
+        if (field.tagName === "TEXTAREA") lines.push("", `${label}：`, value || "-", "");
+        else lines.push(`${label}：${value || "-"}`);
+      });
+      const typeField = form.querySelector("[data-subject-type]");
+      const head = form.dataset.subject + (typeField ? typeField.querySelector("input:checked").dataset.label : "");
+      const subject = `${head}｜${form.elements.name.value}様`;
+      const to = form.dataset.to;
 
-      window.location.href = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join("\n"))}`;
       status.dataset.state = "info";
       status.textContent = `メールアプリが開きます。内容を確認して送信してください。開かない場合は ${to} まで直接ご連絡ください。`;
     });
-  }
+  });
 
   // ---------- 採用：メッセージの文字がスクロールに合わせて濃くなる ----------
   const fillTexts = [...document.querySelectorAll("[data-fill-text]")];
@@ -357,27 +385,8 @@
     });
   });
 
-  // ---------- Products：カードの出方・カーソルへの反応・カードごとの小さな動き ----------
+  // ---------- Products：カードの出方とカーソルへの反応 ----------
   const pcards = document.querySelectorAll("[data-pcard]");
-
-  // ジブンゴ：英語の吹き出しを1文字ずつ打つ
-  const typeText = (el) => {
-    const text = el.dataset.type;
-    const bubble = el.closest(".pv-bubble");
-    if (reduceMotion) return;
-    let n = 0;
-    el.textContent = "";
-    bubble.classList.add("is-typing");
-    setTimeout(function tick() {
-      el.textContent = text.slice(0, ++n);
-      if (n < text.length) setTimeout(tick, 55);
-      else setTimeout(() => bubble.classList.remove("is-typing"), 1200);
-    }, 900);
-  };
-
-  const playCard = (card) => {
-    card.querySelectorAll("[data-type]").forEach(typeText);
-  };
 
   if ("IntersectionObserver" in window && !reduceMotion) {
     const cardObserver = new IntersectionObserver(
@@ -385,7 +394,6 @@
         entries.forEach((e) => {
           if (!e.isIntersecting) return;
           e.target.classList.add("is-shown");
-          playCard(e.target);
           cardObserver.unobserve(e.target);
         });
       },
@@ -396,27 +404,19 @@
     pcards.forEach((card) => card.classList.add("is-shown"));
   }
 
-  // マウスのときだけ：カードがカーソルの方へ少し傾き、光が追いかけ、画面イメージが逆に動く
+  // マウスのときだけ：カーソルの位置にやわらかい光を当てる（カードや画像は動かさない）
   if (window.matchMedia("(hover: hover) and (pointer: fine)").matches && !reduceMotion) {
     pcards.forEach((card) => {
       let frame;
       card.addEventListener("pointermove", (e) => {
         const rect = card.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width;
-        const y = (e.clientY - rect.top) / rect.height;
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
         cancelAnimationFrame(frame);
         frame = requestAnimationFrame(() => {
-          card.style.setProperty("--mx", `${(x * 100).toFixed(1)}%`);
-          card.style.setProperty("--my", `${(y * 100).toFixed(1)}%`);
-          card.style.setProperty("--px", ((x - 0.5) * 2).toFixed(3));
-          card.style.setProperty("--py", ((y - 0.5) * 2).toFixed(3));
-          card.style.setProperty("--rx", `${((0.5 - y) * 4).toFixed(2)}deg`);
-          card.style.setProperty("--ry", `${((x - 0.5) * 5).toFixed(2)}deg`);
+          card.style.setProperty("--mx", `${x.toFixed(1)}%`);
+          card.style.setProperty("--my", `${y.toFixed(1)}%`);
         });
-      });
-      card.addEventListener("pointerleave", () => {
-        cancelAnimationFrame(frame);
-        ["--px", "--py", "--rx", "--ry"].forEach((name) => card.style.removeProperty(name));
       });
     });
   }

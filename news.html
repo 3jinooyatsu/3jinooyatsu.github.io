@@ -31,8 +31,8 @@
       </a>
       <nav class="gh-nav" id="gh-nav" aria-label="メイン">
         <a href="/about/">About</a>
-        <a href="/#products">Products</a>
-        <a href="/#development">Development</a>
+        <a href="/products/">Products</a>
+        <a href="/development/">Development</a>
         <a href="/news.html" aria-current="page">News</a>
         <a href="/recruit/">Recruit</a>
         <a href="/contact/" class="gh-nav-cta-sp">Contact</a>
@@ -45,7 +45,7 @@
   </header>
 
   <main>
-    <section class="page-head" aria-labelledby="page-title">
+    <section class="page-head page-head--news page-head--fade" aria-labelledby="page-title">
       <div class="hero-grid-bg" aria-hidden="true"></div>
       <div class="wrap">
         <p class="crumb"><a href="/">Home</a><span aria-hidden="true">/</span><span>News</span></p>
@@ -58,30 +58,61 @@
 
     <section class="sec" aria-label="お知らせ一覧">
       <div class="wrap">
-        <ul class="news-rows">
-          <li>
-            <a href="/ikocca/">
-              <time datetime="2026-06-26">2026.06.26</time>
-              <span class="chip">Product</span>
-              <span class="news-rows-body"><span class="news-rows-title">「いこっか。」アプリをリリースしました</span><span class="news-rows-excerpt">SNSで見つけた「ここ行ってみたい」を溜めて、次のおでかけを決められるiOSアプリ「いこっか。」を6月26日にリリースしました。App Storeにて配信中です。</span></span>
-              <span class="news-rows-arrow" aria-hidden="true">→</span>
-            </a>
-          </li>
-          <li>
-            <div class="news-row">
-              <time datetime="2026-05-20">2026.05.20</time>
-              <span class="chip">Notice</span>
-              <span class="news-rows-body"><span class="news-rows-title">ゴールデンウィーク期間のお問い合わせ対応について</span><span class="news-rows-excerpt">5月3日〜5月6日はお問い合わせへの返信を一時休止いたします。期間中のご連絡は、5月7日以降に順次ご対応いたします。</span></span>
+        <div class="news-cards">
+          <a href="/ikocca/" class="news-card" data-reveal>
+            <div class="news-card-visual news-card-visual--product" aria-hidden="true"><img src="/ikocca/shots/phone-home.png" alt="" loading="lazy" /></div>
+            <div class="news-card-body">
+              <p class="news-card-meta"><time datetime="2026-06-26">2026.06.26</time><span class="chip chip--product">Product</span></p>
+              <h2 class="news-card-title">「いこっか。」アプリをリリースしました</h2>
+              <p class="news-card-text">SNSで見つけた「ここ行ってみたい」を溜めて、次のおでかけを決められるiOSアプリ「いこっか。」を6月26日にリリースしました。App Storeにて配信中です。</p>
             </div>
-          </li>
-          <li>
-            <div class="news-row">
-              <time datetime="2026-05-10">2026.05.10</time>
-              <span class="chip">Journal</span>
-              <span class="news-rows-body"><span class="news-rows-title">受託開発で大切にしている3つのこと</span><span class="news-rows-excerpt">良いプロダクトは「目的の共有」「ちいさな試行」「気持ちの設計」から生まれる、と私たちは考えています。最近の現場で感じたことを綴りました。</span></span>
+          </a>
+          <article class="news-card" data-reveal style="--d: 80ms">
+            <div class="news-card-visual news-card-visual--notice" aria-hidden="true"><span class="news-card-word">Notice</span></div>
+            <div class="news-card-body">
+              <p class="news-card-meta"><time datetime="2026-05-20">2026.05.20</time><span class="chip chip--notice">Notice</span></p>
+              <h2 class="news-card-title">ゴールデンウィーク期間のお問い合わせ対応について</h2>
+              <p class="news-card-text">5月3日〜5月6日はお問い合わせへの返信を一時休止いたします。期間中のご連絡は、5月7日以降に順次ご対応いたします。</p>
             </div>
-          </li>
-        </ul>
+          </article>
+          <a href="/development/" class="news-card" data-reveal style="--d: 160ms">
+            <div class="news-card-visual news-card-visual--journal" aria-hidden="true"><span class="news-card-word">Journal</span></div>
+            <div class="news-card-body">
+              <p class="news-card-meta"><time datetime="2026-05-10">2026.05.10</time><span class="chip chip--journal">Journal</span></p>
+              <h2 class="news-card-title">受託開発で大切にしている3つのこと</h2>
+              <p class="news-card-text">良いプロダクトは「目的の共有」「ちいさな試行」「気持ちの設計」から生まれる、と私たちは考えています。最近の現場で感じたことを綴りました。</p>
+            </div>
+          </a>
+        </div>
+
+        <h2 class="sub-title news-all" data-reveal>All news<span>お知らせ一覧</span></h2>
+        <div class="news-archive">
+          <p class="news-year" data-reveal>2026</p>
+          <ul class="news-rows" data-reveal>
+            <li>
+              <a href="/ikocca/">
+                <time datetime="2026-06-26">2026.06.26</time>
+                <span class="chip chip--product">Product</span>
+                <span class="news-rows-body"><span class="news-rows-title">「いこっか。」アプリをリリースしました</span><span class="news-rows-excerpt">SNSで見つけた「ここ行ってみたい」を溜めて、次のおでかけを決められるiOSアプリ「いこっか。」を6月26日にリリースしました。App Storeにて配信中です。</span></span>
+                <span class="news-rows-arrow" aria-hidden="true">→</span>
+              </a>
+            </li>
+            <li>
+              <div class="news-row">
+                <time datetime="2026-05-20">2026.05.20</time>
+                <span class="chip chip--notice">Notice</span>
+                <span class="news-rows-body"><span class="news-rows-title">ゴールデンウィーク期間のお問い合わせ対応について</span><span class="news-rows-excerpt">5月3日〜5月6日はお問い合わせへの返信を一時休止いたします。期間中のご連絡は、5月7日以降に順次ご対応いたします。</span></span>
+              </div>
+            </li>
+            <li>
+              <div class="news-row">
+                <time datetime="2026-05-10">2026.05.10</time>
+                <span class="chip chip--journal">Journal</span>
+                <span class="news-rows-body"><span class="news-rows-title">受託開発で大切にしている3つのこと</span><span class="news-rows-excerpt">良いプロダクトは「目的の共有」「ちいさな試行」「気持ちの設計」から生まれる、と私たちは考えています。最近の現場で感じたことを綴りました。</span></span>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </section>
   </main>
@@ -95,19 +126,20 @@
           <p>Product Development Studio</p>
         </div>
         <div class="gf-cols">
-          <nav aria-label="フッター：スタジオ">
-            <p class="gf-head">Studio</p>
+          <nav aria-label="フッター：会社">
+            <p class="gf-head">Company</p>
             <a href="/about/">About</a>
-            <a href="/#development">Development</a>
+            <a href="/development/">Development</a>
             <a href="/news.html">News</a>
             <a href="/recruit/">Recruit</a>
           </nav>
           <nav aria-label="フッター：プロダクト">
             <p class="gf-head">Products</p>
-            <a href="/ikocca/">いこっか。</a>
-            <a href="/poissh/">ポイッシュ</a>
-            <a href="/jibungo/">ジブンゴ</a>
+            <a href="/products/">すべてのプロダクト</a>
             <a href="https://anothercontact.com/" target="_blank" rel="noopener">Another Contact</a>
+            <a href="/jibungo/">ジブンゴ</a>
+            <a href="/poissh/">ポイッシュ</a>
+            <a href="/ikocca/">いこっか。</a>
           </nav>
           <nav aria-label="フッター：その他">
             <p class="gf-head">Support</p>
