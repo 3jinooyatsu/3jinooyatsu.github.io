@@ -1601,6 +1601,7 @@ h1, h2, h3, p, dl, dd { margin: 0; }
 .facts dd { font-size: 15px; line-height: 1.9; }
 .facts a { border-bottom: 1px solid currentColor; transition: color .2s ease; }
 .facts a:hover { color: var(--signal); }
+.facts-map { display: inline-block; margin-top: 4px; font-size: 13px; color: var(--ink-2); }
 
 @media (max-width: 860px) {
   .name-body { grid-template-columns: 1fr; }
@@ -1652,6 +1653,8 @@ h1, h2, h3, p, dl, dd { margin: 0; }
   transition: color .2s ease;
 }
 .cp-mail a:hover { color: var(--signal); }
+.cp-mail + .cp-mail { margin-top: 28px; }
+.cp-address { margin-top: 6px; font-style: normal; font-size: 14px; line-height: 1.8; color: var(--ink-2); }
 
 .cform {
   display: flex;
