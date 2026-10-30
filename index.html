@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>3時のおやつ｜iOS・Web・LINEのプロダクト開発スタジオ</title>
-  <meta name="description" content="3時のおやつは、iOS・Webアプリ・LINEミニアプリを企画から開発・運用まで手がけるプロダクト開発スタジオです。" />
+  <title>3時のおやつ｜iOS・Android・Web・LINEのプロダクト開発スタジオ</title>
+  <meta name="description" content="3時のおやつは、iOS・Androidアプリ、Webアプリ、LINEミニアプリを企画から開発・運用まで手がけるプロダクト開発スタジオです。" />
   <link rel="canonical" href="https://3jino-oyatsu.com/" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="3時のおやつ" />
-  <meta property="og:title" content="3時のおやつ｜iOS・Web・LINEのプロダクト開発スタジオ" />
-  <meta property="og:description" content="3時のおやつは、iOS・Webアプリ・LINEミニアプリを企画から開発・運用まで手がけるプロダクト開発スタジオです。" />
+  <meta property="og:title" content="3時のおやつ｜iOS・Android・Web・LINEのプロダクト開発スタジオ" />
+  <meta property="og:description" content="3時のおやつは、iOS・Androidアプリ、Webアプリ、LINEミニアプリを企画から開発・運用まで手がけるプロダクト開発スタジオです。" />
   <meta property="og:url" content="https://3jino-oyatsu.com/" />
   <meta property="og:image" content="https://3jino-oyatsu.com/logos/3jinooyatsu_logo.png" />
   <meta name="twitter:card" content="summary" />
@@ -56,7 +56,7 @@
         <a href="recruit/">Recruit</a>
         <a href="contact/" class="gh-nav-cta-sp">Contact</a>
       </nav>
-      <a href="contact/" class="btn btn--primary gh-cta">お問い合わせ<span class="btn-arrow" aria-hidden="true">→</span></a>
+      <a href="contact/" class="btn btn--circle gh-cta">お問い合わせ<span class="btn-arrow btn-arrow--circle" aria-hidden="true"><svg viewBox="0 0 18 18"><path d="M3 9h12M10 4l5 5-5 5" /></svg></span></a>
       <button class="gh-toggle" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="gh-nav" data-gh-toggle>
         <span></span><span></span>
       </button>
@@ -70,61 +70,49 @@
       <div class="hero-grid-bg" aria-hidden="true"></div>
       <div class="wrap hero-inner">
         <div class="hero-copy">
-          <p class="hero-label"><span>Product Development Studio</span></p>
           <h1 class="hero-title" id="hero-title" aria-label="あったらいいなを開発する" data-split>
             <span class="hero-line">あったらいいな</span>
             <span class="hero-line hero-line--sm">を開発する</span>
           </h1>
-          <p class="hero-en">Engineering the 3 o'clock moments of everyday life.</p>
-          <p class="hero-lead">
-            3時のおやつは、iOS・Web・LINE のプロダクトを<br class="br-pc" />企画から開発・運用まで手がける開発スタジオです。
-          </p>
+          <p class="hero-lead" lang="en">Not essential. Just nice to have.</p>
           <div class="hero-actions">
-            <a href="#products" class="btn btn--primary">プロダクトを見る<span class="btn-arrow" aria-hidden="true">→</span></a>
-            <a href="#development" class="btn btn--ghost">開発のご相談<span class="btn-arrow" aria-hidden="true">→</span></a>
+            <a href="#products" class="btn btn--primary btn--circle">プロダクトを見る<span class="btn-arrow btn-arrow--circle" aria-hidden="true"><svg viewBox="0 0 18 18"><path d="M3 9h12M10 4l5 5-5 5" /></svg></span></a>
+            <a href="#development" class="btn btn--ghost btn--circle">開発のご相談<span class="btn-arrow btn-arrow--circle" aria-hidden="true"><svg viewBox="0 0 18 18"><path d="M3 9h12M10 4l5 5-5 5" /></svg></span></a>
           </div>
         </div>
 
-        <div class="hero-dial" aria-hidden="true">
-          <svg class="dial" viewBox="-320 -320 640 640" data-dial>
-            <circle class="dial-ring" r="300" />
-            <circle class="dial-ring dial-ring--inner" r="236" />
-            <g class="dial-ticks" data-dial-ticks></g>
-            <g class="dial-nums" data-dial-nums></g>
-            <path class="dial-arc" data-dial-arc />
-            <g class="dial-marker" transform="rotate(90)">
-              <circle cx="0" cy="-268" r="6" />
-            </g>
-            <text class="dial-marker-label" x="244" y="0">15:00</text>
-            <line class="dial-hand dial-hand--h" y1="18" y2="-150" data-hand="h" />
-            <line class="dial-hand dial-hand--m" y1="22" y2="-218" data-hand="m" />
-            <g data-hand="s">
-              <line class="dial-hand dial-hand--s" y1="40" y2="-262" />
-            </g>
-            <circle class="dial-pin" r="5" />
-            <g class="dial-readout">
-              <rect class="dial-readout-plate" x="-112" y="76" width="224" height="108" rx="16" />
-              <text class="dial-readout-zone" y="102">JST</text>
-              <text class="dial-readout-time" y="138" data-clock>--:--:--</text>
-              <text class="dial-readout-next" y="166" data-countdown>next 15:00 in --:--:--</text>
-            </g>
+        <div class="hero-dial hero-globe" data-globe>
+          <canvas class="globe-canvas" aria-hidden="true"></canvas>
+          <svg class="globe-ring" aria-hidden="true">
+            <path id="globe-arc-top" data-globe-arc="top" fill="none" />
+            <path id="globe-arc-bottom" data-globe-arc="bottom" fill="none" />
+            <text class="globe-ring-en"><textPath href="#globe-arc-top" startOffset="50%" text-anchor="middle">IT’S ALWAYS 3 O’CLOCK SOMEWHERE</textPath></text>
+            <text class="globe-ring-ja"><textPath href="#globe-arc-bottom" startOffset="50%" text-anchor="middle">世界のどこかは、いつも3時のおやつ。</textPath></text>
           </svg>
+          <div class="globe-pin" data-globe-pin aria-hidden="true">
+            <span class="globe-pin-dot"></span>
+            <span class="globe-pin-leader"></span>
+            <span class="globe-pin-name"><b data-globe-name></b><span class="globe-pin-time" data-globe-time>15:00</span></span>
+            <span class="globe-pin-country"><span data-globe-country-en></span><span data-globe-country></span></span>
+          </div>
+          <p class="visually-hidden" data-globe-place>世界のどこかは、いつも3時のおやつ。</p>
         </div>
       </div>
 
       <div class="wrap hero-meta">
-        <dl class="meta">
-          <div class="meta-now"><dt>Now · JST</dt><dd><span data-clock>--:--:--</span><small data-countdown>next 15:00 in --:--:--</small></dd></div>
+        <dl class="hero-platforms" lang="en">
+          <dt>Platforms</dt>
+          <dd><span>iOS</span><span>Android</span><span>Web</span><span>LINE</span></dd>
         </dl>
         <a href="#about" class="scroll-cue">Scroll<span aria-hidden="true"></span></a>
       </div>
     </section>
 
     <!-- ========== 01 About ========== -->
-    <section class="sec" id="about" aria-labelledby="about-title">
+    <section class="sec sec--drift" id="about" aria-labelledby="about-title">
       <div class="wrap">
         <header class="sec-head" data-reveal>
-          <span class="sec-index">01 /</span>
+          <span class="sec-index" aria-hidden="true"></span>
           <h2 class="sec-title" id="about-title">About</h2>
           <p class="sec-ja">私たちについて</p>
         </header>
@@ -154,13 +142,13 @@
       <div class="wrap">
         <header class="sec-head sec-head--split" data-reveal>
           <div>
-            <span class="sec-index">02 /</span>
+            <span class="sec-index" aria-hidden="true"></span>
             <h2 class="sec-title" id="products-title">Products</h2>
             <p class="sec-ja">自社プロダクト</p>
           </div>
           <div class="sec-head-side">
             <p class="sec-desc">
-              暮らしの「ちょっと面倒」を、ひとつずつソフトウェアで解いていく。<br class="br-pc" />企画からデザイン、開発、運用まで、すべて自社で手がけています。
+              暮らしの「ちょっと面倒」に、ひとつずつ「あったらいいな」で応えていく。<br class="br-pc" />企画からデザイン、開発、運用まで、すべて自社で手がけています。
             </p>
             <a href="products/" class="link-arrow">View all<span aria-hidden="true">→</span></a>
           </div>
@@ -270,7 +258,7 @@
       <div class="wrap">
         <header class="sec-head sec-head--split" data-reveal>
           <div>
-            <span class="sec-index">03 /</span>
+            <span class="sec-index" aria-hidden="true"></span>
             <h2 class="sec-title" id="dev-title">Development</h2>
             <p class="sec-ja">受託開発</p>
           </div>
@@ -284,10 +272,10 @@
 
         <div class="caps">
           <article class="cap" data-reveal>
-            <h3 class="cap-title">iOS App</h3>
-            <p class="cap-ja">iOSアプリ開発</p>
-            <p class="cap-desc">SwiftUI によるネイティブアプリ開発。ウィジェット、共有メニュー、通知など、OSの機能を活かした体験を設計します。</p>
-            <ul class="tags tags--dark"><li>Swift</li><li>SwiftUI</li><li>WidgetKit</li></ul>
+            <h3 class="cap-title">Mobile App</h3>
+            <p class="cap-ja">iOS・Androidアプリ開発</p>
+            <p class="cap-desc">iPhone・Android のネイティブアプリ開発。ウィジェット、共有メニュー、通知など、OSの機能を活かした体験を設計します。</p>
+            <ul class="tags tags--dark"><li>Swift</li><li>SwiftUI</li><li>Kotlin</li><li>Jetpack Compose</li></ul>
           </article>
           <article class="cap" data-reveal>
             <h3 class="cap-title">Web App &amp; System</h3>
@@ -322,7 +310,7 @@
       <div class="wrap">
         <header class="sec-head sec-head--split" data-reveal>
           <div>
-            <span class="sec-index">04 /</span>
+            <span class="sec-index" aria-hidden="true"></span>
             <h2 class="sec-title" id="news-title">News</h2>
             <p class="sec-ja">お知らせ</p>
           </div>
@@ -363,7 +351,7 @@
       <div class="wrap">
         <div class="recruit" data-reveal>
           <div class="recruit-head">
-            <span class="sec-index">05 / 採用情報</span>
+            <span class="sec-index">採用情報</span>
             <p class="rhero-badge"><span class="dot"></span>Now hiring</p>
             <h2 class="join-title" id="recruit-title">Join us<span>.</span></h2>
           </div>
@@ -438,6 +426,7 @@
     </div>
   </footer>
 
+  <script src="assets/globe-land.js"></script>
   <script src="assets/site.js"></script>
 </body>
 </html>

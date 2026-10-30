@@ -224,6 +224,29 @@ h1, h2, h3, p, dl, dd { margin: 0; }
   transition: transform .35s var(--ease);
 }
 .btn:hover .btn-arrow { transform: translateX(4px); }
+/* 丸の中の矢印：ボタンの右端に小さな丸を置き、乗せると丸が少しふくらむ */
+.btn--circle { gap: 16px; padding-right: 7px; }
+.btn-arrow--circle {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+}
+.btn-arrow--circle svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform .35s var(--ease);
+}
+.btn:hover .btn-arrow--circle { transform: scale(1.1); }
+.btn:hover .btn-arrow--circle svg { transform: translateX(2px); }
+.btn--primary .btn-arrow--circle { background: var(--base); color: var(--signal-fill); }
+.btn--ghost .btn-arrow--circle { background: var(--ink); color: var(--base); }
 
 .btn--primary { background: var(--signal-fill); color: var(--on-signal); }
 .btn--primary:hover { background: var(--signal-fill-hover); }
@@ -282,28 +305,27 @@ h1, h2, h3, p, dl, dd { margin: 0; }
   z-index: 50;
   height: var(--header-h);
 }
-/* .gh 本体に backdrop-filter を付けると中の fixed メニューが閉じ込められるため疑似要素で */
+/* ヘッダーの帯は、スクロールしても背景なしの完全透過。
+   帯の色はスマホでメニューを開いたときだけ付ける（疑似要素で） */
 .gh::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: color-mix(in srgb, var(--base) 72%, transparent);
-  backdrop-filter: saturate(180%) blur(14px);
-  -webkit-backdrop-filter: saturate(180%) blur(14px);
   border-bottom: 1px solid transparent;
   transition: border-color .3s ease, background-color .3s ease;
 }
-.gh.is-scrolled::before { border-bottom-color: var(--line); background: color-mix(in srgb, var(--base) 88%, transparent); }
 .gh.is-open::before { background: var(--base); border-bottom-color: var(--line); }
+/* 文字が本文と重なっても読めるように、まわりを地の色でうっすらぼかす */
+.gh-nav a { text-shadow: 0 0 2px var(--base), 0 0 8px var(--base), 0 0 16px var(--base); }
+.gh-logo img { filter: drop-shadow(0 0 6px var(--base)); }
 
-/* 暗いセクションの上ではヘッダーも暗く（メニュー展開中は明るいまま） */
-.gh.is-dark:not(.is-open)::before { background: color-mix(in srgb, var(--night) 78%, transparent); border-bottom-color: var(--night-line); }
-.gh.is-dark:not(.is-open) .gh-logo img { filter: invert(1) brightness(1.1); }
+/* 暗いセクションの上では、ロゴや文字を明るく（メニュー展開中は明るい地のまま） */
+.gh.is-dark:not(.is-open) .gh-nav a { text-shadow: 0 0 2px var(--night), 0 0 8px var(--night), 0 0 16px var(--night); }
+.gh.is-dark:not(.is-open) .gh-logo img { filter: invert(1) brightness(1.1) drop-shadow(0 0 6px var(--night)); }
 .gh.is-dark:not(.is-open) .gh-nav a { color: var(--night-sub); }
 .gh.is-dark:not(.is-open) .gh-nav a:hover { color: var(--night-ink); }
-.gh.is-dark:not(.is-open) .gh-toggle { border-color: var(--night-line); }
-.gh.is-dark:not(.is-open) .gh-toggle span { background: var(--night-ink); }
+.gh.is-dark:not(.is-open) .gh-toggle span { background: var(--night-ink); box-shadow: 0 0 6px var(--night); }
 .gh-logo img,
 .gh-toggle span { transition: filter .3s ease, background-color .3s ease; }
 
@@ -342,30 +364,125 @@ h1, h2, h3, p, dl, dd { margin: 0; }
 .gh-nav a:hover::after { transform: scaleX(1); transform-origin: left; }
 .gh-nav-cta-sp { display: none; }
 
-.gh-cta { height: 40px; padding: 0 18px; font-size: 13px; }
+/* ヘッダーのお問い合わせ：時間帯に関係なく黒。右端に白い丸の矢印。
+   暗い背景の上でも輪郭がわかるように、うっすら内側の線を入れる */
+.gh-cta {
+  gap: 12px;
+  height: 40px;
+  padding: 0 5px 0 18px;
+  background: #111518;
+  color: #fff;
+  font-size: 13px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+}
+.gh-cta:hover { background: #2a3136; }
+.gh-cta .btn-arrow--circle { width: 30px; height: 30px; background: #fff; color: #111518; }
+.gh-cta .btn-arrow--circle svg { width: 14px; height: 14px; }
 
 .gh-toggle {
   display: none;
   width: 40px;
   height: 40px;
   margin-left: auto;
-  border: 1px solid var(--line-strong);
-  border-radius: 999px;
+  border: 0;
   background: transparent;
   cursor: pointer;
   position: relative;
 }
+/* 丸い枠はなしで2本線だけ。本文と重なっても見えるように、線のまわりを地の色でうっすらぼかす */
 .gh-toggle span {
   position: absolute;
-  left: 12px; right: 12px;
+  left: 8px; right: 8px;
   height: 1.5px;
   background: var(--ink);
+  box-shadow: 0 0 6px var(--base);
   transition: transform .35s var(--ease), top .35s var(--ease);
 }
 .gh-toggle span:nth-child(1) { top: 16px; }
 .gh-toggle span:nth-child(2) { top: 22px; }
 .gh-toggle[aria-expanded="true"] span:nth-child(1) { top: 19px; transform: rotate(45deg); }
 .gh-toggle[aria-expanded="true"] span:nth-child(2) { top: 19px; transform: rotate(-45deg); }
+
+/* PC：スクロールしたら、メニューを右上の「Menu」だけの小さなカプセルにまとめる（ロゴは透過のまま左に）。
+   「Menu」を押すとカプセルが左へ伸びて、すべてのメニューが出る。カプセルの位置と幅は site.js で合わせる */
+@media (min-width: 961px) {
+  .gh-inner { position: relative; }
+  .gh-inner::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 10px;
+    bottom: 10px;
+    left: var(--pill-x, 0px);
+    width: var(--pill-w, 0px);
+    border-radius: 999px;
+    background: var(--base);
+    box-shadow: 0 0 0 1px var(--line), 0 12px 32px -16px rgba(15, 26, 36, 0.35);
+    opacity: 0;
+    transition: left .5s var(--ease), width .5s var(--ease), opacity .3s ease;
+  }
+  .gh.is-compact .gh-inner::before,
+  .gh.is-releasing .gh-inner::before { opacity: 1; }
+  /* カプセルを出す最初の一瞬は、位置と幅を動かさずにメニューの幅でぱっと出す */
+  .gh.no-pill-anim .gh-inner::before { transition: opacity .25s ease; }
+
+  /* メニューの文字とボタン：カプセルに吸い込まれるように右へ流れて消え、広げると左から順に戻る */
+  .gh-nav a,
+  .gh-cta {
+    transition: color .2s ease, background-color .25s ease, opacity .4s ease, translate .55s var(--ease), visibility 0s;
+  }
+  .gh.is-compact:not(.is-expanded) .gh-nav a,
+  .gh.is-compact:not(.is-expanded) .gh-cta {
+    opacity: 0;
+    translate: 40px 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .3s ease, translate .5s var(--ease), visibility 0s linear .5s;
+  }
+  /* 吸い込まれるときは「Menu」に近い右側から、戻るときは左側から */
+  .gh.is-compact:not(.is-expanded) .gh-nav a:nth-child(1) { transition-delay: .16s, .16s, .5s; }
+  .gh.is-compact:not(.is-expanded) .gh-nav a:nth-child(2) { transition-delay: .12s, .12s, .5s; }
+  .gh.is-compact:not(.is-expanded) .gh-nav a:nth-child(3) { transition-delay: .08s, .08s, .5s; }
+  .gh.is-compact:not(.is-expanded) .gh-nav a:nth-child(4) { transition-delay: .04s, .04s, .5s; }
+  .gh-nav a:nth-child(2) { transition-delay: 0s, 0s, .04s, .04s, 0s; }
+  .gh-nav a:nth-child(3) { transition-delay: 0s, 0s, .08s, .08s, 0s; }
+  .gh-nav a:nth-child(4) { transition-delay: 0s, 0s, .12s, .12s, 0s; }
+  .gh-nav a:nth-child(5) { transition-delay: 0s, 0s, .16s, .16s, 0s; }
+  .gh-cta { transition-delay: 0s, 0s, .2s, .2s, 0s; }
+  .gh.is-compact .gh-nav a { text-shadow: none; }
+
+  /* 「Menu」は、メニューが吸い込まれたあとにふわっと出る */
+  .gh.is-compact .gh-toggle { animation: gh-menu-in .45s var(--ease) .2s both; }
+  @keyframes gh-menu-in {
+    from { opacity: 0; translate: 8px 0; }
+    to { opacity: 1; translate: none; }
+  }
+
+  .gh.is-compact .gh-toggle {
+    display: flex;
+    align-items: center;
+    width: auto;
+    height: 36px;
+    margin-left: -16px;
+    padding: 0 38px 0 12px;
+    font-family: var(--font);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+  }
+  .gh.is-compact .gh-toggle::before { content: "Menu"; }
+  .gh.is-compact.is-expanded .gh-toggle::before { content: "Close"; }
+  /* ロゴは透過のまま暗いセクションでは白くなるが、カプセルの中は白い地なので暗い文字のまま */
+  .gh.is-compact.is-dark .gh-nav a { color: var(--ink-2); text-shadow: none; }
+  .gh.is-compact.is-dark .gh-nav a:hover { color: var(--ink); }
+  .gh.is-compact.is-dark .gh-toggle span { background: var(--ink); box-shadow: none; }
+  .gh.is-compact .gh-toggle span { left: auto; right: 12px; width: 16px; box-shadow: none; }
+  .gh.is-compact .gh-toggle span:nth-child(1) { top: 14px; }
+  .gh.is-compact .gh-toggle span:nth-child(2) { top: 20px; }
+  .gh.is-compact .gh-toggle[aria-expanded="true"] span:nth-child(1),
+  .gh.is-compact .gh-toggle[aria-expanded="true"] span:nth-child(2) { top: 17px; }
+}
 
 @media (max-width: 960px) {
   .gh-cta { display: none; }
@@ -473,8 +590,17 @@ h1, h2, h3, p, dl, dd { margin: 0; }
   letter-spacing: -0.02em;
 }
 .hero-line { display: block; white-space: nowrap; }
+/* PC：左カラムの幅に合わせて、1行目（7文字）が右の時計にかからない大きさに */
+@media (min-width: 961px) {
+  .hero-copy { container-type: inline-size; }
+  .hero-title { font-size: min(5.8vw, 120px); font-size: min(14cqi, 120px); }
+}
 /* 2行目は少し小さく、主役の1行目を引き立てる */
-.hero-line--sm { margin-top: 0.08em; font-size: 0.66em; }
+.hero-line--sm { margin-top: 0.04em; font-size: 0.8em; }
+/* 文字の左端をそろえる：「あ」「を」は字形の左に余白があるぶん、下の英語より右に見えるので、その分だけ左へ */
+.hero-title .hero-line { margin-left: -0.09em; }
+.hero-title .hero-line--sm { margin-left: -0.075em; }
+.hero-lead { margin-left: -0.04em; }
 
 /* 1文字ずつのリビール（JSで .ch に分割） */
 .ch {
@@ -487,23 +613,18 @@ h1, h2, h3, p, dl, dd { margin: 0; }
 }
 .is-ready .ch { opacity: 1; transform: none; filter: none; }
 
-.hero-en {
+/* キャッチの下：英語のひとこと */
+.hero-lead {
   margin-top: 28px;
   font-family: var(--font);
-  font-size: clamp(15px, 1.4vw, 18px);
-  font-weight: 400;
+  font-size: clamp(17px, 1.5vw, 21px);
+  font-weight: 500;
+  line-height: 1.5;
   letter-spacing: -0.005em;
-  color: var(--ink-2);
-}
-.hero-lead {
-  margin-top: 16px;
-  font-size: 15px;
-  color: var(--ink-2);
-  line-height: 1.9;
+  color: var(--ink);
 }
 .hero-actions { margin-top: 40px; display: flex; flex-wrap: wrap; gap: 12px; }
 
-.js .hero-en,
 .js .hero-lead,
 .js .hero-actions,
 .js .hero-dial,
@@ -512,7 +633,6 @@ h1, h2, h3, p, dl, dd { margin: 0; }
   transform: translateY(12px);
   transition: opacity .9s ease, transform 1s var(--ease);
 }
-.is-ready .hero-en { opacity: 1; transform: none; transition-delay: .75s; }
 .is-ready .hero-lead { opacity: 1; transform: none; transition-delay: .85s; }
 .is-ready .hero-actions { opacity: 1; transform: none; transition-delay: .95s; }
 .is-ready .hero-dial { opacity: 1; transform: none; transition-delay: .3s; }
@@ -561,6 +681,113 @@ h1, h2, h3, p, dl, dd { margin: 0; }
 .dial-pin { fill: var(--signal); stroke: var(--base); stroke-width: 2; }
 .dial-readout { pointer-events: none; }
 
+/* ---------- Globe：いま15時台の街のほうを向く地球 ---------- */
+.hero-globe { position: relative; aspect-ratio: 1; }
+.globe-canvas { display: block; width: 100%; height: 100%; touch-action: pan-y; cursor: grab; }
+.globe-canvas.is-dragging { cursor: grabbing; }
+
+/* 街の印：点が波紋のように広がり、横に街の名前 */
+.globe-pin {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .6s ease;
+}
+.globe-pin.is-on { opacity: 1; }
+.globe-pin-dot {
+  position: absolute;
+  left: -5px;
+  top: -5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--ink);
+  box-shadow: 0 0 0 3px var(--paper);
+}
+.globe-pin-dot::after {
+  content: "";
+  position: absolute;
+  inset: -9px;
+  border: 1.5px solid var(--ink);
+  border-radius: 50%;
+  animation: pin-pulse 2.4s var(--ease) infinite;
+}
+@keyframes pin-pulse {
+  from { transform: scale(0.4); opacity: 0.9; }
+  to { transform: scale(1.7); opacity: 0; }
+}
+/* 街のラベル：点から細い線を引き出し、線の上に街の名前と時刻、下に国名（地図の注記のように）。
+   文字のまわりを地の色でぼかして、下の点に埋もれないようにする */
+.globe-pin-leader { position: absolute; left: 0; top: 0; }
+.globe-pin-leader::before,
+.globe-pin-leader::after {
+  content: "";
+  position: absolute;
+  height: 1px;
+  background: var(--ink);
+  transform-origin: 0 50%;
+}
+.globe-pin-leader::before { left: 4px; top: -4px; width: 34px; transform: rotate(-45deg) scaleX(0); }
+.globe-pin-leader::after { left: 28px; top: -28px; width: var(--lw, 120px); transform: scaleX(0); }
+.globe-pin.is-drawn .globe-pin-leader::before { transform: rotate(-45deg) scaleX(1); transition: transform .35s var(--ease); }
+.globe-pin.is-drawn .globe-pin-leader::after { transform: scaleX(1); transition: transform .5s var(--ease) .3s; }
+.globe-pin.is-left .globe-pin-leader { transform: scaleX(-1); }
+/* 地球の上のほうにある街は、ラベルを下向きに出して外周の文字と重ならないように */
+.globe-pin.is-down .globe-pin-leader { transform: scaleY(-1); }
+.globe-pin.is-down.is-left .globe-pin-leader { transform: scale(-1, -1); }
+
+.globe-pin-name,
+.globe-pin-country {
+  position: absolute;
+  left: 30px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  white-space: nowrap;
+  font-family: var(--font);
+  text-shadow: 0 0 1px var(--paper), 0 0 3px var(--paper), 0 0 6px var(--paper), 0 0 10px var(--paper), 0 0 16px var(--paper), 0 0 24px var(--paper);
+  opacity: 0;
+  translate: 0 4px;
+  transition: opacity .4s ease, translate .5s var(--ease);
+}
+.globe-pin-name { bottom: 32px; }
+.globe-pin-country { top: -23px; transition-delay: .6s; }
+.globe-pin.is-drawn .globe-pin-name { opacity: 1; translate: none; transition-delay: .25s; }
+.globe-pin.is-drawn .globe-pin-country { opacity: 1; translate: none; }
+.globe-pin.is-left .globe-pin-name,
+.globe-pin.is-left .globe-pin-country { left: auto; right: 30px; }
+.globe-pin.is-down .globe-pin-name { bottom: -25px; }
+.globe-pin.is-down .globe-pin-country { top: 33px; }
+
+/* 街が変わるときは、空港の発着案内板のように文字がパタパタと入れ替わる */
+.globe-pin-name b {
+  display: inline-block;
+  overflow: hidden;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  vertical-align: bottom;
+}
+.globe-pin-time { font-size: 12px; font-weight: 500; letter-spacing: 0.04em; font-variant-numeric: tabular-nums; color: var(--ink-2); }
+.globe-pin-country { font-size: 11px; font-weight: 600; line-height: 1.4; color: var(--ink-2); }
+.globe-pin-country span:first-child { letter-spacing: 0.16em; }
+.globe-pin-country span:last-child { letter-spacing: 0.06em; }
+
+/* 外周の文字：上に英語、下に日本語。円の大きさと文字サイズは site.js で合わせる */
+.globe-ring { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.globe-ring text { font-family: var(--font); font-weight: 500; }
+.globe-ring-en { letter-spacing: 0.24em; fill: var(--ink-3); }
+.globe-ring-ja { letter-spacing: 0.32em; fill: var(--signal); }
+@media (prefers-reduced-motion: reduce) {
+  .globe-pin-dot::after { animation: none; opacity: 0; }
+}
+
 /* ---------- Hero meta ---------- */
 .hero-meta {
   position: relative;
@@ -571,30 +798,26 @@ h1, h2, h3, p, dl, dd { margin: 0; }
   padding-top: 40px;
   padding-bottom: 32px;
 }
-/* PCは大きな時計があるので、時刻の文字表示はタブレット・スマホだけ */
-.meta {
-  display: none;
-  flex-wrap: wrap;
-  gap: 0;
-  border-top: 1px solid var(--line-strong);
-  flex: 1;
-  max-width: 760px;
-}
-.meta > div { flex: 1; min-width: 160px; padding: 16px 24px 0 0; }
-.meta dt {
-  font-family: var(--font);
+/* FV左下：対応環境。右下の SCROLL と対になる位置に、雑誌の表紙の隅の情報のように */
+.hero-platforms { flex: 1; max-width: 520px; font-family: var(--font); }
+.hero-platforms dt {
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line-strong);
   font-size: 11px;
   font-weight: 500;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink-3);
 }
-.meta dd {
-  margin-top: 4px;
-  font-family: var(--font);
+.hero-platforms dd {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 32px;
+  margin-top: 12px;
   font-size: 15px;
   font-weight: 500;
-  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+  color: var(--ink-3);
 }
 .scroll-cue {
   display: inline-flex;
@@ -622,72 +845,43 @@ h1, h2, h3, p, dl, dd { margin: 0; }
   100% { background-position: 0 260%; }
 }
 
-.meta-now dd { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; }
-.meta-now small {
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  color: var(--signal);
-}
-
-/* タブレット・スマホ：時計を右上に置き、見出しに少し重ねる */
+/* タブレット・スマホ：時計を主役として上に大きく置き、テキストはその下に */
 @media (max-width: 960px) {
-  .hero-inner { display: block; }
-  .hero-copy { position: relative; z-index: 1; }
-  .hero-dial {
-    position: absolute;
-    top: -4px;
-    left: 72vw;
-    z-index: 0;
-    width: min(52vw, 340px);
-    max-width: none;
-    transform: translateX(-50%);
-    pointer-events: none;
-  }
-  .js .hero-dial { transform: translate(-50%, 12px) scale(0.96); }
-  .is-ready .hero-dial { transform: translateX(-50%); }
+  .hero { padding-top: calc(var(--header-h) + 4px); padding-bottom: 48px; }
+  .hero-inner { display: flex; flex-direction: column; align-items: stretch; gap: 32px; }
+  .hero-dial { order: -1; align-self: center; width: min(100%, 440px); max-width: none; }
+  .js .hero-dial { transform: translateY(12px) scale(0.96); }
 
-  .hero-dial .dial-nums,
-  .hero-dial .dial-readout,
-  .hero-dial .dial-ring--inner,
-  .hero-dial .dial-marker-label,
-  .hero-dial .dial-pin { display: none; }
-  .hero-dial .dial-ring { stroke: var(--line-strong); stroke-width: 1.4; }
-  .hero-dial .dial-ticks line { stroke: var(--ink-3); stroke-width: 1.4; opacity: 0.55; }
-  .hero-dial .dial-ticks line.is-major { stroke: var(--ink); stroke-width: 2.4; opacity: 0.75; }
-  .hero-dial .dial-hand--h,
-  .hero-dial .dial-hand--m { stroke: var(--ink); opacity: 0.22; }
-  .hero-dial .dial-hand--s { stroke-width: 2; }
-  .hero-dial .dial-marker circle { r: 9px; }
+  .globe-pin-name b { font-size: 13px; }
+  .globe-pin-time { font-size: 10px; }
+  .globe-pin-country { font-size: 10px; }
+  .globe-pin-name,
+  .globe-pin-country { gap: 6px; }
+  .globe-pin-time { padding-left: 6px; }
+
+  .hero-title { font-size: min(10.4vw, 72px); }
+  .hero-lead { margin-top: 20px; }
+  .hero-actions { margin-top: 28px; }
 
   .hero-grid-bg {
-    mask-image: radial-gradient(ellipse 60% 28% at 72% 26%, #000 20%, transparent 75%);
-    -webkit-mask-image: radial-gradient(ellipse 60% 28% at 72% 26%, #000 20%, transparent 75%);
+    mask-image: radial-gradient(ellipse 80% 32% at 50% 26%, #000 20%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 32% at 50% 26%, #000 20%, transparent 75%);
   }
+  /* 下の帯は対応環境だけ。スクロール案内は省く */
+  .hero-meta { padding-top: 40px; padding-bottom: 0; }
   .scroll-cue { display: none; }
-  .meta { display: flex; }
+  .hero-platforms dd { gap: 4px 24px; font-size: 14px; }
 }
 @media (max-width: 560px) {
-  .hero-label { margin-bottom: 24px; }
+  .hero-label { margin-bottom: 16px; padding: 2px 9px; font-size: 8px; line-height: 1.6; letter-spacing: 0.06em; }
   .hero-actions {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
   }
   .hero-actions .btn { justify-content: center; gap: 8px; padding: 0 12px; font-size: 13px; }
-
-  .meta { flex-direction: column; }
-  .meta > div {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    min-width: 0;
-    padding: 12px 0;
-    border-bottom: 1px solid var(--line);
-  }
-  .meta dd { margin-top: 0; font-size: 14px; }
-  .meta-now { display: flex; }
-  .meta-now dd { align-items: flex-end; }
+  .hero-actions .btn--circle { justify-content: space-between; padding: 0 6px 0 16px; }
+  .hero-actions .btn-arrow--circle { width: 30px; height: 30px; }
 }
 
 /* =========================================================
@@ -708,15 +902,29 @@ h1, h2, h3, p, dl, dd { margin: 0; }
   gap: 32px;
   flex-wrap: wrap;
 }
+/* 見出しのアクセント：番号の代わりに短い線。表示されるときに左から伸びる */
 .sec-index {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 12px;
   font-family: var(--font);
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.04em;
   color: var(--signal);
-  margin-bottom: 12px;
+  margin-bottom: 20px;
 }
+.sec-index::before {
+  content: "";
+  flex: none;
+  width: 40px;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  transform-origin: left center;
+}
+.js [data-reveal] .sec-index::before { transform: scaleX(0); transition: transform 0.9s var(--ease) 0.25s; }
+.js [data-reveal].is-in .sec-index::before { transform: none; }
 .sec-title {
   font-family: var(--font);
   font-weight: 600;
@@ -733,6 +941,50 @@ h1, h2, h3, p, dl, dd { margin: 0; }
 }
 .sec--dark .sec-ja { color: var(--night-sub); }
 .sec--dark .sec-index { color: var(--signal-on-dark); }
+
+/* 全面は塗らず、その時間帯の色が端からにじんで、ゆっくり漂う */
+.sec--drift { position: relative; overflow: hidden; isolation: isolate; }
+.sec--drift::before,
+.sec--drift::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.sec--drift::before {
+  top: 2%;
+  right: -14%;
+  width: min(72vw, 900px);
+  aspect-ratio: 1;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--signal) 24%, transparent), transparent);
+  animation: drift-a 24s ease-in-out infinite alternate;
+}
+.sec--drift::after {
+  bottom: 0;
+  left: -16%;
+  width: min(60vw, 720px);
+  aspect-ratio: 1;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--signal) 14%, transparent), transparent);
+  animation: drift-b 30s ease-in-out infinite alternate;
+}
+@keyframes drift-a {
+  from { translate: 0 0; scale: 1; }
+  to { translate: -14vw 8%; scale: 1.12; }
+}
+@keyframes drift-b {
+  from { translate: 0 0; scale: 1.1; }
+  to { translate: 16vw -10%; scale: 0.95; }
+}
+@media (max-width: 560px) {
+  .sec--drift::before { right: -50%; width: 130vw; }
+  .sec--drift::after { left: -50%; width: 120vw; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sec--drift::before,
+  .sec--drift::after { animation: none; }
+}
+
 .sec-desc {
   max-width: 540px;
   font-size: 15px;
@@ -1147,15 +1399,16 @@ h1, h2, h3, p, dl, dd { margin: 0; }
 @media (max-width: 640px) {
   .pgrid { gap: 16px; }
   .pcard { grid-template-columns: 1fr; min-height: 0; border-radius: 24px; }
-  .pcard-visual { order: -1; height: 190px; overflow: hidden; }
+  .pcard-visual { order: -1; height: 210px; overflow: hidden; }
   .pcard-body { padding: 18px 24px 22px; }
   .pcard-desc { display: none; }
   .pcard-id { margin-top: 16px; }
   .pcard-icon { width: 52px; height: 52px; border-radius: 13px; }
   .pcard-catch { margin-top: 14px; font-size: 18px; }
-  .pv-phone { width: 38%; }
-  .pv-phone--back { left: 16%; }
-  .pv-phone--front { left: 46%; }
+  /* 端末を少し小さくして、画面の7〜8割が見えるように */
+  .pv-phone { width: 33%; }
+  .pv-phone--back { left: 18%; top: 48px; }
+  .pv-phone--front { left: 47%; top: 20px; }
 }
 
 /* 紹介ページ（いこっか。・ポイッシュ）：画面イメージは上部で端末が覗く形にトリミング */
@@ -3294,5 +3547,5 @@ body:has(.rdlg[open]) { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
-  .ch, .js [data-reveal], .js .hero-en, .js .hero-lead, .js .hero-actions, .js .hero-dial, .js .hero-meta { opacity: 1; transform: none; filter: none; }
+  .ch, .js [data-reveal], .js .hero-lead, .js .hero-actions, .js .hero-dial, .js .hero-meta { opacity: 1; transform: none; filter: none; }
 }
