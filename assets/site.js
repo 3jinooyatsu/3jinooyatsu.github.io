@@ -789,6 +789,14 @@
     });
   });
 
+  // ---------- 制作例：カードの画面イメージを、詳細ポップアップの見出しの下にも出す ----------
+  document.querySelectorAll(".case").forEach((card) => {
+    const shot = card.querySelector(".case-shot");
+    const id = card.querySelector("[data-open-dialog]")?.dataset.openDialog;
+    const title = id && document.querySelector(`#dlg-${id} .rdlg-title`);
+    if (shot && title) title.after(shot.cloneNode(true));
+  });
+
   // ---------- 採用：職種の詳細ポップアップ（#ios などの URL でも開く） ----------
   const openRole = (id, updateHash) => {
     const dialog = document.getElementById(`dlg-${id}`);

@@ -1888,12 +1888,19 @@ h1, h2, h3, p, dl, dd { margin: 0; }
 .cases { border-top: 1px solid var(--night-line); }
 .case {
   display: grid;
-  grid-template-columns: 160px minmax(0, 1fr) 200px;
-  gap: 32px;
+  grid-template-columns: 140px minmax(0, 1fr) minmax(0, 340px);
+  grid-template-areas:
+    "head main shot"
+    "head cost shot"
+    "head more shot";
+  grid-template-rows: auto auto 1fr;
+  column-gap: 40px;
+  row-gap: 18px;
   padding: 40px 0;
   border-bottom: 1px solid var(--night-line);
 }
-.case-head { display: flex; flex-direction: column; gap: 10px; }
+.case-head { grid-area: head; display: flex; flex-direction: column; gap: 10px; }
+.case-main { grid-area: main; }
 .case-no { font-family: var(--font); font-size: 13px; font-weight: 500; color: var(--signal-on-dark); }
 .case-kind {
   align-self: flex-start;
@@ -1910,19 +1917,19 @@ h1, h2, h3, p, dl, dd { margin: 0; }
 .case-desc { margin-top: 12px; max-width: 38em; font-size: 14px; line-height: 1.95; color: var(--night-text); }
 .case-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px; }
 .case-tags li { padding: 5px 12px; border-radius: 999px; background: rgba(255, 255, 255, 0.06); font-size: 12px; color: var(--night-text); }
-.case-cost { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; white-space: nowrap; }
+.case-cost { grid-area: cost; display: flex; align-items: baseline; gap: 12px; white-space: nowrap; }
 .case-cost span { font-size: 12px; font-weight: 500; letter-spacing: 0.08em; color: var(--night-sub); }
 .case-cost b { font-family: var(--font); font-size: 18px; font-weight: 600; }
 .case-cost small { margin-left: 2px; font-family: var(--font-ja); font-size: 12px; font-weight: 500; }
 .cases-note { margin-top: 20px; font-size: 12px; line-height: 1.8; color: var(--night-sub); }
 /* 導入の背景を開くボタン（説明の下に置く） */
 .case-more {
-  grid-column: 2;
+  grid-area: more;
+  align-self: start;
   justify-self: start;
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  margin-top: -12px;
   padding: 10px 18px;
   border: 1px solid var(--night-line);
   border-radius: 999px;
@@ -1937,7 +1944,130 @@ h1, h2, h3, p, dl, dd { margin: 0; }
 .case-more span { font-family: var(--font); font-weight: 400; transition: transform .4s var(--ease); }
 .case-more:hover { border-color: rgba(255, 255, 255, 0.4); background: rgba(255, 255, 255, 0.04); }
 .case-more:hover span { transform: rotate(90deg); }
-.cases-hint { display: none; }
+
+/* 制作例のイメージ：精密機械のように作動する抽象UI。
+   細い方眼とトンボの上に、線だけの図形を描き、要所だけをテーマ色で光らせる */
+.case-shot {
+  grid-area: shot;
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+  border: 1px solid var(--night-line);
+  border-radius: 16px;
+  background:
+    radial-gradient(120% 100% at 50% 0%, rgba(255, 255, 255, 0.06), transparent 70%),
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px) 0 0 / 16px 16px,
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px) 0 0 / 16px 16px,
+    #0b1018;
+  --cm-acc: var(--signal-on-dark);
+}
+.cm { position: absolute; inset: 0; width: 100%; height: 100%; }
+.cm * { transform-box: fill-box; transform-origin: center; }
+.cm-frame { fill: none; stroke: rgba(255, 255, 255, 0.28); stroke-width: 1; }
+.cm-label { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 6.5px; letter-spacing: 0.14em; fill: rgba(255, 255, 255, 0.42); }
+.cm-live circle { fill: var(--cm-acc); animation: cm-blink 1.6s steps(1) infinite; }
+.cm-line,
+.cm-line path { fill: none; stroke: rgba(255, 255, 255, 0.16); stroke-width: 1; }
+.cm-node { fill: rgba(255, 255, 255, 0.03); stroke: rgba(255, 255, 255, 0.5); stroke-width: 1; }
+.cm-core { fill: var(--cm-acc); animation: cm-pulse 2.4s ease-in-out infinite; }
+.cm-pkt,
+.cm-flow { fill: var(--cm-acc); filter: drop-shadow(0 0 3px var(--cm-acc)); }
+
+/* 01 配信の振り分け：粒が3つの経路を流れ、リッチメニューの面が順に切り替わる */
+.cm-tiles rect { fill: rgba(255, 255, 255, 0.05); stroke: rgba(255, 255, 255, 0.28); stroke-width: 1; animation: cm-tile 3.6s steps(1) infinite; animation-delay: calc(var(--t) * 0.6s); }
+
+/* 02 予約枠の走査：カーソルが1マスずつ止まりながら空き枠を探し、確定する */
+.cm-slot { fill: rgba(255, 255, 255, 0.07); }
+.cm-slot.is-busy { fill: rgba(255, 255, 255, 0.26); }
+.cm-cursor { fill: none; stroke: var(--cm-acc); stroke-width: 1.2; transform-origin: 0 0; animation: cm-scan 6s cubic-bezier(.7, 0, .3, 1) infinite; }
+.cm-hit { fill: var(--cm-acc); opacity: 0; animation: cm-hit 6s linear infinite; }
+.cm-bar { fill: rgba(255, 255, 255, 0.5); }
+.cm-bar.is-dim { fill: rgba(255, 255, 255, 0.18); }
+.cm-track { fill: rgba(255, 255, 255, 0.1); }
+.cm-fill { fill: var(--cm-acc); transform-origin: left center; animation: cm-fill 6s linear infinite; }
+.cm-check-ring { fill: none; stroke: rgba(255, 255, 255, 0.3); stroke-width: 1; }
+.cm-check { fill: none; stroke: var(--cm-acc); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 12; animation: cm-check 6s linear infinite; }
+.cm-ok { fill: var(--cm-acc); animation: cm-ok 6s linear infinite; }
+
+/* 03 集客の流れ：粒が段階を進み、途中で抜けていく。各段階の柱が順に光る */
+.cm-col { fill: rgba(255, 255, 255, 0.1); animation: cm-col 3s ease-in-out infinite; animation-delay: calc(var(--t) * 0.3s); }
+.cm-cap { fill: none; stroke: var(--cm-acc); stroke-width: 1.4; }
+.cm-flow { opacity: 0; animation: cm-flow 3s cubic-bezier(.4, 0, .2, 1) infinite; animation-delay: var(--d); }
+
+/* 04 本部と店舗の同期：目盛りの輪が回り、線の上をデータが流れ、各店舗の状態が進む */
+.cm-link { fill: none; stroke: rgba(255, 255, 255, 0.3); stroke-width: 1; stroke-dasharray: 2 4; animation: cm-dash 1.2s linear infinite; }
+.cm-ticks { fill: none; stroke: rgba(255, 255, 255, 0.32); stroke-width: 5; stroke-dasharray: 1 3.4; animation: cm-spin 24s linear infinite; }
+.cm-step { fill: rgba(255, 255, 255, 0.12); animation: cm-step 3.6s steps(1) infinite; animation-delay: calc(var(--t) * 0.6s); }
+
+/* 05 暗号化と自動削除：走査線が通ったデータが伏せ字に変わり、保存期限が減っていく */
+.cm-plain,
+.cm-mask { fill: none; stroke-linecap: round; }
+.cm-plain { stroke: rgba(255, 255, 255, 0.22); stroke-width: 8; transform-origin: right center; animation: cm-unmask 5s cubic-bezier(.5, 0, .5, 1) infinite; }
+.cm-mask { stroke: var(--cm-acc); stroke-width: 5; stroke-dasharray: 0.1 6; transform-origin: left center; animation: cm-mask 5s cubic-bezier(.5, 0, .5, 1) infinite; }
+.cm-beam rect { fill: var(--cm-acc); opacity: 0.12; }
+.cm-beam path { stroke: var(--cm-acc); stroke-width: 1.4; }
+.cm-beam { transform-box: view-box; transform-origin: 0 0; animation: cm-beam 5s cubic-bezier(.5, 0, .5, 1) infinite; }
+.cm-ring { fill: none; stroke: rgba(255, 255, 255, 0.18); stroke-width: 1; stroke-dasharray: 14 6; animation: cm-spin 18s linear infinite reverse; }
+.cm-ttl { fill: none; stroke: rgba(255, 255, 255, 0.3); stroke-width: 3; stroke-linecap: round; transform-origin: left center; animation: cm-ttl 6s linear infinite; animation-delay: calc(var(--t) * -2s); }
+
+/* 06 ダッシュボード：折れ線が描かれ、点が順に灯り、目標の計器がたまっていく */
+.cm-grid { fill: none; stroke: rgba(255, 255, 255, 0.08); stroke-width: 1; }
+.cm-chart { fill: none; stroke: var(--cm-acc); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 100; animation: cm-draw 6s cubic-bezier(.6, 0, .3, 1) infinite; }
+.cm-area { fill: var(--cm-acc); opacity: 0; animation: cm-area 6s ease infinite; }
+.cm-pt { fill: #0b1018; stroke: var(--cm-acc); stroke-width: 1.2; opacity: 0; animation: cm-pt 6s linear infinite; animation-delay: calc(var(--t) * 0.28s); }
+.cm-dial { fill: none; stroke: rgba(255, 255, 255, 0.22); stroke-width: 4; stroke-dasharray: 0.8 5.48; animation: cm-spin 40s linear infinite; }
+.cm-track-ring { fill: none; stroke: rgba(255, 255, 255, 0.08); stroke-width: 5; }
+.cm-gauge { fill: none; stroke: var(--cm-acc); stroke-width: 5; stroke-linecap: round; stroke-dasharray: 100; transform: rotate(-90deg); animation: cm-gauge 6s cubic-bezier(.6, 0, .3, 1) infinite; }
+.cm-num { font-family: var(--font); font-size: 15px; font-weight: 600; fill: #fff; }
+.cm-num tspan { font-size: 8px; fill: rgba(255, 255, 255, 0.55); }
+
+@keyframes cm-blink { 50% { opacity: 0.2; } }
+@keyframes cm-pulse { 50% { opacity: 0.45; } }
+@keyframes cm-spin { to { rotate: 360deg; } }
+@keyframes cm-dash { to { stroke-dashoffset: -12; } }
+@keyframes cm-tile {
+  0% { fill: color-mix(in srgb, var(--cm-acc) 30%, transparent); stroke: var(--cm-acc); }
+  16.66% { fill: rgba(255, 255, 255, 0.05); stroke: rgba(255, 255, 255, 0.28); }
+}
+@keyframes cm-scan {
+  0%, 10% { translate: 26px 56px; }
+  13%, 23% { translate: 86px 56px; }
+  26%, 36% { translate: 146px 76px; }
+  39%, 49% { translate: 66px 96px; }
+  52%, 62% { translate: 106px 116px; }
+  65%, 100% { translate: 126px 96px; }
+}
+@keyframes cm-hit { 0%, 66% { opacity: 0; } 69%, 94% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes cm-fill { 0%, 68% { scale: 0 1; } 84%, 96% { scale: 1 1; } 100% { scale: 0 1; } }
+@keyframes cm-check { 0%, 84% { stroke-dashoffset: 12; } 90%, 96% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 12; } }
+@keyframes cm-ok { 0%, 86% { opacity: 0; } 90%, 96% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes cm-col { 50% { fill: rgba(255, 255, 255, 0.22); } }
+@keyframes cm-flow {
+  0% { translate: 0 0; opacity: 0; }
+  8%, 80% { opacity: 1; }
+  100% { translate: var(--to) 0; opacity: 0; }
+}
+@keyframes cm-step { 0% { fill: var(--cm-acc); } 33.33% { fill: rgba(255, 255, 255, 0.12); } }
+@keyframes cm-beam { 0% { translate: 0 0; opacity: 0; } 6% { opacity: 1; } 60% { translate: 150px 0; opacity: 1; } 66%, 100% { translate: 150px 0; opacity: 0; } }
+@keyframes cm-unmask { 0%, 4% { scale: 1 1; opacity: 1; } 60%, 92% { scale: 0 1; opacity: 1; } 93% { scale: 1 1; opacity: 0; } 100% { scale: 1 1; opacity: 1; } }
+@keyframes cm-mask { 0%, 4% { scale: 0 1; opacity: 1; } 60%, 92% { scale: 1 1; opacity: 1; } 100% { scale: 1 1; opacity: 0; } }
+@keyframes cm-ttl { 0% { scale: 1 1; stroke: rgba(255, 255, 255, 0.3); } 85% { stroke: rgba(255, 255, 255, 0.3); } 96% { scale: 0.04 1; stroke: var(--cm-acc); } 100% { scale: 0 1; } }
+@keyframes cm-draw { 0% { stroke-dashoffset: 100; opacity: 1; } 45%, 90% { stroke-dashoffset: 0; opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 0; } }
+@keyframes cm-area { 0%, 30% { opacity: 0; } 50%, 88% { opacity: 0.12; } 100% { opacity: 0; } }
+@keyframes cm-pt { 0%, 8% { opacity: 0; } 12%, 90% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes cm-gauge { 0% { stroke-dashoffset: 100; } 45%, 90% { stroke-dashoffset: 18; } 100% { stroke-dashoffset: 100; } }
+
+/* 画面に入るまでは止めておく。動きを減らす設定では、止まった状態で見せる */
+.cases:not(.is-in) .cm * { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .cm * { animation: none !important; }
+  .cm-pkt,
+  .cm-flow,
+  .cm-beam { display: none; }
+}
+
+/* ポップアップの中では大きめに */
+.cdlg .case-shot { height: 280px; margin-top: 24px; }
 
 /* 制作例の詳細（ポップアップ） */
 .cdlg-no { display: flex; align-items: center; gap: 10px; font-family: var(--font); font-size: 13px; font-weight: 500; color: var(--signal-on-dark); }
@@ -1953,6 +2083,10 @@ h1, h2, h3, p, dl, dd { margin: 0; }
 .cdlg .pos-spec { margin: 24px 0 32px; }
 .cdlg .pos-spec li + li { margin-top: 6px; }
 .cdlg-cost { font-family: var(--font); font-size: 18px; font-weight: 600; }
+/* スマホ：上に余白を残さず、画面いっぱいのシートで開く（中身はシートの中でスクロール） */
+@media (max-width: 640px) {
+  .rdlg.cdlg { height: calc(100svh - 16px); max-height: none; }
+}
 
 /* 料金の考え方：仕様表のように並べる */
 .pricing { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 48px; align-items: start; }
@@ -2011,15 +2145,18 @@ h1, h2, h3, p, dl, dd { margin: 0; }
 }
 
 @media (max-width: 960px) {
-  .case { grid-template-columns: 1fr; gap: 16px; padding: 32px 0; }
+  .case {
+    grid-template-columns: 1fr;
+    grid-template-areas: "head" "shot" "main" "cost" "more";
+    grid-template-rows: none;
+    gap: 16px;
+    padding: 32px 0;
+  }
   .case-head { flex-direction: row; align-items: center; }
-  .case-cost { flex-direction: row; align-items: baseline; gap: 12px; }
-  .case-more { grid-column: auto; margin-top: 0; }
   .pricing { grid-template-columns: 1fr; gap: 32px; }
 }
 /* スマホ：制作例は縦に積まず、横にスワイプして1件ずつ見る */
 @media (max-width: 760px) {
-  .cases-hint { display: flex; justify-content: flex-end; gap: 8px; margin-bottom: 12px; font-size: 12px; color: var(--night-sub); }
   .cases {
     display: flex;
     gap: 12px;
@@ -2043,6 +2180,8 @@ h1, h2, h3, p, dl, dd { margin: 0; }
     background: var(--night-2);
     scroll-snap-align: start;
   }
+  .case-shot { height: 172px; margin: -4px -8px 0; }
+  .cdlg .case-shot { height: 230px; margin: 20px 0 0; }
   .case-desc { margin-top: 10px; font-size: 13px; }
   .case-tags { margin-top: 14px; }
   .case-tags li:nth-child(n + 4) { display: none; }
