@@ -2169,24 +2169,36 @@ h1, h2, h3, p, dl, dd { margin: 0; }
     scrollbar-width: none;
   }
   .cases::-webkit-scrollbar { display: none; }
+  /* 横にスワイプして見比べる一覧なので、カードは画面の半分ほどの高さに。
+     詳しい説明やタグはポップアップで読めるので、カードでは説明を2行までにする */
   .case {
     flex: 0 0 84%;
     display: flex;
     flex-direction: column;
-    gap: 14px;
-    padding: 24px 22px;
+    gap: 10px;
+    padding: 18px 18px 18px;
     border: 1px solid var(--night-line);
     border-radius: 20px;
     background: var(--night-2);
     scroll-snap-align: start;
   }
-  .case-shot { height: 172px; margin: -4px -8px 0; }
-  .cdlg .case-shot { height: 230px; margin: 20px 0 0; }
-  .case-desc { margin-top: 10px; font-size: 13px; }
-  .case-tags { margin-top: 14px; }
-  .case-tags li:nth-child(n + 4) { display: none; }
-  .case-cost { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--night-line); }
-  .case-more { justify-content: space-between; width: 100%; }
+  .case-shot { height: 128px; margin: 0 -6px; border-radius: 12px; }
+  .cdlg .case-shot { height: 230px; margin: 20px 0 0; border-radius: 16px; }
+  .case-client { margin-bottom: 4px; font-size: 12px; }
+  .case-title { font-size: 18px; }
+  .case-desc {
+    display: -webkit-box;
+    margin-top: 6px;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    font-size: 13px;
+    line-height: 1.75;
+  }
+  .case-tags { display: none; }
+  .case-cost { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--night-line); }
+  .case-cost b { font-size: 16px; }
+  .case-more { justify-content: space-between; width: 100%; padding: 9px 16px; font-size: 12px; }
 }
 @media (max-width: 560px) {
   .dev-terms li { padding-right: 20px; font-size: 17px; }
