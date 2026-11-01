@@ -284,17 +284,6 @@ h1, h2, h3, p, dl, dd { margin: 0; }
 }
 .tags--dark li { border-color: var(--night-line); color: var(--night-sub); }
 
-.chip {
-  display: inline-block;
-  font-family: var(--font);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  padding: 2px 10px;
-  border-radius: 999px;
-  background: var(--signal-soft);
-  color: var(--signal);
-}
 
 /* =========================================================
    Header
@@ -1734,13 +1723,14 @@ h1, h2, h3, p, dl, dd { margin: 0; }
    ========================================================= */
 .news-rows { border-top: 1px solid var(--line-strong); }
 .news-rows li { border-bottom: 1px solid var(--line); }
+/* お知らせの一覧：日付を主役に大きく。カテゴリは見出しの上に日本語で小さく、右端は丸い矢印 */
 .news-rows a,
 .news-rows .news-row {
   display: grid;
-  grid-template-columns: 120px 96px minmax(0, 1fr) 40px;
+  grid-template-columns: 112px minmax(0, 1fr) 40px;
   align-items: center;
-  gap: 24px;
-  padding: 28px 0;
+  gap: 32px;
+  padding: 26px 0;
   transition: padding .4s var(--ease), color .25s ease;
 }
 .news-rows-body { display: block; }
@@ -1752,36 +1742,46 @@ h1, h2, h3, p, dl, dd { margin: 0; }
   line-height: 1.9;
   color: var(--ink-2);
 }
-.news-rows time {
+.news-date {
   font-family: var(--font);
-  font-size: 14px;
-  font-weight: 500;
+  font-size: clamp(24px, 2.2vw, 30px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
-  color: var(--ink-3);
+  color: var(--ink);
 }
-.news-rows .chip { justify-self: start; }
+.news-date small { display: block; margin-bottom: 6px; font-size: 11px; font-weight: 500; letter-spacing: 0.14em; color: var(--ink-3); }
+.news-cat { display: block; margin-bottom: 4px; font-size: 12px; font-weight: 500; letter-spacing: 0.08em; color: var(--ink-3); }
 .news-rows-title { font-size: 16px; font-weight: 500; }
 .news-rows-arrow {
   justify-self: end;
-  font-family: var(--font);
-  transition: transform .4s var(--ease), color .25s ease;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  color: var(--ink);
+  transition: background-color .3s ease, border-color .3s ease, color .3s ease, transform .4s var(--ease);
 }
+.news-rows-arrow svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .news-rows a:hover { padding-left: 12px; }
 .news-rows a:hover .news-rows-title { color: var(--signal); }
-.news-rows a:hover .news-rows-arrow { transform: translateX(4px); color: var(--signal); }
+.news-rows a:hover .news-rows-arrow { transform: translateX(4px); border-color: var(--ink); background: var(--ink); color: var(--base); }
 
 @media (max-width: 760px) {
   .news-rows a,
   .news-rows .news-row {
-    grid-template-columns: auto auto 1fr;
-    grid-template-areas: "date chip ." "title title title";
-    gap: 10px 14px;
-    padding: 22px 0;
+    grid-template-columns: 64px minmax(0, 1fr);
+    align-items: start;
+    gap: 16px;
+    padding: 20px 0;
   }
-  .news-rows time { grid-area: date; }
-  .news-rows .chip { grid-area: chip; }
+  .news-date { font-size: 20px; }
+  .news-date small { margin-bottom: 4px; font-size: 10px; }
   .news-rows-title,
-  .news-rows-body { grid-area: title; font-size: 15px; }
+  .news-rows-body { font-size: 15px; }
   .news-rows-arrow { display: none; }
   .news-rows a:hover { padding-left: 0; }
 }
@@ -1821,7 +1821,30 @@ h1, h2, h3, p, dl, dd { margin: 0; }
   pointer-events: none;
 }
 .join .wrap { position: relative; }
-.join .rhero-badge { margin-top: 12px; }
+/* 「Now hiring」：円に沿った文字だけがゆっくり回るバッジ。押すと採用ページへ。
+   右上の、セクションの上の余白に重ねて置く（並びの外に出すので、セクションの高さは変わらない）。
+   大きさは上の余白と同じ割合で変えて、どの画面幅でも説明文にかからないように */
+.hire-badge {
+  position: absolute;
+  top: calc(24px - clamp(72px, 9vw, 128px));
+  right: var(--gutter);
+  display: block;
+  width: clamp(96px, 9vw, 128px);
+  height: clamp(96px, 9vw, 128px);
+  border-radius: 50%;
+  color: var(--night-ink);
+  transition: scale .5s var(--ease);
+}
+.hire-badge svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.hire-badge-text { transform-origin: 60px 60px; animation: hire-spin 16s linear infinite; }
+.hire-badge text { font-family: var(--font); font-size: 9.5px; font-weight: 500; fill: currentColor; }
+.hire-badge text { transition: fill .3s ease; }
+.hire-badge:hover { scale: 1.06; }
+.hire-badge:hover text { fill: var(--signal-on-dark); }
+@keyframes hire-spin { to { rotate: 360deg; } }
+@media (prefers-reduced-motion: reduce) {
+  .hire-badge-text { animation: none; }
+}
 .join-title {
   margin-top: 24px;
   font-family: var(--font);
@@ -1831,10 +1854,16 @@ h1, h2, h3, p, dl, dd { margin: 0; }
   letter-spacing: -0.06em;
 }
 .join-title span { color: var(--signal-on-dark); }
+/* PC：「Now hiring」のカプセルがあったときと同じ位置に、見出し・説明文・ボタンを置く */
+@media (min-width: 861px) {
+  .join-title { margin-top: 94px; }
+}
 .join .recruit-lead { color: var(--night-ink); }
 
 @media (max-width: 860px) {
   .recruit { grid-template-columns: 1fr; gap: 40px; }
+  /* 1列のときは「採用情報」のラベルと同じ高さの右端に */
+  .hire-badge { top: -28px; width: 88px; height: 88px; }
 }
 @media (max-width: 560px) {
   .recruit-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -2386,6 +2415,7 @@ a.news-card:hover .news-card-visual--product img { transform: translate(-50%, -6
 .news-card-word { font-family: var(--font); font-size: 44px; font-weight: 600; letter-spacing: -0.03em; }
 .news-card-body { display: flex; flex-direction: column; gap: 10px; padding: 22px 24px 26px; }
 .news-card-meta { display: flex; align-items: center; gap: 10px; font-family: var(--font); font-size: 13px; color: var(--ink-3); }
+.news-card-meta .news-cat { margin: 0; padding-left: 10px; border-left: 1px solid var(--line-strong); }
 .news-card-title { font-size: 17px; font-weight: 700; line-height: 1.6; }
 .news-card-text {
   display: -webkit-box;
@@ -2399,12 +2429,12 @@ a.news-card:hover .news-card-visual--product img { transform: translate(-50%, -6
 .news-all { margin-top: clamp(56px, 7vw, 88px); }
 
 .news-archive { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: 32px; }
+/* 一覧ページは本文の抜粋まであるので、日付は上でそろえる */
+.news-archive .news-rows a,
+.news-archive .news-rows .news-row { align-items: start; }
 .news-year { font-family: var(--font); font-size: clamp(40px, 4vw, 56px); font-weight: 600; line-height: 1; letter-spacing: -0.04em; }
 
 /* カテゴリごとの色 */
-.chip--product { background: var(--signal-soft); color: var(--signal); }
-.chip--notice { background: var(--fill); color: var(--ink-2); }
-.chip--journal { background: rgba(242, 169, 0, 0.16); color: #9A6A00; }
 
 /* タブレット・スマホ：最新の3件は横にスワイプ */
 @media (max-width: 860px) {
