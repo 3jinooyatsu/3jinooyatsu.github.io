@@ -21,6 +21,89 @@
   };
   setInterval(() => setTheme(slotAt(jstHour()).id), 30 * 1000);
 
+  // ---------- 日本語の改行：文節の切れ目に <wbr> を入れる ----------
+  // 本文は word-break: keep-all（site.css）なので、「、」「。」と <wbr> の位置でしか折り返さない。
+  // ひらがなから漢字・カタカナに変わるところを切れ目にする。ただし送り仮名（取り組む・問い合わせ）や
+  // 「お」「ご」のあとでは切らず、「・」のあと、」）のあとに続く助詞、数字のあとでは折り返さない。
+  const HIRA = /[ぁ-ゖ]/;
+  const KANJI = /[㐀-鿿々]/;
+  const KANJI_KATA = /[㐀-鿿々ァ-ヺ]/;
+  const PARTICLES = "のをにがはでともへや";
+  // 漢字にはさまれた1文字で、複合語の途中に来やすい送り仮名（い段・え段）
+  const OKURIGANA = "いきぎしじちぢひびぴみりえけげせぜてねべぺめれ";
+  const WORD_JOINER = "⁠";
+  // 「企画・開発」「営業・マーケティング」のような2語の「・」では折り返さない。
+  // 3つ以上の列挙の2つ目以降や、「〜なし・」のような言い回しのあとでは折り返してよい
+  const charKind = (ch) =>
+    !ch ? "" : /[㐀-鿿々]/.test(ch) ? "K" : /[ァ-ヺー]/.test(ch) ? "T" : /[ぁ-ゖ]/.test(ch) ? "H" : /[A-Za-z0-9]/.test(ch) ? "L" : "";
+  const shortAround = (text, at) => {
+    const before = charKind(text[at - 1]);
+    const after = charKind(text[at + 1]);
+    if (!before || !after) return false;
+    let b = at - 1;
+    while (b > 0 && charKind(text[b - 1]) === before) b--;
+    let a = at + 1;
+    while (a + 1 < text.length && charKind(text[a + 1]) === after) a++;
+    if (text[b - 1] === "・") return false;
+    if (before === "H" && charKind(text[b - 1]) === "K") return false;
+    return at - b + (a - at) <= 10;
+  };
+  const splitPhrases = (text) => {
+    let joined = "";
+    const cuts = [];
+    for (let i = 0; i < text.length; i++) {
+      const c = text[i];
+      const p = text[i - 1];
+      if (p && ((p === "・" && c !== " " && shortAround(text, i - 1)) || c === "／" || (/[」』）]/.test(p) && HIRA.test(c)) || (/[0-9０-９]/.test(p) && !/[\s0-9０-９,.]/.test(c)))) {
+        joined += WORD_JOINER;
+      } else if (p === "／") {
+        cuts.push(joined.length);
+      } else if (p && HIRA.test(p) && (KANJI_KATA.test(c) || /[0-9０-９]/.test(c))) {
+        let k = i - 1;
+        while (k > 0 && HIRA.test(text[k - 1])) k--;
+        const run = text.slice(k, i);
+        const okurigana = run.length === 1 && KANJI.test(text[k - 1] || "") && !PARTICLES.includes(run) && OKURIGANA.includes(run);
+        if (/[おご]$/.test(run)) {
+          if (run.length > 1) cuts.push(joined.length - 1);
+        } else if (!okurigana) {
+          cuts.push(joined.length);
+        }
+      }
+      joined += c;
+    }
+    return { joined, cuts };
+  };
+  const JA_TEXT = /[぀-ヿ㐀-鿿]/;
+  const phraseWalker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+    acceptNode: (node) =>
+      JA_TEXT.test(node.data) &&
+      !node.parentElement.closest("script, style, textarea, noscript, svg, canvas, title, [data-split]") &&
+      !/nowrap|pre/.test(getComputedStyle(node.parentElement).whiteSpace)
+        ? NodeFilter.FILTER_ACCEPT
+        : NodeFilter.FILTER_REJECT,
+  });
+  const phraseNodes = [];
+  while (phraseWalker.nextNode()) phraseNodes.push(phraseWalker.currentNode);
+  phraseNodes.forEach((node) => {
+    const { joined, cuts } = splitPhrases(node.data);
+    if (!cuts.length && joined === node.data) return;
+    const frag = document.createDocumentFragment();
+    let from = 0;
+    cuts.forEach((at) => {
+      frag.append(joined.slice(from, at), document.createElement("wbr"));
+      from = at;
+    });
+    frag.append(joined.slice(from));
+    // 横並び（flex / grid）の要素の中では、<wbr> で文字が別々の箱に分かれないよう、ひとつにまとめる
+    if (/flex|grid/.test(getComputedStyle(node.parentElement).display)) {
+      const phrase = document.createElement("ja-phrase");
+      phrase.append(frag);
+      node.replaceWith(phrase);
+    } else {
+      node.replaceWith(frag);
+    }
+  });
+
   // ---------- Hero: 1文字ずつ分割 ----------
   let i = 0;
   document.querySelectorAll("[data-split] .hero-line").forEach((line) => {
@@ -770,24 +853,131 @@
     paint();
   }
 
+  // ---------- 採用：こんな人と、働きたい。画面の中ほどまで来た行から、順にピントが合うように浮かび上がる ----------
+  const wantItems = document.querySelectorAll("[data-want] li");
+  if (wantItems.length && "IntersectionObserver" in window && !reduceMotion) {
+    const wantObserver = new IntersectionObserver(
+      (entries) => entries.forEach((e) => e.target.classList.toggle("is-on", e.isIntersecting || e.boundingClientRect.top < 0)),
+      { rootMargin: "0px 0px -45% 0px" }
+    );
+    wantItems.forEach((li) => wantObserver.observe(li));
+  } else {
+    wantItems.forEach((li) => li.classList.add("is-on"));
+  }
+
+  // ---------- 採用：写真の細い帯と、いま何番目のセクションかの表示 ----------
+  const slits = reduceMotion ? [] : [...document.querySelectorAll("[data-slit]")];
+  const counter = document.querySelector("[data-rcounter]");
+  const chapters = [...document.querySelectorAll("[data-chapter]")];
+
+  const paintSlits = () => {
+    const vh = innerHeight;
+    slits.forEach((s) => {
+      const r = s.getBoundingClientRect();
+      if (r.bottom < -100 || r.top > vh + 100) return;
+      // 帯の上端が画面の下から6割の高さに来るまでに、閉じた線から開ききる
+      const t = Math.min(Math.max((vh - r.top) / (vh * 0.6), 0), 1);
+      const open = 1 - (1 - t) * (1 - t);
+      const travel = (r.top + r.height / 2 - vh / 2) / vh;
+      s.style.setProperty("--slit-cut", `${((1 - open) * 50).toFixed(2)}%`);
+      s.style.setProperty("--slit-y", `${(-travel * r.height * 0.4).toFixed(1)}px`);
+    });
+  };
+
+  let currentChapter = -1;
+  const paintCounter = () => {
+    if (!counter || !chapters.length) return;
+    const line = innerHeight * 0.5;
+    let idx = -1;
+    chapters.forEach((c, i) => {
+      if (c.getBoundingClientRect().top <= line) idx = i;
+    });
+    const first = chapters[0].getBoundingClientRect().top;
+    const last = chapters[chapters.length - 1].getBoundingClientRect().top;
+    // FV のあいだと、最後の Entry が見えてきたら隠す（Entry のボタンと重ねない）
+    counter.classList.toggle("is-on", idx >= 0 && last > innerHeight * 0.85);
+    counter.style.setProperty("--p", Math.min(Math.max((line - first) / (last - first), 0), 1).toFixed(3));
+    if (idx < 0 || idx === currentChapter) return;
+    currentChapter = idx;
+    const name = counter.querySelector("[data-rcounter-name]");
+    counter.querySelector("[data-rcounter-no]").textContent = pad(idx + 1);
+    name.textContent = chapters[idx].dataset.chapter;
+    const next = chapters[idx + 1];
+    if (next) counter.querySelector("[data-rcounter-next]").setAttribute("aria-label", `次のセクション（${next.dataset.chapter}）へ`);
+    if (!reduceMotion) name.animate([{ opacity: 0, transform: "translateY(6px)" }, { opacity: 1, transform: "none" }], { duration: 450, easing: "cubic-bezier(.2,.7,.2,1)" });
+  };
+
+  if (slits.length || counter) {
+    slits.forEach((s) => s.classList.add("is-live"));
+    counter?.querySelector("[data-rcounter-next]").addEventListener("click", () => {
+      chapters[currentChapter + 1]?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
+    });
+    let queued = false;
+    const paintAll = () => {
+      paintSlits();
+      paintCounter();
+      queued = false;
+    };
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(paintAll);
+      },
+      { passive: true }
+    );
+    window.addEventListener("resize", paintAll);
+    paintAll();
+  }
+
   // ---------- 採用：職種の絞り込み ----------
   const filterButtons = document.querySelectorAll("[data-filter]");
   const positionCards = document.querySelectorAll(".pos-card");
-  const positionCount = document.querySelector("[data-pos-count]");
+  // 職種の数は一覧から数え、各ボタンの横に小さく添える
+  const countPositions = (filter) =>
+    [...positionCards].filter((card) => card.dataset.cat !== "open" && (filter === "all" || card.dataset.cat === filter)).length;
   filterButtons.forEach((button) => {
+    const num = document.createElement("span");
+    num.className = "filter-num";
+    num.textContent = countPositions(button.dataset.filter);
+    button.append(num);
     button.addEventListener("click", () => {
       const filter = button.dataset.filter;
       filterButtons.forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
-      let shown = 0;
       positionCards.forEach((card) => {
-        const isOpenCard = card.dataset.cat === "open";
-        const match = filter === "all" || card.dataset.cat === filter;
-        card.hidden = !match;
-        if (match && !isOpenCard) shown++;
+        card.hidden = !(filter === "all" || card.dataset.cat === filter);
       });
-      if (positionCount) positionCount.textContent = shown;
+      // 絞り込んだときは件数が少ないので全部見せ、「すべて」に戻したら最初の3件にたたむ
+      setPositionsCollapsed(filter === "all");
     });
   });
+
+  // ---------- 採用：スマホでは最初の3件だけ見せ、残りは「すべての職種を見る」で開く（CSS はスマホでだけ効く） ----------
+  const positionList = document.querySelector(".pos-rows");
+  const positionMore = document.querySelector("[data-pos-more]");
+  const POSITION_PREVIEW = 3;
+  function setPositionsCollapsed(collapsed) {
+    if (!positionList || !positionMore) return;
+    const rest = positionCards.length - POSITION_PREVIEW;
+    positionList.classList.toggle("is-collapsed", collapsed && rest > 0);
+    positionList.classList.remove("is-opened");
+    positionMore.hidden = !collapsed || rest <= 0;
+    positionMore.setAttribute("aria-expanded", "false");
+    positionMore.querySelector(".pos-more-label").textContent = "すべての職種を見る";
+    positionMore.querySelector("[data-pos-more-count]").textContent = `あと${rest}件`;
+  }
+  if (positionList && positionMore) {
+    setPositionsCollapsed(true);
+    positionMore.addEventListener("click", () => {
+      const open = positionMore.getAttribute("aria-expanded") !== "true";
+      positionList.classList.toggle("is-collapsed", !open);
+      positionList.classList.toggle("is-opened", open);
+      positionMore.setAttribute("aria-expanded", String(open));
+      positionMore.querySelector(".pos-more-label").textContent = open ? "閉じる" : "すべての職種を見る";
+      positionMore.querySelector("[data-pos-more-count]").textContent = open ? "" : `あと${positionCards.length - POSITION_PREVIEW}件`;
+    });
+  }
 
   // ---------- 制作例：カードの画面イメージを、詳細ポップアップの見出しの下にも出す ----------
   document.querySelectorAll(".case").forEach((card) => {
@@ -968,7 +1158,7 @@
     }
   };
 
-  const darkZones = [...document.querySelectorAll(".sec--dark, .gf, .rhero, .rentry")];
+  const darkZones = [...document.querySelectorAll(".sec--dark, .gf, .rhero, .rentry, .rtone-ink")];
   const onScroll = () => {
     const compact = desktop.matches && window.scrollY > 120;
     if (compact !== header.classList.contains("is-compact")) setCompact(compact);

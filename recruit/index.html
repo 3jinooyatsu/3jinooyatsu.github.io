@@ -46,11 +46,10 @@
 
   <main>
 
-    <!-- ========== Hero ========== -->
-    <section class="rhero" aria-labelledby="page-title">
+    <!-- ========== Hero：写真は入れず、黒地に大きな「Join us.」だけ ========== -->
+    <section class="rhero rhero--type" aria-labelledby="page-title">
       <div class="wrap">
         <p class="crumb"><a href="../">Home</a><span aria-hidden="true">/</span><span>Recruit</span></p>
-        <p class="rhero-badge"><span class="dot"></span>Now hiring — 5 positions</p>
         <h1 class="rhero-title" id="page-title">Join us<span>.</span></h1>
         <p class="rhero-lead">つくることを、<br />一緒に楽しめる人へ。</p>
         <div class="rhero-actions">
@@ -66,207 +65,218 @@
       </div>
     </section>
 
-    <!-- ========== 01 Message ========== -->
-    <section class="sec" aria-label="メッセージ">
-      <div class="wrap">
-        <p class="rlabel"><b>(01)</b> Message — メッセージ</p>
-        <p class="fill-text" data-fill-text>3時のおやつは、自社プロダクトの企画・開発と、受託開発の両方に取り組む小さな開発スタジオです。企画から設計、実装、リリース後の改善まで。職種の枠をこえて、プロダクトづくりの全体に関われるのが、私たちの環境の特徴です。</p>
-      </div>
-    </section>
-
-    <!-- ========== 02 Environment ========== -->
-    <section class="sec sec--tint" aria-labelledby="env-title">
-      <div class="wrap">
-        <p class="rlabel"><b>(02)</b> Environment — 働く環境</p>
-        <h2 class="rsec-title" id="env-title" data-reveal>3時のおやつで、<br />働くということ。</h2>
-
-        <div class="bento">
-          <article class="tile tile--wide tile--ink" data-reveal>
-            <p class="tile-kicker">Product × Client</p>
-            <h3 class="tile-title">自社プロダクトも、受託開発も。</h3>
-            <p class="tile-text">自社プロダクトで培った知見を受託開発に、受託開発で得た視点を自社プロダクトに。両方を行き来しながら、つくる力を伸ばせます。</p>
-            <span class="tile-deco" aria-hidden="true">P×C</span>
-          </article>
-          <article class="tile tile--signal" data-reveal>
-            <p class="tile-kicker">End to end</p>
-            <h3 class="tile-title">企画から、<br />リリース後まで。</h3>
-            <p class="tile-text">職種の枠をこえて、企画・設計・実装・改善のすべてに関われます。</p>
-          </article>
-          <article class="tile" data-reveal>
-            <p class="tile-kicker">Small team</p>
-            <h3 class="tile-title">小さなチームで、<br />裁量大きく。</h3>
-            <p class="tile-text">意思決定が速く、ひとりひとりの提案がそのままプロダクトに反映されます。</p>
-          </article>
-          <article class="tile tile--wide" data-reveal>
-            <p class="tile-kicker">Our products</p>
-            <h3 class="tile-title">いま、一緒に育てているプロダクト</h3>
-            <div class="mini-apps">
-              <a href="https://anothercontact.com/" class="mini-app" target="_blank" rel="noopener">
-                <img src="../logos/another-contact-logo.png" alt="" />
-                <span><strong>Another Contact</strong><small>まもなくリリース</small></span>
-                <i aria-hidden="true">↗</i>
-              </a>
-              <a href="../jibungo/" class="mini-app">
-                <img src="../logos/jibungo-logo.png" alt="" />
-                <span><strong>ジブンゴ</strong><small>まもなくリリース</small></span>
-                <i aria-hidden="true">→</i>
-              </a>
-              <a href="../poissh/" class="mini-app">
-                <img src="../logos/poissh-logo.png" alt="" />
-                <span><strong>ポイッシュ</strong><small>App Store で配信中</small></span>
-                <i aria-hidden="true">→</i>
-              </a>
-              <a href="../ikocca/" class="mini-app">
-                <img src="../logos/ikocca-logo.png" alt="" />
-                <span><strong>いこっか。</strong><small>App Store で配信中</small></span>
-                <i aria-hidden="true">→</i>
-              </a>
-            </div>
-          </article>
-          <article class="tile tile--full" data-reveal>
-            <p class="tile-kicker">How we work</p>
-            <h3 class="tile-title">職種に関わらず、大切にしている3つのこと</h3>
-            <ol class="tile-principles">
-              <li><span>01</span><strong>目的の共有</strong><em>Align on why</em></li>
-              <li><span>02</span><strong>ちいさな試行</strong><em>Ship small, learn fast</em></li>
-              <li><span>03</span><strong>気持ちの設計</strong><em>Design the feeling</em></li>
-            </ol>
-          </article>
+    <!-- ========== 01 Message：左に固定した写真、右に文章 ========== -->
+    <section class="rmsg" aria-label="メッセージ" data-chapter="Message">
+      <div class="rmsg-split">
+        <figure class="film rmsg-photo"><img src="photos/message-window.jpg" alt="窓辺でパソコンに向かう人の後ろ姿" loading="lazy" /></figure>
+        <div class="rmsg-body">
+          <p class="rlabel"><b>(01)</b> Message — メッセージ</p>
+          <p class="fill-text" data-fill-text>3時のおやつは、海の近くで、自社プロダクトの<wbr />企画・&#8288;開発と、受託開発の両方に<wbr />取り組む<wbr />小さな開発スタジオです。企画から設計、実装、リリース後の改善まで。職種の枠をこえて、プロダクトづくりの全体に<wbr />関われるのが、私たちの環境の特徴です。</p>
         </div>
       </div>
     </section>
 
-    <!-- ========== 03 Positions ========== -->
-    <section class="sec" id="positions" aria-labelledby="positions-title">
+    <!-- ========== 02 Work：自社プロダクトと受託開発は、別々の仕事ではなく、ひとつのチームが行き来するもの ========== -->
+    <section class="sec rwork" aria-labelledby="work-title" data-chapter="Work">
       <div class="wrap">
-        <p class="rlabel"><b>(03)</b> Positions — 募集職種</p>
-        <div class="rsec-head" data-reveal>
-          <h2 class="rsec-title" id="positions-title">いま、募集している職種<span class="count" data-pos-count>5</span></h2>
-          <div class="filters" role="group" aria-label="職種の絞り込み">
-            <button type="button" class="filter" data-filter="all" aria-pressed="true">すべて</button>
-            <button type="button" class="filter" data-filter="engineering" aria-pressed="false">Engineering</button>
-            <button type="button" class="filter" data-filter="design" aria-pressed="false">Design</button>
-            <button type="button" class="filter" data-filter="business" aria-pressed="false">Business</button>
+        <p class="rlabel"><b>(02)</b> Work — 仕事</p>
+        <h2 class="rsec-title" id="work-title" data-reveal>自分たちの<span class="nobr">「あったらいいな」も、</span><br />誰かの<span class="nobr">「あったらいいな」も。</span></h2>
+        <p class="rwork-lead" data-reveal>自社プロダクトと受託開発を、担当を分けずに、ひとつの<wbr />小さなチームで<wbr />つくっています。<br class="br-pc" />行き来するから、どちらの仕事にも、もう一方で<wbr />得た視点が<wbr />活きます。</p>
+
+        <!-- 2つの仕事を、ひとつのチームが行き来する図（点が左右に流れ続ける） -->
+        <div class="loop" data-reveal>
+          <p class="loop-node"><small>Products</small>自社<br />プロダクト</p>
+          <div class="loop-mid">
+            <p class="loop-arrow loop-arrow--to"><span>磨いた設計と実装</span><i aria-hidden="true"></i></p>
+            <p class="loop-team">ひとつのチーム</p>
+            <p class="loop-arrow loop-arrow--back"><i aria-hidden="true"></i><span>多様な事業の課題</span></p>
           </div>
+          <p class="loop-node"><small>Client</small>受託<br />開発</p>
         </div>
 
-        <ul class="pos-grid" data-reveal>
-          <li class="pos-card" data-cat="engineering">
-            <button type="button" class="pos-card-btn" data-open-dialog="ios">
-              <span class="pos-cat">Engineering</span>
-              <span class="pos-en">iOS Engineer</span>
-              <span class="pos-jp">iOSエンジニア</span>
-              <span class="pos-sum">自社プロダクトと受託案件の iOS アプリ開発</span>
-              <span class="pos-foot"><span class="pos-type">正社員 / 業務委託</span><span class="pos-plus" aria-hidden="true">+</span></span>
-            </button>
-          </li>
-          <li class="pos-card" data-cat="engineering">
-            <button type="button" class="pos-card-btn" data-open-dialog="web">
-              <span class="pos-cat">Engineering</span>
-              <span class="pos-en">Web Engineer</span>
-              <span class="pos-jp">Webエンジニア</span>
-              <span class="pos-sum">Web アプリ・業務システム、LINE ミニアプリの開発</span>
-              <span class="pos-foot"><span class="pos-type">正社員 / 業務委託</span><span class="pos-plus" aria-hidden="true">+</span></span>
-            </button>
-          </li>
-          <li class="pos-card" data-cat="design">
-            <button type="button" class="pos-card-btn" data-open-dialog="designer">
-              <span class="pos-cat pos-cat--design">Design</span>
-              <span class="pos-en">Product Designer</span>
-              <span class="pos-jp">プロダクトデザイナー</span>
-              <span class="pos-sum">アプリ・Web の UI / UX デザイン</span>
-              <span class="pos-foot"><span class="pos-type">業務委託</span><span class="pos-plus" aria-hidden="true">+</span></span>
-            </button>
-          </li>
-          <li class="pos-card" data-cat="business">
-            <button type="button" class="pos-card-btn" data-open-dialog="sales">
-              <span class="pos-cat pos-cat--business">Business</span>
-              <span class="pos-en">Sales</span>
-              <span class="pos-jp">法人営業</span>
-              <span class="pos-sum">受託開発の新規開拓と、課題に合わせた提案</span>
-              <span class="pos-foot"><span class="pos-type">正社員 / 業務委託</span><span class="pos-plus" aria-hidden="true">+</span></span>
-            </button>
-          </li>
-          <li class="pos-card" data-cat="business">
-            <button type="button" class="pos-card-btn" data-open-dialog="marketing">
-              <span class="pos-cat pos-cat--business">Business</span>
-              <span class="pos-en">Marketing</span>
-              <span class="pos-jp">マーケティング</span>
-              <span class="pos-sum">自社プロダクトのユーザー獲得とグロース</span>
-              <span class="pos-foot"><span class="pos-type">正社員 / 業務委託</span><span class="pos-plus" aria-hidden="true">+</span></span>
-            </button>
-          </li>
-          <li class="pos-card pos-card--open" data-cat="open">
-            <a class="pos-card-btn" href="../contact/?type=recruit&amp;topic=%E3%82%AB%E3%82%B8%E3%83%A5%E3%82%A2%E3%83%AB%E9%9D%A2%E8%AB%87">
-              <span class="pos-cat">Open</span>
-              <span class="pos-en">Not listed?</span>
-              <span class="pos-jp">該当する職種がない方へ</span>
-              <span class="pos-sum">ほかの職種でも、まずはカジュアルにお話ししましょう。</span>
-              <span class="pos-foot"><span class="pos-type">カジュアル面談</span><span class="pos-plus" aria-hidden="true">→</span></span>
-            </a>
-          </li>
+        <!-- それぞれの中身：どちらも4つずつ、アプリのアイコンのように横に並べる -->
+        <div class="work-cols" data-reveal>
+          <article class="work-col">
+            <h3 class="work-title">自社プロダクト</h3>
+            <p class="work-text"><span class="nobr">「あったらいいな」を、</span>自分たちで企画して、つくって、届ける。いま4つのアプリを<wbr />育てています。</p>
+            <ul class="tiles">
+              <li><a class="tile" href="https://anothercontact.com/" target="_blank" rel="noopener"><span class="tile-icon"><img src="../logos/another-contact-logo.png" alt="" /></span><b>Another Contact</b></a></li>
+              <li><a class="tile" href="../jibungo/"><span class="tile-icon"><img src="../logos/jibungo-logo.png" alt="" /></span><b>ジブンゴ</b></a></li>
+              <li><a class="tile" href="../poissh/"><span class="tile-icon"><img src="../logos/poissh-logo.png" alt="" /></span><b>ポイッシュ</b></a></li>
+              <li><a class="tile" href="../ikocca/"><span class="tile-icon"><img src="../logos/ikocca-logo.png" alt="" /></span><b>いこっか。</b></a></li>
+            </ul>
+          </article>
+          <article class="work-col">
+            <h3 class="work-title">受託開発</h3>
+            <p class="work-text">お客さまの事業に<wbr />合わせたシステムを、企画の整理から、リリース後の改善まで。小さな会社の<wbr /><span class="nobr">「あったらいいな」も</span><wbr />形にします。</p>
+            <ul class="tiles">
+              <li class="tile tile--tech" style="--i: 0"><span class="tile-icon tile-icon--type"><svg class="tile-glyph" viewBox="0 0 32 32" aria-hidden="true"><rect x="9" y="3" width="14" height="26" rx="3.5" pathLength="1" /><rect class="ac" x="13.5" y="5.6" width="5" height="1.8" rx="0.9" /></svg>iOS</span><b>Swift</b><small>SwiftUI</small></li>
+              <li class="tile tile--tech" style="--i: 1"><span class="tile-icon tile-icon--type"><svg class="tile-glyph" viewBox="0 0 32 32" aria-hidden="true"><rect x="9" y="3" width="14" height="26" rx="2.5" pathLength="1" /><path d="M14 25.6h4" pathLength="1" /><circle class="ac" cx="16" cy="6.6" r="1.1" /></svg>Android</span><b>Kotlin</b><small>Compose</small></li>
+              <li class="tile tile--tech" style="--i: 2"><span class="tile-icon tile-icon--type"><svg class="tile-glyph" viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="7" width="24" height="18" rx="2.5" pathLength="1" /><path d="M4 12h24" pathLength="1" /><circle class="ac" cx="7.4" cy="9.5" r="0.9" /><circle class="ac ac--dim" cx="10.2" cy="9.5" r="0.9" /><circle class="ac ac--dim" cx="13" cy="9.5" r="0.9" /></svg>Web</span><b>TypeScript</b><small>React</small></li>
+              <li class="tile tile--tech" style="--i: 3"><span class="tile-icon tile-icon--type"><svg class="tile-glyph" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 6.5c-6.4 0-11.5 4.1-11.5 9.2 0 2.9 1.6 5.4 4.2 7.1l-0.8 3.7 4.6-2.5c1.1 0.3 2.3 0.4 3.5 0.4 6.4 0 11.5-4.1 11.5-9.2S22.4 6.5 16 6.5z" pathLength="1" /><circle class="ac" cx="11.6" cy="15.7" r="1" /><circle class="ac" cx="16" cy="15.7" r="1" /><circle class="ac" cx="20.4" cy="15.7" r="1" /></svg>LINE</span><b>TypeScript</b><small>LIFF</small></li>
+            </ul>
+          </article>
+        </div>
+        <!-- あなたの関わり方：考える→つくる→届ける→広める→育てる→また考える、のひと回りに、全員で関わる -->
+        <div class="role" data-reveal>
+          <p class="role-kicker">Your role</p>
+          <h3 class="role-title">得意はそれぞれ。<span class="nobr">関わるのは、全部。</span></h3>
+          <div class="role-cycle" role="img" aria-label="考える、つくる、届ける、広める、育てる。そしてまた考える。このひと回りに、全員で関わります。">
+            <ol class="role-steps" aria-hidden="true">
+              <li style="--i: 0">考える</li><li style="--i: 1">つくる</li><li style="--i: 2">届ける</li><li style="--i: 3">広める</li><li style="--i: 4">育てる</li>
+            </ol>
+            <span class="role-return" aria-hidden="true"></span>
+            <span class="role-all" aria-hidden="true">全員で、何度でも</span>
+          </div>
+          <p class="role-text">どんなにいいものを<wbr />つくっても、届かなければ、誰の<span class="nobr">「あったらいいな」にも</span><wbr />なりません。だから<wbr />職種に関わらず、考えるところから、つくって、届けて、広めて、育てるところまで、全員で関わります。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 03 Culture：大切にしている3つのこと → 打ち合わせの写真 → 一緒に働きたい人 ========== -->
+    <section class="sec rculture rtone-ink" aria-labelledby="culture-title" data-chapter="Culture">
+      <div class="wrap">
+        <p class="rlabel"><b>(03)</b> Culture — 大切にしていること</p>
+        <h2 class="rsec-title" id="culture-title" data-reveal>職種に関わらず、<br />大切にしている3つのこと。</h2>
+        <!-- 3つのことは、英語の言葉を大きく見せて横に並べる -->
+        <ol class="values" data-reveal>
+          <li><em>Align on why</em><strong>目的の共有</strong><p>何をつくるかの前に、なぜつくるかを<wbr />揃える。事業のゴールと<wbr />優先順位を<wbr />言葉にしてから、手を動かします。</p></li>
+          <li><em>Ship small, learn fast</em><strong>ちいさな試行</strong><p>動くものを早く触って、早く直す。大きな仕様書よりも、触れるプロトタイプで<wbr />判断します。</p></li>
+          <li><em>Design the feeling</em><strong>気持ちの設計</strong><p>使っていて気持ちいいか、まで設計する。操作の手触りや<wbr />言葉づかいの<wbr />細部まで詰めます。</p></li>
+        </ol>
+      </div>
+
+      <!-- 写真の細い帯：画面に入ると上下に開き、写真がゆっくり流れる -->
+      <div class="film rslit rslit--inset" aria-hidden="true" data-slit><img src="photos/slit-meeting.jpg" alt="" loading="lazy" /></div>
+
+      <!-- 一緒に働きたい人：見出しを左に固定し、読み進めるとチェックが1つずつ入っていく -->
+      <div class="wrap rwant">
+        <h3 class="rsec-title rwant-title" data-reveal>こんな人と、<br />働きたい。</h3>
+        <ul class="want-list" data-want>
+          <li><p><span>「あったらいいな」を、</span><span>自分ごととして考えられる人。</span></p></li>
+          <li><p><span>ちいさく試して、</span><span>すぐ直すのが好きな人。</span></p></li>
+          <li><p><span>職種の枠をこえて、</span><span>手を動かせる人。</span></p></li>
+          <li><p><span>使う人の気持ちを、</span><span>想像できる人。</span></p></li>
+          <li><p><span>3時には、ちゃんと</span><span>手を止められる人。</span></p></li>
         </ul>
       </div>
     </section>
 
-    <!-- ========== 04 Process ========== -->
-    <section class="sec sec--tint" aria-labelledby="process-title">
+    <!-- ========== 04 Positions：職種の一覧 ========== -->
+    <section class="sec" id="positions" aria-labelledby="positions-title" data-chapter="Positions">
       <div class="wrap">
-        <p class="rlabel"><b>(04)</b> Process — 選考の流れ</p>
-        <div class="board-head" data-reveal>
-          <h2 class="rsec-title" id="process-title">ご応募から、オファーまで。</h2>
-          <p class="board-status"><span class="dot"></span>Now open — 応募受付中</p>
+        <p class="rlabel"><b>(04)</b> Positions — 募集職種</p>
+        <div class="rsec-head" data-reveal>
+          <h2 class="rsec-title" id="positions-title">募集中の職種</h2>
+          <div class="filters" role="group" aria-label="職種の絞り込み">
+            <button type="button" class="filter" data-filter="all" aria-pressed="true">すべて</button>
+            <button type="button" class="filter" data-filter="business" aria-pressed="false">Business</button>
+            <button type="button" class="filter" data-filter="engineering" aria-pressed="false">Engineering</button>
+            <button type="button" class="filter" data-filter="design" aria-pressed="false">Design</button>
+          </div>
         </div>
 
-        <div class="board" role="table" aria-labelledby="process-title" data-reveal>
-          <div class="board-row board-row--head" role="row">
-            <span role="columnheader">Step</span>
-            <span role="columnheader">Phase</span>
-            <span role="columnheader">Detail</span>
-          </div>
-          <div class="board-row" role="row" style="--i:0">
-            <span class="board-step" role="cell">01</span>
-            <span class="board-phase" role="cell"><strong>ご応募</strong><em>Entry</em></span>
-            <span class="board-detail" role="cell">お問い合わせフォームの「採用について」からご連絡ください。</span>
-          </div>
-          <div class="board-row" role="row" style="--i:1">
-            <span class="board-step" role="cell">02</span>
-            <span class="board-phase" role="cell"><strong>カジュアル面談</strong><em>Casual talk</em></span>
-            <span class="board-detail" role="cell">お互いを知るための時間です。選考の前に、気軽にお話ししましょう。</span>
-          </div>
-          <div class="board-row" role="row" style="--i:2">
-            <span class="board-step" role="cell">03</span>
-            <span class="board-phase" role="cell"><strong>面接</strong><em>Interview</em></span>
-            <span class="board-detail" role="cell">1〜2回を予定しています。これまでの経験や、これからやりたいことを伺います。</span>
-          </div>
-          <div class="board-row" role="row" style="--i:3">
-            <span class="board-step" role="cell">04</span>
-            <span class="board-phase" role="cell"><strong>オファー</strong><em>Offer</em></span>
-            <span class="board-detail" role="cell">条件や働き方をすり合わせ、ご納得いただいたうえでご参加いただきます。<span class="board-tag">Welcome</span></span>
-          </div>
-        </div>
-        <p class="board-note">選考の途中でも、気になることがあればいつでもご質問ください。</p>
+        <!-- スマホでは最初の3件だけ見せ、残りは下のボタンで開く -->
+        <ul class="pos-rows" id="pos-rows" data-reveal>
+          <li class="pos-card pos-row" data-cat="business">
+            <button type="button" class="pos-row-btn" data-open-dialog="sales">
+              <span class="pos-row-cat">Business</span>
+              <span class="pos-row-name"><b>Sales</b><small>法人営業</small></span>
+              <span class="pos-row-sum">受託開発の新規開拓と、課題に合わせた提案</span>
+              <span class="pos-row-type">正社員 / 業務委託</span>
+              <span class="pos-row-plus" aria-hidden="true">+</span>
+            </button>
+          </li>
+          <li class="pos-card pos-row" data-cat="business">
+            <button type="button" class="pos-row-btn" data-open-dialog="marketing">
+              <span class="pos-row-cat">Business</span>
+              <span class="pos-row-name"><b>Marketing</b><small>マーケティング</small></span>
+              <span class="pos-row-sum">自社プロダクトのユーザー獲得とグロース</span>
+              <span class="pos-row-type">正社員 / 業務委託</span>
+              <span class="pos-row-plus" aria-hidden="true">+</span>
+            </button>
+          </li>
+          <li class="pos-card pos-row" data-cat="engineering">
+            <button type="button" class="pos-row-btn" data-open-dialog="ios">
+              <span class="pos-row-cat">Engineering</span>
+              <span class="pos-row-name"><b>iOS Engineer</b><small>iOSエンジニア</small></span>
+              <span class="pos-row-sum">自社プロダクトと受託案件の iOS アプリ開発</span>
+              <span class="pos-row-type">正社員 / 業務委託</span>
+              <span class="pos-row-plus" aria-hidden="true">+</span>
+            </button>
+          </li>
+          <li class="pos-card pos-row" data-cat="engineering">
+            <button type="button" class="pos-row-btn" data-open-dialog="web">
+              <span class="pos-row-cat">Engineering</span>
+              <span class="pos-row-name"><b>Web Engineer</b><small>Webエンジニア</small></span>
+              <span class="pos-row-sum">Web アプリ・業務システム、LINE ミニアプリの開発</span>
+              <span class="pos-row-type">正社員 / 業務委託</span>
+              <span class="pos-row-plus" aria-hidden="true">+</span>
+            </button>
+          </li>
+          <li class="pos-card pos-row" data-cat="design">
+            <button type="button" class="pos-row-btn" data-open-dialog="designer">
+              <span class="pos-row-cat">Design</span>
+              <span class="pos-row-name"><b>Product Designer</b><small>プロダクトデザイナー</small></span>
+              <span class="pos-row-sum">アプリ・Web の UI / UX デザイン</span>
+              <span class="pos-row-type">業務委託</span>
+              <span class="pos-row-plus" aria-hidden="true">+</span>
+            </button>
+          </li>
+        </ul>
+        <a class="pos-open" href="../contact/?type=recruit&amp;topic=%E3%82%AB%E3%82%B8%E3%83%A5%E3%82%A2%E3%83%AB%E9%9D%A2%E8%AB%87">
+          <span><b>該当する職種がない方へ</b>ほかの職種でも、まずはカジュアルに<wbr />お話ししましょう。</span>
+          <span class="btn-arrow btn-arrow--circle" aria-hidden="true"><svg viewBox="0 0 18 18"><path d="M3 9h12M10 4l5 5-5 5" /></svg></span>
+        </a>
+        <button type="button" class="pos-more" aria-expanded="false" aria-controls="pos-rows" data-pos-more>
+          <span class="pos-more-label">すべての職種を見る</span><small data-pos-more-count></small><span class="pos-more-icon" aria-hidden="true"></span>
+        </button>
       </div>
     </section>
 
-    <!-- ========== 05 Entry ========== -->
-    <section class="rentry" aria-labelledby="entry-title">
+    <div class="film rslit" aria-hidden="true" data-slit><img src="photos/slit-desk.jpg" alt="" loading="lazy" /></div>
+
+    <!-- ========== 05 Process：1本の線でたどる選考 ========== -->
+    <section class="sec" aria-labelledby="process-title" data-chapter="Process">
       <div class="wrap">
-        <p class="rlabel rlabel--dark"><b>(05)</b> Entry — ご応募</p>
-        <h2 class="visually-hidden" id="entry-title">ご応募</h2>
-        <div class="rentry-grid">
-          <a class="rentry-card rentry-card--primary" href="../contact/?type=recruit">
-            <span class="rentry-kicker">Entry</span>
-            <span class="rentry-title">応募する</span>
-            <span class="rentry-text">募集職種を選んで、フォームからご応募ください。</span>
-            <span class="rentry-arrow" aria-hidden="true">→</span>
-          </a>
-          <a class="rentry-card" href="../contact/?type=recruit&amp;topic=%E3%82%AB%E3%82%B8%E3%83%A5%E3%82%A2%E3%83%AB%E9%9D%A2%E8%AB%87">
-            <span class="rentry-kicker">Casual talk</span>
-            <span class="rentry-title">まずは話を聞いてみる</span>
-            <span class="rentry-text">応募の前に、カジュアルにお話ししましょう。</span>
-            <span class="rentry-arrow" aria-hidden="true">→</span>
-          </a>
+        <p class="rlabel"><b>(05)</b> Process — 選考の流れ</p>
+        <h2 class="rsec-title" id="process-title" data-reveal>ご応募から、オファーまで。</h2>
+        <ol class="steps" data-reveal>
+          <li class="step" style="--i: 0">
+            <span class="step-no">01</span>
+            <h3 class="step-title">ご応募<em>Entry</em></h3>
+            <p class="step-text">お問い合わせフォームの<wbr /><span class="nobr">「採用について」から</span><wbr />ご連絡ください。</p>
+          </li>
+          <li class="step" style="--i: 1">
+            <span class="step-no">02</span>
+            <h3 class="step-title">カジュアル面談<em>Casual talk</em></h3>
+            <p class="step-text">お互いを知るための<wbr />時間です。選考の前に、気軽に<wbr />お話ししましょう。</p>
+          </li>
+          <li class="step" style="--i: 2">
+            <span class="step-no">03</span>
+            <h3 class="step-title">面接<em>Interview</em></h3>
+            <p class="step-text">1〜2回を<wbr />予定しています。これまでの経験や、これからやりたいことを<wbr />伺います。</p>
+          </li>
+          <li class="step" style="--i: 3">
+            <span class="step-no">04</span>
+            <h3 class="step-title">オファー<em>Offer</em></h3>
+            <p class="step-text">条件や働き方をすり合わせ、ご納得いただいたうえで<wbr />ご参加いただきます。</p>
+          </li>
+        </ol>
+        <p class="steps-note">選考の途中でも、気になることがあれば<wbr />いつでも<wbr />ご質問ください。</p>
+      </div>
+    </section>
+
+    <!-- ========== 06 Entry：大きな一言と2つのボタン ========== -->
+    <section class="rentry rentry--film" aria-labelledby="entry-title" data-chapter="Entry">
+      <figure class="film rtexture" aria-hidden="true"><img src="photos/entry-dusk.jpg" alt="" loading="lazy" /></figure>
+      <div class="wrap">
+        <p class="rlabel rlabel--dark"><b>(06)</b> Entry — ご応募</p>
+        <h2 class="rentry-big" id="entry-title">Let’s talk<span>.</span></h2>
+        <p class="rentry-lead">応募はもちろん、まずは話を<wbr />聞いてみるだけでも<wbr />大歓迎です。</p>
+        <div class="rentry-actions">
+          <a class="btn btn--primary btn--circle btn--lg" href="../contact/?type=recruit">応募する<span class="btn-arrow btn-arrow--circle" aria-hidden="true"><svg viewBox="0 0 18 18"><path d="M3 9h12M10 4l5 5-5 5" /></svg></span></a>
+          <a class="btn btn--outline-light btn--lg" href="../contact/?type=recruit&amp;topic=%E3%82%AB%E3%82%B8%E3%83%A5%E3%82%A2%E3%83%AB%E9%9D%A2%E8%AB%87">まずは話を聞いてみる<span class="btn-arrow" aria-hidden="true">→</span></a>
         </div>
       </div>
     </section>
@@ -279,9 +289,9 @@
         <h3 class="rdlg-title" id="dlg-ios-title">iOS Engineer</h3>
         <p class="rdlg-jp">iOSエンジニア</p>
         <dl class="pos-spec">
-          <div><dt>仕事内容</dt><dd>自社プロダクト（いこっか。・ポイッシュなど）と、受託案件の iOS アプリ開発。設計から実装、App Store での公開・運用までを担当していただきます。</dd></div>
-          <div><dt>必須スキル</dt><dd><ul><li>Swift / SwiftUI を用いたアプリ開発経験</li></ul></dd></div>
-          <div><dt>歓迎スキル</dt><dd><ul><li>App Store でのアプリ公開経験</li><li>WidgetKit・Share Extension など OS 機能の実装経験</li><li>Supabase / Firebase などの利用経験</li></ul></dd></div>
+          <div><dt>仕事内容</dt><dd>自社プロダクト<span class="nobr">（いこっか。・ポイッシュなど）と、</span>受託案件の iOS&nbsp;アプリ開発。設計から実装、App&nbsp;Store&nbsp;での公開・&#8288;運用までを<wbr />担当していただきます。</dd></div>
+          <div><dt>必須スキル</dt><dd><ul><li>Swift / SwiftUI&nbsp;を用いたアプリ開発経験</li></ul></dd></div>
+          <div><dt>歓迎スキル</dt><dd><ul><li>App&nbsp;Store&nbsp;でのアプリ公開経験</li><li>WidgetKit・Share Extension&nbsp;など OS&nbsp;機能の実装経験</li><li>Supabase / Firebase&nbsp;などの利用経験</li></ul></dd></div>
           <div><dt>雇用形態</dt><dd>正社員 / 業務委託</dd></div>
           <div><dt>勤務形態</dt><dd>応相談</dd></div>
         </dl>
@@ -296,9 +306,9 @@
         <h3 class="rdlg-title" id="dlg-web-title">Web Engineer</h3>
         <p class="rdlg-jp">Webエンジニア</p>
         <dl class="pos-spec">
-          <div><dt>仕事内容</dt><dd>受託開発での Web アプリ・業務システム、LINE ミニアプリの開発。要件の整理から実装、リリース後の改善までを担当していただきます。</dd></div>
-          <div><dt>必須スキル</dt><dd><ul><li>TypeScript / React を用いた開発経験</li></ul></dd></div>
-          <div><dt>歓迎スキル</dt><dd><ul><li>LIFF・Messaging API を用いた開発経験</li><li>Supabase / Firebase などの利用経験</li></ul></dd></div>
+          <div><dt>仕事内容</dt><dd>受託開発での Web&nbsp;アプリ・&#8288;業務システム、LINE&nbsp;ミニアプリの開発。要件の整理から実装、リリース後の改善までを<wbr />担当していただきます。</dd></div>
+          <div><dt>必須スキル</dt><dd><ul><li>TypeScript / React&nbsp;を用いた開発経験</li></ul></dd></div>
+          <div><dt>歓迎スキル</dt><dd><ul><li>LIFF・Messaging API&nbsp;を用いた開発経験</li><li>Supabase / Firebase&nbsp;などの利用経験</li></ul></dd></div>
           <div><dt>雇用形態</dt><dd>正社員 / 業務委託</dd></div>
           <div><dt>勤務形態</dt><dd>応相談</dd></div>
         </dl>
@@ -313,8 +323,8 @@
         <h3 class="rdlg-title" id="dlg-designer-title">Product Designer</h3>
         <p class="rdlg-jp">プロダクトデザイナー</p>
         <dl class="pos-spec">
-          <div><dt>仕事内容</dt><dd>自社プロダクトと受託案件の UI / UX デザイン。アプリ画面の設計から、ストア画像や Web サイトのデザインまで幅広く担当していただきます。</dd></div>
-          <div><dt>歓迎スキル</dt><dd><ul><li>iOS のヒューマンインターフェイスガイドラインへの理解</li><li>HTML / CSS など簡単なコーディング経験</li></ul></dd></div>
+          <div><dt>仕事内容</dt><dd>自社プロダクトと受託案件の UI&nbsp;/&nbsp;UX&nbsp;デザイン。アプリ画面の設計から、ストア画像や Web&nbsp;サイトの<wbr />デザインまで<wbr />幅広く<wbr />担当していただきます。</dd></div>
+          <div><dt>歓迎スキル</dt><dd><ul><li>iOS&nbsp;のヒューマンインターフェイス<wbr />ガイドラインへの理解</li><li>HTML / CSS&nbsp;など簡単なコーディング経験</li></ul></dd></div>
           <div><dt>雇用形態</dt><dd>業務委託</dd></div>
           <div><dt>勤務形態</dt><dd>応相談</dd></div>
         </dl>
@@ -329,9 +339,9 @@
         <h3 class="rdlg-title" id="dlg-sales-title">Sales</h3>
         <p class="rdlg-jp">法人営業</p>
         <dl class="pos-spec">
-          <div><dt>仕事内容</dt><dd>受託開発（iOS・Android アプリ / Web アプリ・システム / LINE ミニアプリ）の新規顧客の開拓と提案。お客様の課題のヒアリングから、開発チームと連携した提案・お見積もり、プロジェクトの立ち上げまでを担当していただきます。</dd></div>
+          <div><dt>仕事内容</dt><dd>受託開発（iOS・Android&nbsp;アプリ&nbsp;/ Web&nbsp;アプリ・&#8288;システム&nbsp;/ LINE&nbsp;ミニアプリ）&#8288;の新規顧客の<wbr />開拓と提案。お客様の課題のヒアリングから、開発チームと連携した提案・お見積もり、プロジェクトの立ち上げまでを<wbr />担当していただきます。</dd></div>
           <div><dt>必須スキル</dt><dd><ul><li>法人向けの営業・提案経験</li></ul></dd></div>
-          <div><dt>歓迎スキル</dt><dd><ul><li>IT・Web 業界での営業経験</li><li>アプリ・システム開発の提案や進行管理の経験</li></ul></dd></div>
+          <div><dt>歓迎スキル</dt><dd><ul><li>IT・Web&nbsp;業界での営業経験</li><li>アプリ・&#8288;システム開発の<wbr />提案や<wbr />進行管理の経験</li></ul></dd></div>
           <div><dt>雇用形態</dt><dd>正社員 / 業務委託</dd></div>
           <div><dt>勤務形態</dt><dd>応相談</dd></div>
         </dl>
@@ -346,15 +356,23 @@
         <h3 class="rdlg-title" id="dlg-marketing-title">Marketing</h3>
         <p class="rdlg-jp">マーケティング</p>
         <dl class="pos-spec">
-          <div><dt>仕事内容</dt><dd>自社プロダクト（いこっか。・ポイッシュなど）のマーケティング。SNS の運用、App Store の最適化（ASO）、キャンペーンの企画から効果測定までを担当していただきます。</dd></div>
-          <div><dt>必須スキル</dt><dd><ul><li>Web・アプリのマーケティング経験（SNS 運用、広告運用など）</li></ul></dd></div>
-          <div><dt>歓迎スキル</dt><dd><ul><li>アプリのユーザー獲得・グロースの経験</li><li>App Store 最適化（ASO）の経験</li><li>アクセス解析ツールを用いた分析の経験</li></ul></dd></div>
+          <div><dt>仕事内容</dt><dd>自社プロダクト<span class="nobr">（いこっか。・ポイッシュなど）の</span><wbr />マーケティング。SNS&nbsp;の運用、App&nbsp;Store&nbsp;の最適化&#8288;（ASO）、キャンペーンの企画から<wbr />効果測定までを<wbr />担当していただきます。</dd></div>
+          <div><dt>必須スキル</dt><dd><ul><li>Web・アプリのマーケティング経験（SNS&nbsp;運用、広告運用など）</li></ul></dd></div>
+          <div><dt>歓迎スキル</dt><dd><ul><li>アプリのユーザー獲得・グロースの経験</li><li>App&nbsp;Store&nbsp;最適化（ASO）の経験</li><li>アクセス解析ツールを用いた分析の経験</li></ul></dd></div>
           <div><dt>雇用形態</dt><dd>正社員 / 業務委託</dd></div>
           <div><dt>勤務形態</dt><dd>応相談</dd></div>
         </dl>
         <a class="btn btn--primary btn--lg" href="../contact/?type=recruit&amp;role=Marketing%EF%BC%88%E3%83%9E%E3%83%BC%E3%82%B1%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%EF%BC%89">この職種に応募する<span class="btn-arrow" aria-hidden="true">→</span></a>
       </div>
     </dialog>
+
+    <!-- ========== いま何番目のセクションか（フィルムのコマ数のように）。押すと次へ ========== -->
+    <div class="rcounter" data-rcounter>
+      <span class="rcounter-no"><b data-rcounter-no>01</b>/06</span>
+      <span class="rcounter-name" data-rcounter-name>Message</span>
+      <span class="rcounter-bar" aria-hidden="true"><i></i></span>
+      <button type="button" class="rcounter-next" aria-label="次のセクションへ" data-rcounter-next><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M9 3v12M4 10l5 5 5-5" /></svg></button>
+    </div>
 
   </main>
 
