@@ -733,49 +733,78 @@
     dialObserver.observe(animDial);
   }
 
-  // ---------- お問い合わせ：「開発相談・見積もり」と「その他」をタブで切り替え ----------
-  const contactTabs = document.querySelector("[data-contact-tabs]");
-  if (contactTabs) {
-    const tabs = [...contactTabs.querySelectorAll('[role="tab"]')];
-    const panels = tabs.map((tab) => document.getElementById(tab.getAttribute("aria-controls")));
-    const showTab = (index, focus) => {
-      tabs.forEach((tab, n) => {
-        const on = n === index;
-        tab.setAttribute("aria-selected", String(on));
-        tab.tabIndex = on ? 0 : -1;
-        panels[n].hidden = !on;
+  // ---------- お問い合わせ：ご用件（開発・採用・会社）を選ぶと、その専用フォームを開く ----------
+  const contactPick = document.querySelector("[data-contact-pick]");
+  if (contactPick) {
+    const cards = [...contactPick.querySelectorAll("[data-contact-to]")];
+    const panels = new Map(cards.map((card) => [card.dataset.contactTo, document.getElementById(card.getAttribute("aria-controls"))]));
+    const openPanel = (type) => {
+      contactPick.classList.add("is-picked");
+      cards.forEach((card) => {
+        if (card.dataset.contactTo === type) card.setAttribute("aria-current", "true");
+        else card.removeAttribute("aria-current");
       });
-      if (focus) tabs[index].focus();
+      panels.forEach((panel, key) => { panel.hidden = key !== type; });
     };
-    tabs.forEach((tab, n) => {
-      tab.addEventListener("click", () => showTab(n));
-      tab.addEventListener("keydown", (e) => {
-        const step = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
-        if (!step) return;
-        e.preventDefault();
-        showTab((n + step + tabs.length) % tabs.length, true);
-      });
+    document.addEventListener("click", (e) => {
+      const link = e.target.closest("[data-contact-to]");
+      if (!link || e.metaKey || e.ctrlKey || e.shiftKey) return;
+      e.preventDefault();
+      const type = link.dataset.contactTo;
+      openPanel(type);
+      history.replaceState(null, "", `?type=${type}`);
+      contactPick.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
     });
 
-    // ?type=development は見積もり、それ以外の種別は「その他」を開いて、その種別を選ぶ
+    // ?type= で開くフォームを決め、ほかのパラメータで選択肢を先に選んでおく
+    // （以前の ?type=product / other、?role=職種名、?topic=カジュアル面談 のリンクにも対応）
     const params = new URLSearchParams(location.search);
-    const type = params.get("type");
-    const general = document.getElementById("panel-general");
-    const presetType = type && general.querySelector(`input[name="type"][value="${CSS.escape(type)}"]`);
-    if (presetType) {
-      presetType.checked = true;
-      showTab(tabs.findIndex((tab) => tab.getAttribute("aria-controls") === "panel-general"));
+    const legacyTopic = { product: "product", other: "other" }[params.get("type")];
+    const type = (legacyTopic || params.get("type") === "general") ? "company" : params.get("type");
+    if (panels.has(type)) {
+      openPanel(type);
+      const form = panels.get(type).querySelector("form");
+      const check = (name, value) => {
+        const input = value && form.querySelector(`input[name="${name}"][value="${CSS.escape(value)}"]`);
+        if (input) input.checked = true;
+      };
+      if (type === "development") check("kind", params.get("kind"));
+      if (type === "company") check("topic", params.get("topic") || legacyTopic);
+      if (type === "recruit") {
+        const role = params.get("role");
+        const option = role && [...form.elements.role.options].find((o) => o.value === role || o.text.startsWith(role));
+        if (option) form.elements.role.value = option.value;
+        check("entry", params.get("kind") || (params.get("topic") === "カジュアル面談" ? "casual" : role ? "apply" : ""));
+      }
     }
-    const activeForm = panels.find((panel) => !panel.hidden).querySelector("form");
-    const role = params.get("role");
-    const topic = params.get("topic");
-    if (role) activeForm.elements.message.value = `【応募職種】${role}\n\n`;
-    else if (topic) activeForm.elements.message.value = `【ご希望】${topic}\n\n`;
   }
 
   // ---------- お問い合わせフォーム：入力内容をメールアプリで開く ----------
+  // ラジオ・チェックは選ばれた data-label、セレクトは表示名、それ以外は入力値
+  const fieldValue = (field) => {
+    if (field.tagName === "FIELDSET") return [...field.querySelectorAll("input:checked")].map((input) => input.dataset.label || input.value).join("、");
+    if (field.tagName === "SELECT") return field.value ? field.selectedOptions[0].text : "";
+    return field.value.trim();
+  };
+  const isActive = (field) => !field.disabled && !field.closest("[data-when][hidden]");
+
   document.querySelectorAll("[data-contact-form]").forEach((form) => {
     const status = form.querySelector("[data-form-status]");
+
+    // data-when="name:値,値" の項目は、そのラジオが選ばれているときだけ出す（隠れている間は必須・送信の対象外）
+    const conditionals = [...form.querySelectorAll("[data-when]")];
+    const syncConditionals = () => {
+      conditionals.forEach((el) => {
+        const [name, values] = el.dataset.when.split(":");
+        const current = form.querySelector(`input[name="${name}"]:checked`)?.value ?? "";
+        const on = values.split(",").includes(current);
+        el.hidden = !on;
+        el.querySelectorAll("input, select, textarea").forEach((field) => { field.disabled = !on; });
+      });
+    };
+    form.addEventListener("change", syncConditionals);
+    syncConditionals();
+
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       if (!form.checkValidity()) {
@@ -788,14 +817,15 @@
       // data-mail-label の付いた項目を、上から順に本文へ
       const lines = [];
       form.querySelectorAll("[data-mail-label]").forEach((field) => {
+        if (!isActive(field)) return;
         const label = field.dataset.mailLabel;
-        const value = field.tagName === "FIELDSET" ? field.querySelector("input:checked")?.dataset.label : field.value.trim();
+        const value = fieldValue(field);
         if (field.tagName === "TEXTAREA") lines.push("", `${label}：`, value || "-", "");
         else lines.push(`${label}：${value || "-"}`);
       });
-      const typeField = form.querySelector("[data-subject-type]");
-      const head = form.dataset.subject + (typeField ? typeField.querySelector("input:checked").dataset.label : "");
-      const subject = `${head}｜${form.elements.name.value}様`;
+      // 件名：【開発のご相談】LINEアプリ｜お名前様 のように、data-subject-part の値を並べる
+      const parts = [...form.querySelectorAll("[data-subject-part]")].filter(isActive).map(fieldValue).filter(Boolean);
+      const subject = `${form.dataset.subject}${parts.join("・")}｜${form.elements.name.value.trim()}様`;
       const to = form.dataset.to;
 
       window.location.href = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join("\n"))}`;

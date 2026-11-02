@@ -4,12 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact｜3時のおやつ</title>
-  <meta name="description" content="3時のおやつへのお問い合わせ。開発のご相談、プロダクトについて、採用、取材などはこちらから。" />
+  <meta name="description" content="3時のおやつへのお問い合わせ。開発のご相談・お見積り、採用へのご応募・カジュアル面談、プロダクトや取材などのお問い合わせを、それぞれ専用のフォームで受け付けています。" />
   <link rel="canonical" href="https://3jino-oyatsu.com/contact/" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="3時のおやつ" />
   <meta property="og:title" content="Contact｜3時のおやつ" />
-  <meta property="og:description" content="開発のご相談、プロダクトについて、採用、取材などのお問い合わせはこちらから。" />
+  <meta property="og:description" content="開発のご相談・お見積り、採用へのご応募、そのほか会社へのお問い合わせはこちらから。" />
   <meta property="og:url" content="https://3jino-oyatsu.com/contact/" />
   <meta property="og:image" content="https://3jino-oyatsu.com/logos/3jinooyatsu_logo.png" />
   <meta name="twitter:card" content="summary" />
@@ -57,50 +57,79 @@
       </div>
     </section>
 
-    <!-- ========== Form ========== -->
-    <section class="sec sec--tint">
-      <div class="wrap contact-page">
-        <aside class="cp-aside" data-reveal>
-          <p class="cp-lead">開発のご相談・お見積り、プロダクトのこと、採用、取材など、お気軽にご連絡ください。</p>
-          <p class="cp-note">内容を拝見のうえ、1〜2営業日を目安にご返信いたします。</p>
+    <!-- ========== ご用件を選ぶ → 用件ごとの専用フォーム ========== -->
+    <section class="sec sec--tint ccontact">
+      <div class="wrap">
+        <div class="cpick-head" data-reveal>
+          <h2 class="cpick-title">ご用件を<wbr />お選びください。</h2>
+          <p class="cpick-note">用件ごとに、専用のフォームを<wbr />ご用意しています。</p>
+        </div>
 
-          <ul class="cp-topics">
-            <li><span>01</span>開発のご相談・お見積り<small>「開発相談・見積もり」のフォームから。お見積りは無料です</small></li>
-            <li><span>02</span>プロダクトについて<small>Another Contact・ジブンゴ・ポイッシュ・いこっか。へのご質問</small></li>
-            <li><span>03</span>採用について<small>募集職種へのご応募・ご質問</small></li>
-            <li><span>04</span>取材・その他</li>
-          </ul>
+        <nav class="cpick" aria-label="お問い合わせの種類" data-contact-pick data-reveal>
+          <a class="cpick-card" href="?type=development" data-contact-to="development" aria-controls="panel-development">
+            <span class="cpick-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><rect x="4" y="6" width="24" height="20" rx="3" pathLength="1" /><path d="M4 11h24" pathLength="1" /><path d="M13 15l-3 3 3 3M19 15l3 3-3 3" pathLength="1" /></svg></span>
+            <span class="cpick-en">Development</span>
+            <b class="cpick-name"><span>開発のご相談・<wbr />お見積り</span><small>開発・見積り</small></b>
+            <span class="cpick-text">LINEアプリ・Webシステム・<wbr />スマホアプリを<wbr />つくりたい方へ。</span>
+            <span class="cpick-tag">お見積り無料</span>
+            <span class="cpick-arrow" aria-hidden="true"><svg viewBox="0 0 18 18"><path d="M9 3v12M4 10l5 5 5-5" /></svg></span>
+          </a>
+          <a class="cpick-card" href="?type=recruit" data-contact-to="recruit" aria-controls="panel-recruit">
+            <span class="cpick-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="13" cy="11" r="5" pathLength="1" /><path d="M4 27c0-5 4-9 9-9s9 4 9 9" pathLength="1" /><path d="M25 9v8M21 13h8" pathLength="1" /></svg></span>
+            <span class="cpick-en">Recruit</span>
+            <b class="cpick-name"><span>採用への<wbr />ご応募・面談</span><small>採用・面談</small></b>
+            <span class="cpick-text">一緒に働きたい方へ。<wbr />カジュアル面談も<wbr />こちらから。</span>
+            <span class="cpick-tag">カジュアル面談OK</span>
+            <span class="cpick-arrow" aria-hidden="true"><svg viewBox="0 0 18 18"><path d="M9 3v12M4 10l5 5 5-5" /></svg></span>
+          </a>
+          <a class="cpick-card" href="?type=company" data-contact-to="company" aria-controls="panel-company">
+            <span class="cpick-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><rect x="4" y="7" width="24" height="18" rx="3" pathLength="1" /><path d="M5 9l11 8 11-8" pathLength="1" /></svg></span>
+            <span class="cpick-en">Company</span>
+            <b class="cpick-name"><span>会社への<wbr />お問い合わせ</span><small>その他</small></b>
+            <span class="cpick-text">プロダクトのこと、取材、<wbr />協業のご相談など。</span>
+            <span class="cpick-tag">取材・協業など</span>
+            <span class="cpick-arrow" aria-hidden="true"><svg viewBox="0 0 18 18"><path d="M9 3v12M4 10l5 5 5-5" /></svg></span>
+          </a>
+        </nav>
 
-          <div class="cp-mail">
-            <p class="cp-mail-label">Email</p>
-            <a href="mailto:info@3jino-oyatsu.com">info@3jino-oyatsu.com</a>
-          </div>
-          <div class="cp-mail">
-            <p class="cp-mail-label">Address</p>
-            <address class="cp-address">〒251-0035<br />神奈川県藤沢市片瀬海岸2丁目18-21<br />リードシー片瀬江ノ島ビル 3F</address>
-          </div>
-        </aside>
+        <!-- ---------- 01 開発のご相談・お見積り ---------- -->
+        <div class="cpanel" id="panel-development" hidden>
+          <aside class="cpanel-aside">
+            <p class="cpanel-en">Development</p>
+            <h2 class="cpanel-title">つくりたいもの、<br />実現したいことを<br />聞かせてください。</h2>
+            <p class="cpanel-text">内容が固まっていなくても<wbr />大丈夫です。必要な機能の整理から、<wbr />一緒に考えます。</p>
+            <dl class="cpanel-facts">
+              <div><dt>初期費用</dt><dd>0<small>円</small></dd></div>
+              <div><dt>月額</dt><dd><span class="nobr">2,980<small>円〜</small></span></dd></div>
+              <div><dt>お見積り</dt><dd>無料</dd></div>
+            </dl>
+            <ol class="cp-topics">
+              <li><span>01</span>フォームを送信<small>わかる範囲で大丈夫です</small></li>
+              <li><span>02</span>1〜2営業日以内にご連絡<small>担当からメールでご連絡します</small></li>
+              <li><span>03</span>ヒアリング<small>オンラインで、実現したいことを整理</small></li>
+              <li><span>04</span>お見積り・ご提案<small>月額と開発内容をご案内します</small></li>
+            </ol>
+            <a class="link-arrow cpanel-more" href="../development/">開発の進め方・料金を見る<span aria-hidden="true">→</span></a>
+          </aside>
 
-        <div class="cform-wrap" data-reveal>
-          <div class="cform-tabs" role="tablist" aria-label="お問い合わせの種類" data-contact-tabs>
-            <button type="button" role="tab" id="tab-estimate" aria-controls="panel-estimate" aria-selected="true">開発相談・見積もり<small>無料</small></button>
-            <button type="button" role="tab" id="tab-general" aria-controls="panel-general" aria-selected="false" tabindex="-1">その他のお問い合わせ</button>
-          </div>
-
-          <div class="cform-panel" role="tabpanel" id="panel-estimate" aria-labelledby="tab-estimate">
-          <form class="cform" data-contact-form data-subject="【開発相談・見積もり】" data-to="info@3jino-oyatsu.com" novalidate>
-            <div class="cform-intro">
-              <p class="cform-intro-title">つくりたいもの、実現したいことを聞かせてください。</p>
-              <p class="cform-intro-text">初期費用無料・月額2,980円〜。内容が固まっていなくても、必要な機能の整理から一緒に考えます。</p>
-            </div>
-
-            <fieldset class="cform-row" data-mail-label="つくりたいもの">
+          <form class="cform" data-contact-form data-subject="【開発のご相談】" data-to="info@3jino-oyatsu.com" novalidate>
+            <p class="cform-step"><span>01</span>ご相談の内容</p>
+            <fieldset class="cform-row" data-mail-label="つくりたいもの" data-subject-part>
               <legend class="cform-label">つくりたいもの <span class="req">必須</span></legend>
               <div class="chips">
                 <label class="chip-radio"><input type="radio" name="kind" value="line" data-label="LINEアプリ" required /><span>LINEアプリ</span></label>
                 <label class="chip-radio"><input type="radio" name="kind" value="web" data-label="Webアプリ・システム" /><span>Webアプリ・システム</span></label>
                 <label class="chip-radio"><input type="radio" name="kind" value="app" data-label="スマホアプリ（iOS・Android）" /><span>スマホアプリ（iOS・Android）</span></label>
                 <label class="chip-radio"><input type="radio" name="kind" value="undecided" data-label="まだ決まっていない" /><span>まだ決まっていない</span></label>
+              </div>
+            </fieldset>
+
+            <fieldset class="cform-row" data-mail-label="いまの状況">
+              <legend class="cform-label">いまの状況 <span class="opt">任意</span></legend>
+              <div class="chips">
+                <label class="chip-radio"><input type="radio" name="stage" value="new" data-label="新しくつくりたい" /><span>新しくつくりたい</span></label>
+                <label class="chip-radio"><input type="radio" name="stage" value="improve" data-label="いまあるものを改善したい" /><span>いまあるものを改善したい</span></label>
+                <label class="chip-radio"><input type="radio" name="stage" value="replace" data-label="作り直し・乗り換えを考えている" /><span>作り直し・乗り換えを考えている</span></label>
               </div>
             </fieldset>
 
@@ -111,6 +140,14 @@
 
             <div class="cform-grid">
               <div class="cform-row">
+                <label class="cform-label" for="ce-business">業種・事業の内容 <span class="opt">任意</span></label>
+                <input id="ce-business" name="business" type="text" data-mail-label="業種・事業の内容" placeholder="例：美容サロン（3店舗）" />
+              </div>
+              <div class="cform-row">
+                <label class="cform-label" for="ce-url">参考URL <span class="opt">任意</span></label>
+                <input id="ce-url" name="url" type="text" inputmode="url" data-mail-label="参考URL" placeholder="今のサイトや、近いサービスなど" />
+              </div>
+              <div class="cform-row">
                 <label class="cform-label" for="ce-budget">ご予算の目安（月額） <span class="opt">任意</span></label>
                 <select id="ce-budget" name="budget" data-mail-label="ご予算の目安（月額）"><option>未定・相談したい</option><option>〜5,000円</option><option>5,000〜10,000円</option><option>10,000〜20,000円</option><option>20,000〜40,000円</option><option>40,000円〜</option></select>
               </div>
@@ -120,11 +157,7 @@
               </div>
             </div>
 
-            <div class="cform-row">
-              <label class="cform-label" for="ce-url">参考URL <span class="opt">任意</span></label>
-              <input id="ce-url" name="url" type="url" inputmode="url" data-mail-label="参考URL" placeholder="今のサイトや、イメージに近いサービスなど" />
-            </div>
-
+            <p class="cform-step"><span>02</span>ご連絡先</p>
             <div class="cform-grid">
               <div class="cform-row">
                 <label class="cform-label" for="ce-company">会社名・団体名 <span class="opt">任意</span></label>
@@ -144,52 +177,110 @@
               </div>
             </div>
 
+            <fieldset class="cform-row" data-mail-label="ご希望の連絡方法">
+              <legend class="cform-label">ご希望の連絡方法 <span class="opt">任意</span></legend>
+              <div class="chips">
+                <label class="chip-radio"><input type="radio" name="reply" value="mail" data-label="メール" checked /><span>メール</span></label>
+                <label class="chip-radio"><input type="radio" name="reply" value="phone" data-label="電話" /><span>電話</span></label>
+                <label class="chip-radio"><input type="radio" name="reply" value="online" data-label="オンラインで打ち合わせ" /><span>オンラインで打ち合わせ</span></label>
+              </div>
+            </fieldset>
+
             <label class="agree">
               <input type="checkbox" name="agree" required />
               <span><a href="../privacy.html" target="_blank" rel="noopener">プライバシーポリシー</a>に同意する</span>
             </label>
 
             <div class="cform-actions">
-              <button type="submit" class="btn btn--primary btn--lg">この内容で見積もりを依頼する<span class="btn-arrow" aria-hidden="true">→</span></button>
+              <button type="submit" class="btn btn--primary btn--lg">無料で見積もりを依頼する<span class="btn-arrow" aria-hidden="true">→</span></button>
               <p class="cform-hint">送信ボタンを押すと、入力内容が入ったメールがメールアプリで開きます。</p>
             </div>
             <p class="cform-status" data-form-status role="status" aria-live="polite"></p>
           </form>
-          </div>
+        </div>
 
-          <div class="cform-panel" role="tabpanel" id="panel-general" aria-labelledby="tab-general" hidden>
-          <form class="cform" data-contact-form data-subject="【お問い合わせ】" data-to="info@3jino-oyatsu.com" novalidate>
-            <fieldset class="cform-row" data-mail-label="お問い合わせ種別" data-subject-type>
-              <legend class="cform-label">お問い合わせ種別 <span class="req">必須</span></legend>
-              <div class="chips">
-                <label class="chip-radio"><input type="radio" name="type" value="product" data-label="プロダクトについて" required checked /><span>プロダクトについて</span></label>
-                <label class="chip-radio"><input type="radio" name="type" value="recruit" data-label="採用について" /><span>採用について</span></label>
-                <label class="chip-radio"><input type="radio" name="type" value="other" data-label="取材・その他" /><span>取材・その他</span></label>
+        <!-- ---------- 02 採用へのご応募・面談 ---------- -->
+        <div class="cpanel" id="panel-recruit" hidden>
+          <aside class="cpanel-aside">
+            <p class="cpanel-en">Recruit</p>
+            <h2 class="cpanel-title">まずは、<br />気軽に話しましょう。</h2>
+            <p class="cpanel-text">選考の前に、カジュアル面談で<wbr />お互いを知る時間を<wbr />つくっています。応募するか<wbr />迷っている段階でも<wbr />大丈夫です。</p>
+            <ol class="cp-topics">
+              <li><span>01</span>ご応募・お申し込み<small>このフォームから</small></li>
+              <li><span>02</span>カジュアル面談<small>選考の前に、お互いを知る時間</small></li>
+              <li><span>03</span>面接<small>1〜2回を予定しています</small></li>
+              <li><span>04</span>オファー<small>条件や働き方をすり合わせます</small></li>
+            </ol>
+            <a class="link-arrow cpanel-more" href="../recruit/#positions">募集中の職種を見る<span aria-hidden="true">→</span></a>
+          </aside>
+
+          <form class="cform" data-contact-form data-subject="【採用】" data-to="info@3jino-oyatsu.com" novalidate>
+            <p class="cform-step"><span>01</span>ご希望</p>
+            <fieldset class="cform-row" data-mail-label="ご希望" data-subject-part>
+              <legend class="cform-label">ご希望 <span class="req">必須</span></legend>
+              <div class="choice">
+                <label class="choice-card"><input type="radio" name="entry" value="apply" data-label="選考への応募" required /><span><b>選考に応募する</b><small>経歴をもとに、選考へ進みます</small></span></label>
+                <label class="choice-card"><input type="radio" name="entry" value="casual" data-label="カジュアル面談" /><span><b>カジュアル面談を申し込む</b><small>選考の前に、まずは話を聞きたい方へ</small></span></label>
               </div>
             </fieldset>
 
             <div class="cform-grid">
               <div class="cform-row">
-                <label class="cform-label" for="cg-company">会社名・団体名 <span class="opt">任意</span></label>
-                <input id="cg-company" name="company" type="text" autocomplete="organization" data-mail-label="会社名・団体名" />
+                <label class="cform-label" for="cr-role">ご希望の職種 <span class="req">必須</span></label>
+                <select id="cr-role" name="role" required data-mail-label="ご希望の職種" data-subject-part><option value="" disabled selected>選択してください</option><option value="sales">Sales（法人営業）</option><option value="marketing">Marketing（マーケティング）</option><option value="ios">iOS Engineer（iOSエンジニア）</option><option value="web">Web Engineer（Webエンジニア）</option><option value="designer">Product Designer（プロダクトデザイナー）</option><option value="undecided">未定・相談したい</option></select>
               </div>
               <div class="cform-row">
-                <label class="cform-label" for="cg-name">お名前 <span class="req">必須</span></label>
-                <input id="cg-name" name="name" type="text" required autocomplete="name" data-mail-label="お名前" />
-              </div>
-              <div class="cform-row">
-                <label class="cform-label" for="cg-email">メールアドレス <span class="req">必須</span></label>
-                <input id="cg-email" name="email" type="email" required autocomplete="email" data-mail-label="メールアドレス" />
-              </div>
-              <div class="cform-row">
-                <label class="cform-label" for="cg-phone">電話番号 <span class="opt">任意</span></label>
-                <input id="cg-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" data-mail-label="電話番号" />
+                <label class="cform-label" for="cr-status">現在のご状況 <span class="opt">任意</span></label>
+                <select id="cr-status" name="status" data-mail-label="現在のご状況"><option value="">選択してください</option><option>在職中</option><option>離職中</option><option>フリーランス</option><option>学生</option><option>その他</option></select>
               </div>
             </div>
 
+            <fieldset class="cform-row" data-mail-label="ご希望の働き方">
+              <legend class="cform-label">ご希望の働き方 <span class="opt">任意</span></legend>
+              <div class="chips">
+                <label class="chip-radio"><input type="radio" name="style" value="fulltime" data-label="正社員" /><span>正社員</span></label>
+                <label class="chip-radio"><input type="radio" name="style" value="contract" data-label="業務委託・副業" /><span>業務委託・副業</span></label>
+                <label class="chip-radio"><input type="radio" name="style" value="undecided" data-label="相談したい" /><span>相談したい</span></label>
+              </div>
+            </fieldset>
+
+            <fieldset class="cform-row" data-mail-label="面談の形式" data-when="entry:casual">
+              <legend class="cform-label">面談の形式 <span class="opt">任意</span></legend>
+              <div class="chips">
+                <label class="chip-radio"><input type="radio" name="place" value="online" data-label="オンライン" checked /><span>オンライン</span></label>
+                <label class="chip-radio"><input type="radio" name="place" value="office" data-label="オフィス（藤沢）" /><span>オフィス（藤沢）</span></label>
+                <label class="chip-radio"><input type="radio" name="place" value="either" data-label="どちらでも" /><span>どちらでも</span></label>
+              </div>
+            </fieldset>
+
             <div class="cform-row">
-              <label class="cform-label" for="cg-message">お問い合わせ内容 <span class="req">必須</span></label>
-              <textarea id="cg-message" name="message" rows="8" required data-mail-label="お問い合わせ内容"></textarea>
+              <label class="cform-label" for="cr-url">経歴・作品がわかるURL <span class="opt">任意</span></label>
+              <input id="cr-url" name="url" type="text" inputmode="url" data-mail-label="経歴・作品がわかるURL" placeholder="GitHub、ポートフォリオ、LinkedIn、Wantedly など" />
+            </div>
+
+            <div class="cform-row">
+              <label class="cform-label" for="cr-message">自己紹介・ひとこと <span class="req">必須</span></label>
+              <textarea id="cr-message" name="message" rows="7" required data-mail-label="自己紹介・ひとこと" placeholder="これまでの経験や、興味を持ったきっかけ、聞いてみたいことなど"></textarea>
+            </div>
+
+            <p class="cform-step"><span>02</span>ご連絡先</p>
+            <div class="cform-grid">
+              <div class="cform-row">
+                <label class="cform-label" for="cr-name">お名前 <span class="req">必須</span></label>
+                <input id="cr-name" name="name" type="text" required autocomplete="name" data-mail-label="お名前" />
+              </div>
+              <div class="cform-row">
+                <label class="cform-label" for="cr-kana">ふりがな <span class="opt">任意</span></label>
+                <input id="cr-kana" name="kana" type="text" data-mail-label="ふりがな" />
+              </div>
+              <div class="cform-row">
+                <label class="cform-label" for="cr-email">メールアドレス <span class="req">必須</span></label>
+                <input id="cr-email" name="email" type="email" required autocomplete="email" data-mail-label="メールアドレス" />
+              </div>
+              <div class="cform-row">
+                <label class="cform-label" for="cr-phone">電話番号 <span class="opt">任意</span></label>
+                <input id="cr-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" data-mail-label="電話番号" />
+              </div>
             </div>
 
             <label class="agree">
@@ -198,11 +289,104 @@
             </label>
 
             <div class="cform-actions">
-              <button type="submit" class="btn btn--primary btn--lg">内容を確認して送信<span class="btn-arrow" aria-hidden="true">→</span></button>
+              <button type="submit" class="btn btn--primary btn--lg"><span data-when="entry:casual">カジュアル面談を申し込む</span><span data-when="entry:apply,">この内容で応募する</span><span class="btn-arrow" aria-hidden="true">→</span></button>
+              <p class="cform-hint">送信ボタンを押すと、入力内容が入ったメールがメールアプリで開きます。<span data-when="entry:apply">履歴書・職務経歴書は、そのメールに添付してお送りいただけます。</span></p>
+            </div>
+            <p class="cform-status" data-form-status role="status" aria-live="polite"></p>
+          </form>
+        </div>
+
+        <!-- ---------- 03 会社へのお問い合わせ ---------- -->
+        <div class="cpanel" id="panel-company" hidden>
+          <aside class="cpanel-aside">
+            <p class="cpanel-en">Company</p>
+            <h2 class="cpanel-title">プロダクトのこと、<br />取材や協業の<br />ご相談など。</h2>
+            <p class="cpanel-text">開発のご依頼と採用以外の<wbr />ご用件は、こちらから<wbr />お送りください。内容を拝見のうえ、<wbr /><span class="nobr">1〜2営業日</span>を目安に<wbr />ご返信します。</p>
+            <ul class="cpanel-elsewhere">
+              <li>開発のご依頼・お見積りは<a href="?type=development" data-contact-to="development">開発のご相談フォーム<span aria-hidden="true">→</span></a></li>
+              <li>ご応募・面談のお申し込みは<a href="?type=recruit" data-contact-to="recruit">採用フォーム<span aria-hidden="true">→</span></a></li>
+            </ul>
+          </aside>
+
+          <form class="cform" data-contact-form data-subject="【お問い合わせ】" data-to="info@3jino-oyatsu.com" novalidate>
+            <p class="cform-step"><span>01</span>お問い合わせの内容</p>
+            <fieldset class="cform-row" data-mail-label="お問い合わせの種類" data-subject-part>
+              <legend class="cform-label">お問い合わせの種類 <span class="req">必須</span></legend>
+              <div class="chips">
+                <label class="chip-radio"><input type="radio" name="topic" value="product" data-label="プロダクトについて" required /><span>プロダクトについて</span></label>
+                <label class="chip-radio"><input type="radio" name="topic" value="press" data-label="取材・メディア掲載" /><span>取材・メディア掲載</span></label>
+                <label class="chip-radio"><input type="radio" name="topic" value="partner" data-label="協業・業務提携" /><span>協業・業務提携</span></label>
+                <label class="chip-radio"><input type="radio" name="topic" value="other" data-label="その他" /><span>その他</span></label>
+              </div>
+            </fieldset>
+
+            <fieldset class="cform-row" data-mail-label="対象のプロダクト" data-when="topic:product">
+              <legend class="cform-label">対象のプロダクト <span class="req">必須</span></legend>
+              <div class="chips">
+                <label class="chip-radio"><input type="radio" name="product" value="another-contact" data-label="Another Contact" required /><span>Another Contact</span></label>
+                <label class="chip-radio"><input type="radio" name="product" value="jibungo" data-label="ジブンゴ" /><span>ジブンゴ</span></label>
+                <label class="chip-radio"><input type="radio" name="product" value="poissh" data-label="ポイッシュ" /><span>ポイッシュ</span></label>
+                <label class="chip-radio"><input type="radio" name="product" value="ikocca" data-label="いこっか。" /><span>いこっか。</span></label>
+              </div>
+            </fieldset>
+
+            <div class="cform-grid" data-when="topic:press">
+              <div class="cform-row">
+                <label class="cform-label" for="cc-media">媒体名 <span class="opt">任意</span></label>
+                <input id="cc-media" name="media" type="text" data-mail-label="媒体名" />
+              </div>
+              <div class="cform-row">
+                <label class="cform-label" for="cc-deadline">ご希望の締切・掲載時期 <span class="opt">任意</span></label>
+                <input id="cc-deadline" name="deadline" type="text" data-mail-label="ご希望の締切・掲載時期" />
+              </div>
+            </div>
+
+            <div class="cform-row">
+              <label class="cform-label" for="cc-message">お問い合わせ内容 <span class="req">必須</span></label>
+              <textarea id="cc-message" name="message" rows="8" required data-mail-label="お問い合わせ内容"></textarea>
+            </div>
+
+            <p class="cform-step"><span>02</span>ご連絡先</p>
+            <div class="cform-grid">
+              <div class="cform-row">
+                <label class="cform-label" for="cc-company">会社名・団体名 <span class="opt">任意</span></label>
+                <input id="cc-company" name="company" type="text" autocomplete="organization" data-mail-label="会社名・団体名" />
+              </div>
+              <div class="cform-row">
+                <label class="cform-label" for="cc-name">お名前 <span class="req">必須</span></label>
+                <input id="cc-name" name="name" type="text" required autocomplete="name" data-mail-label="お名前" />
+              </div>
+              <div class="cform-row">
+                <label class="cform-label" for="cc-email">メールアドレス <span class="req">必須</span></label>
+                <input id="cc-email" name="email" type="email" required autocomplete="email" data-mail-label="メールアドレス" />
+              </div>
+              <div class="cform-row">
+                <label class="cform-label" for="cc-phone">電話番号 <span class="opt">任意</span></label>
+                <input id="cc-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" data-mail-label="電話番号" />
+              </div>
+            </div>
+
+            <label class="agree">
+              <input type="checkbox" name="agree" required />
+              <span><a href="../privacy.html" target="_blank" rel="noopener">プライバシーポリシー</a>に同意する</span>
+            </label>
+
+            <div class="cform-actions">
+              <button type="submit" class="btn btn--primary btn--lg">この内容で送信する<span class="btn-arrow" aria-hidden="true">→</span></button>
               <p class="cform-hint">送信ボタンを押すと、入力内容が入ったメールがメールアプリで開きます。</p>
             </div>
             <p class="cform-status" data-form-status role="status" aria-live="polite"></p>
           </form>
+        </div>
+
+        <div class="cp-direct" data-reveal>
+          <div class="cp-mail">
+            <p class="cp-mail-label">Email</p>
+            <a href="mailto:info@3jino-oyatsu.com">info@3jino-oyatsu.com</a>
+          </div>
+          <div class="cp-mail">
+            <p class="cp-mail-label">Address</p>
+            <address class="cp-address">〒251-0035<br />神奈川県藤沢市片瀬海岸2丁目18-21<br />リードシー片瀬江ノ島ビル 3F</address>
           </div>
         </div>
       </div>

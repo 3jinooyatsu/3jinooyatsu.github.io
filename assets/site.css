@@ -2568,17 +2568,143 @@ a.news-card:hover .news-card-visual--product img { transform: translate(-50%, -6
 }
 
 /* =========================================================
-   Contact ページ：フォーム
+   Contact ページ：ご用件を選ぶ → 用件ごとの専用フォーム
    ========================================================= */
-.contact-page {
+.ccontact [hidden] { display: none !important; }
+
+.cpick-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px 24px;
+  margin-bottom: clamp(20px, 2.4vw, 28px);
+}
+.cpick-title { font-size: clamp(22px, 2.6vw, 32px); font-weight: 700; line-height: 1.5; }
+.cpick-note { font-size: 14px; color: var(--ink-2); }
+.cpick { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(12px, 1.6vw, 20px); scroll-margin-top: calc(var(--header-h) + 16px); }
+.cpick-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: clamp(24px, 2.4vw, 32px);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: var(--paper);
+  color: var(--ink);
+  transition: border-color .3s ease, background-color .3s ease, color .3s ease, box-shadow .4s ease, transform .4s var(--ease);
+}
+.cpick-icon { width: 44px; height: 44px; }
+.cpick-icon svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; }
+.cpick-icon [pathLength] { stroke-dasharray: 1; stroke-dashoffset: 0; }
+.cpick-card:hover .cpick-icon [pathLength] { animation: cpick-draw 1s var(--ease) both; }
+.cpick-card:hover .cpick-icon [pathLength]:nth-child(2) { animation-delay: .12s; }
+.cpick-card:hover .cpick-icon [pathLength]:nth-child(3) { animation-delay: .24s; }
+@keyframes cpick-draw { from { stroke-dashoffset: 1; } }
+.cpick-en {
+  padding-top: clamp(40px, 4.4vw, 64px);
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--signal);
+}
+.cpick-name { margin-top: 8px; font-size: clamp(19px, 1.8vw, 23px); font-weight: 700; line-height: 1.5; }
+.cpick-name small { display: none; }
+.cpick-text { margin: 10px 0 24px; font-size: 14px; line-height: 1.8; color: var(--ink-2); }
+.cpick-tag {
+  margin-top: auto;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--signal-soft);
+  color: var(--signal);
+  font-size: 12px;
+  font-weight: 500;
+}
+.cpick-arrow {
+  position: absolute;
+  top: clamp(24px, 2.4vw, 32px);
+  right: clamp(24px, 2.4vw, 32px);
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  transition: background-color .3s ease, border-color .3s ease, color .3s ease;
+}
+.cpick-arrow svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; transition: transform .4s var(--ease); }
+.cpick-card:hover { border-color: var(--ink); transform: translateY(-4px); box-shadow: 0 22px 44px -32px rgba(15, 26, 36, 0.5); }
+.cpick-card:hover .cpick-arrow { background: var(--ink); border-color: var(--ink); color: #fff; }
+.cpick-card:hover .cpick-arrow svg { transform: translateY(2px); }
+.cpick-card:focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; }
+
+/* ご用件を選んだあとは、小さな切り替えに */
+.cpick.is-picked .cpick-card {
+  flex-direction: row;
+  align-items: center;
+  gap: 14px;
+  min-height: 0;
+  padding: 14px 16px 14px 20px;
+  border-radius: 999px;
+}
+.cpick.is-picked .cpick-card:hover { transform: none; box-shadow: none; }
+.cpick.is-picked .cpick-icon { flex: none; width: 28px; height: 28px; }
+.cpick.is-picked .cpick-en,
+.cpick.is-picked .cpick-text,
+.cpick.is-picked .cpick-tag { display: none; }
+.cpick.is-picked .cpick-name { margin: 0; font-size: 15px; line-height: 1.4; }
+.cpick.is-picked .cpick-arrow { position: static; flex: none; width: 32px; height: 32px; margin-left: auto; }
+.cpick.is-picked .cpick-arrow svg { width: 14px; height: 14px; }
+.cpick-card[aria-current="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
+.cpick-card[aria-current="true"] .cpick-arrow { border-color: rgba(255, 255, 255, 0.3); background: transparent; color: #fff; }
+
+/* 用件ごとのフォーム（左に説明、右にフォーム） */
+.cpanel {
   display: grid;
   grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
   gap: clamp(40px, 6vw, 96px);
   align-items: start;
+  margin-top: clamp(40px, 5vw, 64px);
+  scroll-margin-top: calc(var(--header-h) + 16px);
+  animation: cpanel-in .7s var(--ease) both;
 }
-.cp-aside { position: sticky; top: calc(var(--header-h) + 32px); }
-.cp-lead { font-size: clamp(20px, 2vw, 24px); font-weight: 700; line-height: 1.7; }
-.cp-note { margin-top: 16px; font-size: 14px; color: var(--ink-2); }
+@keyframes cpanel-in { from { opacity: 0; transform: translateY(20px); } }
+.cpanel-aside { position: sticky; top: calc(var(--header-h) + 32px); }
+.cpanel-en {
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--signal);
+}
+.cpanel-title { margin-top: 12px; font-size: clamp(22px, 2.4vw, 30px); font-weight: 700; line-height: 1.55; }
+.cpanel-text { margin-top: 16px; font-size: 14px; line-height: 1.9; color: var(--ink-2); }
+.cpanel-facts { display: flex; flex-wrap: wrap; gap: 12px 32px; margin-top: 28px; }
+.cpanel-facts dt { font-size: 11px; color: var(--ink-3); }
+.cpanel-facts dd { margin: 2px 0 0; font-family: var(--font); font-size: 26px; font-weight: 500; line-height: 1.3; }
+.cpanel-facts dd small { margin-left: 2px; font-family: var(--font-ja); font-size: 12px; font-weight: 500; }
+.cpanel .cp-topics { margin-top: 32px; }
+.cpanel-more { margin-top: 24px; }
+.cpanel-elsewhere { margin-top: 32px; border-top: 1px solid var(--line-strong); }
+.cpanel-elsewhere li { padding: 16px 0; border-bottom: 1px solid var(--line-strong); font-size: 13px; line-height: 1.8; color: var(--ink-2); }
+.cpanel-elsewhere a { display: inline-flex; gap: 6px; margin-left: 4px; color: var(--ink); font-weight: 700; border-bottom: 1px solid currentColor; transition: color .2s ease; }
+.cpanel-elsewhere a:hover { color: var(--signal); }
+
+.cp-direct {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px 72px;
+  margin-top: clamp(64px, 8vw, 112px);
+  padding-top: 32px;
+  border-top: 1px solid var(--line-strong);
+}
+.cp-direct .cp-mail,
+.cp-direct .cp-mail + .cp-mail { margin-top: 0; }
+
 .cp-topics { margin-top: 40px; border-top: 1px solid var(--line-strong); }
 .cp-topics li {
   display: grid;
@@ -2724,56 +2850,101 @@ button.btn { border: 0; cursor: pointer; }
 .cform-status[data-state="error"] { color: #D64545; }
 .cform-status[data-state="info"] { color: var(--signal); }
 
-/* 「開発相談・見積もり」と「その他」のタブ */
-.cform-tabs {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 6px;
-  margin-bottom: 16px;
-  padding: 6px;
-  border-radius: 999px;
-  background: var(--fill);
+/* フォームの中の区切り（01 ご相談の内容 / 02 ご連絡先） */
+.cform-step { display: flex; align-items: center; gap: 12px; font-size: 13px; font-weight: 700; }
+.cform-step span { font-family: var(--font); font-size: 12px; font-weight: 500; letter-spacing: 0.08em; color: var(--signal); }
+.cform-step::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+.cform-step:not(:first-child) { margin-top: 20px; }
+
+/* 説明つきの大きな選択肢（採用：応募 / カジュアル面談） */
+.choice { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 12px; }
+.choice-card { position: relative; cursor: pointer; }
+.choice-card input { position: absolute; inset: 0; margin: 0; opacity: 0; cursor: pointer; }
+.choice-card > span {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  height: 100%;
+  padding: 18px 20px 18px 50px;
+  border: 1px solid var(--line-strong);
+  border-radius: 16px;
+  background: var(--base);
+  transition: border-color .2s ease, box-shadow .2s ease;
 }
-.cform-tabs button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  height: 52px;
-  border: 0;
-  border-radius: 999px;
-  background: transparent;
-  color: var(--ink-2);
-  font: inherit;
-  font-size: 15px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background-color .3s ease, color .3s ease, box-shadow .3s ease;
+.choice-card > span::before {
+  content: "";
+  position: absolute;
+  top: 21px;
+  left: 18px;
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  background: var(--base);
+  transition: border-color .2s ease, background-color .2s ease, box-shadow .2s ease;
 }
-.cform-tabs button small {
-  padding: 2px 8px;
-  border-radius: 999px;
-  background: var(--signal-soft);
-  color: var(--signal);
-  font-size: 11px;
-}
-.cform-tabs button:hover { color: var(--ink); }
-.cform-tabs button[aria-selected="true"] { background: var(--paper); color: var(--ink); box-shadow: 0 6px 16px -10px rgba(15, 26, 36, 0.35); }
-.cform-tabs button:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
-.cform-intro { padding-bottom: 24px; border-bottom: 1px solid var(--line); }
-.cform-intro-title { font-size: clamp(18px, 1.8vw, 22px); font-weight: 700; line-height: 1.6; }
-.cform-intro-text { margin-top: 6px; font-size: 14px; line-height: 1.85; color: var(--ink-2); }
+.choice-card b { font-size: 15px; line-height: 1.5; }
+.choice-card small { font-size: 12px; line-height: 1.7; color: var(--ink-3); }
+.choice-card:hover > span { border-color: var(--ink-3); }
+.choice-card input:checked + span { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+.choice-card input:checked + span::before { border-color: var(--ink); background: var(--ink); box-shadow: inset 0 0 0 4px var(--base); }
+.choice-card input:focus-visible + span { border-color: var(--signal); box-shadow: 0 0 0 4px var(--signal-soft); }
+
+/* 選んだ内容に応じて出てくる項目 */
+.cform [data-when]:not([hidden]) { animation: cwhen-in .45s var(--ease) both; }
+@keyframes cwhen-in { from { opacity: 0; transform: translateY(-6px); } }
 
 @media (max-width: 860px) {
-  .contact-page { grid-template-columns: minmax(0, 1fr); }
-  .cp-aside { position: static; }
   .cform-grid { grid-template-columns: 1fr; }
   .cform { border-radius: 20px; }
   .cform-actions .btn { width: 100%; justify-content: center; }
-  .cform-tabs button { height: 48px; font-size: 13px; }
-}
-@media (max-width: 560px) {
-  .cform-tabs button small { display: none; }
+
+  .cpick { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .cpick-card {
+    display: grid;
+    grid-template-columns: 36px minmax(0, 1fr) 36px;
+    column-gap: 14px;
+    align-items: center;
+    min-height: 0;
+    padding: 18px 16px 18px 18px;
+    border-radius: 20px;
+  }
+  .cpick-card:hover { transform: none; }
+  .cpick-icon { grid-row: 1 / span 3; align-self: start; width: 36px; height: 36px; }
+  .cpick-en { grid-column: 2; margin: 0; padding: 0; font-size: 11px; }
+  .cpick-name { grid-column: 2; margin-top: 2px; font-size: 17px; }
+  .cpick-text { grid-column: 2; margin: 4px 0 0; font-size: 13px; line-height: 1.7; }
+  .cpick-tag { display: none; }
+  .cpick-arrow { position: static; grid-column: 3; grid-row: 1 / span 3; width: 36px; height: 36px; }
+
+  /* 選んだあとは、3つ並びの切り替えに */
+  .cpick.is-picked { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+  .cpick.is-picked .cpick-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    padding: 12px 4px;
+    border-radius: 16px;
+  }
+  .cpick.is-picked .cpick-icon { align-self: center; width: 24px; height: 24px; }
+  .cpick.is-picked .cpick-name { font-size: 12px; text-align: center; }
+  .cpick.is-picked .cpick-name > span { display: none; }
+  .cpick.is-picked .cpick-name small { display: block; font-size: inherit; }
+  .cpick.is-picked .cpick-arrow { display: none; }
+
+  /* 説明 → フォーム → 流れ の順に並べ替える */
+  .cpanel { display: flex; flex-direction: column; gap: 0; }
+  .cpanel-aside { display: contents; }
+  .cpanel .cform { order: 1; margin-top: 28px; }
+  .cpanel .cp-topics,
+  .cpanel-more,
+  .cpanel-elsewhere { order: 2; }
+  .cpanel .cp-topics,
+  .cpanel-elsewhere { margin-top: 40px; }
+  .cpanel-facts dd { font-size: 22px; }
+  .choice { grid-template-columns: 1fr; }
 }
 
 /* =========================================================
