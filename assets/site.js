@@ -779,8 +779,9 @@
     }
   }
 
-  // ---------- お問い合わせフォーム：その場で送信する ----------
-  // 送り先は data-contact-endpoint（Google Apps Script。_contact-form/）。空のときや送れなかったときはメールアプリで開く
+  // ---------- お問い合わせフォーム（お問い合わせページ・各アプリのサポートページ）：その場で送信する ----------
+  // 送り先は Google Apps Script のウェブアプリ（_contact-form/README.md）。空にしたときや送れなかったときはメールアプリで開く
+  const CONTACT_ENDPOINT = "https://script.google.com/macros/s/AKfycbxfIG0UFjsjybp7tcpYAvUzTce7l6b8mqKfjP7VCSA6XNmIiM1Sf9R_3A2wkZZuhERaJQ/exec";
   // ラジオ・チェックは選ばれた data-label、セレクトは表示名、それ以外は入力値
   const fieldValue = (field) => {
     if (field.tagName === "FIELDSET") return [...field.querySelectorAll("input:checked")].map((input) => input.dataset.label || input.value).join("、");
@@ -801,6 +802,23 @@
     trap.innerHTML = '<label>この欄は空のままにしてください<input type="text" name="website" tabindex="-1" autocomplete="off" /></label>';
     form.append(trap);
 
+    // 送信中は、ボタンを回る印と「送信しています…」に変える（幅はそのまま。失敗したら元の文字に戻す）
+    const idleLabel = [...button.childNodes];
+    const setSending = (on) => {
+      button.disabled = on;
+      button.classList.toggle("is-sending", on);
+      if (on) {
+        button.style.minWidth = `${button.offsetWidth}px`;
+        const spinner = document.createElement("span");
+        spinner.className = "btn-spinner";
+        spinner.setAttribute("aria-hidden", "true");
+        button.replaceChildren(spinner, "送信しています…");
+      } else {
+        button.replaceChildren(...idleLabel);
+        button.style.minWidth = "";
+      }
+    };
+
     // data-when="name:値,値" の項目は、そのラジオが選ばれているときだけ出す（隠れている間は必須・送信の対象外）
     const conditionals = [...form.querySelectorAll("[data-when]")];
     const syncConditionals = () => {
@@ -816,6 +834,7 @@
     syncConditionals();
 
     // data-mail-label の付いた項目を、上から順に。件名は【開発のご相談】LINEアプリ｜お名前様 のように data-subject-part の値を並べる
+    // （お名前が任意のフォームで空のときは、「｜お名前様」を付けない）
     const collect = () => {
       const fields = [...form.querySelectorAll("[data-mail-label]")].filter(isActive).map((field) => ({
         label: field.dataset.mailLabel,
@@ -823,7 +842,8 @@
         long: field.tagName === "TEXTAREA",
       }));
       const parts = [...form.querySelectorAll("[data-subject-part]")].filter(isActive).map(fieldValue).filter(Boolean);
-      return { subject: `${form.dataset.subject}${parts.join("・")}｜${form.elements.name.value.trim()}様`, fields };
+      const name = form.elements.name.value.trim();
+      return { subject: `${form.dataset.subject}${parts.join("・")}${name ? `｜${name}様` : ""}`, name, fields };
     };
     const mailtoOf = ({ subject, fields }) => {
       const lines = [];
@@ -847,24 +867,22 @@
         return;
       }
       const mail = collect();
-      const endpoint = form.closest("[data-contact-endpoint]")?.dataset.contactEndpoint.trim();
-      if (!endpoint) {
+      if (!CONTACT_ENDPOINT) {
         window.location.href = mailtoOf(mail);
         say("info", `メールアプリが開きます。内容を確認して送信してください。開かない場合は ${form.dataset.to} まで直接ご連絡ください。`);
         return;
       }
 
-      button.disabled = true;
+      setSending(true);
       form.setAttribute("aria-busy", "true");
-      say("info", "送信しています…");
+      say("info", "数秒かかることがあります。このままお待ちください。");
       try {
-        const res = await fetch(endpoint, {
+        const res = await fetch(CONTACT_ENDPOINT, {
           method: "POST",
           // フォーム形式で送ると、Apps Script への事前確認の通信（プリフライト）が起きない
           body: new URLSearchParams({
             payload: JSON.stringify({
               form: form.dataset.formType,
-              name: form.elements.name.value.trim(),
               email: form.elements.email.value.trim(),
               website: form.elements.website.value,
               ...mail,
@@ -884,7 +902,7 @@
         fallback.href = mailtoOf(mail);
         fallback.textContent = "メールアプリから送信";
         say("error", "送信できませんでした。少し時間をおいてもう一度お試しいただくか、", fallback, "してください。");
-        button.disabled = false;
+        setSending(false);
       } finally {
         form.removeAttribute("aria-busy");
       }

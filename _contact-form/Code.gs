@@ -1,15 +1,15 @@
 /**
  * @OnlyCurrentDoc
  *
- * 3時のおやつ サイトのお問い合わせフォーム（開発・採用・会社）の受け口。
+ * 3時のおやつ サイトのお問い合わせフォーム（開発・採用・会社、各アプリのサポート）の受け口。
  * サイトから届いた内容を、このスプレッドシートに記録し、メールで知らせ、Slack に通知する。
  *
  * 置き場所：記録用スプレッドシートの「拡張機能 → Apps Script」に貼り、ウェブアプリとして公開する（手順は README.md）。
  * 設定（Apps Script の「プロジェクトの設定 → スクリプト プロパティ」。変えるとすぐ反映され、再デプロイは不要）：
  *   SLACK_WEBHOOK_URL            Slack の Incoming Webhook の URL（ないときは Slack に送らない）
- *   SLACK_WEBHOOK_URL_RECRUIT    採用だけ別のチャンネルに送りたいとき（_DEVELOPMENT / _COMPANY も同じ）
+ *   SLACK_WEBHOOK_URL_RECRUIT    採用だけ別のチャンネルに送りたいとき（_DEVELOPMENT / _COMPANY / _APP も同じ）
  *   MAIL_TO                      通知メールの宛先（ないときは info@3jino-oyatsu.com）
- *   MAIL_TO_RECRUIT              採用だけ別の宛先にしたいとき（_DEVELOPMENT / _COMPANY も同じ）
+ *   MAIL_TO_RECRUIT              採用だけ別の宛先にしたいとき（_DEVELOPMENT / _COMPANY / _APP も同じ）
  */
 
 const DEFAULT_MAIL_TO = "info@3jino-oyatsu.com";
@@ -20,6 +20,8 @@ const FORMS = {
   development: { sheet: "開発のご相談", label: "開発のご相談" },
   recruit: { sheet: "採用", label: "採用への応募・面談" },
   company: { sheet: "会社へのお問い合わせ", label: "会社へのお問い合わせ" },
+  // 各アプリのサポートページ（どのアプリかは「アプリ」の列に入る）
+  app: { sheet: "アプリのお問い合わせ", label: "アプリのお問い合わせ" },
 };
 
 // シートの左端に必ず置く列。「対応状況」はチームで書き換えて使う
@@ -71,16 +73,17 @@ function doPost(e) {
 function parse_(data) {
   const type = String(data.form || "");
   if (!Object.prototype.hasOwnProperty.call(FORMS, type)) throw new Error(`知らないフォーム：${type}`);
+  // お名前はアプリのサポートでは任意。返信先のメールアドレスは必ずいる
   const name = text_(data.name, 100);
   const email = text_(data.email, 254);
-  if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Error("お名前かメールアドレスが正しくない");
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Error("メールアドレスが正しくない");
 
   const fields = (Array.isArray(data.fields) ? data.fields : [])
     .slice(0, 40)
     .filter((f) => f && typeof f === "object")
     .map((f) => ({ label: text_(f.label, 60), value: text_(f.value, f.long ? 5000 : 500, Boolean(f.long)), long: Boolean(f.long) }))
     .filter((f) => f.label);
-  const subject = text_(data.subject, 200) || `【${FORMS[type].label}】${name}様`;
+  const subject = text_(data.subject, 200) || `【${FORMS[type].label}】${name ? `${name}様` : email}`;
   return { type, name, email, subject, fields, at: new Date() };
 }
 
@@ -132,7 +135,7 @@ function sendMail_(entry) {
   });
   const body = [
     `サイトの「${FORMS[entry.type].label}」フォームから届きました。`,
-    `このメールに返信すると、${entry.name}様（${entry.email}）あてに送られます。`,
+    `このメールに返信すると、${entry.name ? `${entry.name}様（${entry.email}）` : `${entry.email} `}あてに送られます。`,
     "",
     "――――――――――――――――",
     ...lines,

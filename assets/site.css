@@ -2570,7 +2570,8 @@ a.news-card:hover .news-card-visual--product img { transform: translate(-50%, -6
 /* =========================================================
    Contact ページ：ご用件を選ぶ → 用件ごとの専用フォーム
    ========================================================= */
-.ccontact [hidden] { display: none !important; }
+.ccontact [hidden],
+.cform [hidden] { display: none !important; }
 
 .cpick-head {
   display: flex;
@@ -2850,7 +2851,20 @@ button.btn { border: 0; cursor: pointer; }
 .cform-status[data-state="error"] { color: #D64545; }
 .cform-status[data-state="info"] { color: var(--signal); }
 .cform-status a { border-bottom: 1px solid currentColor; font-weight: 500; }
-.cform button[type="submit"]:disabled { opacity: .55; cursor: progress; }
+/* 送信中のボタン（site.js が中身を回る印と「送信しています…」に変える） */
+.cform button[type="submit"]:disabled { cursor: progress; }
+.btn.is-sending { justify-content: center; gap: 10px; }
+.btn--primary.is-sending { background: var(--signal-fill-hover); }
+.btn-spinner {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: btn-spin .8s linear infinite;
+}
+@keyframes btn-spin { to { transform: rotate(360deg); } }
 /* 自動送信よけの入力欄（site.js が足す）。人には見せない */
 .cform-trap { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); opacity: 0; pointer-events: none; }
 
@@ -3875,6 +3889,8 @@ body:has(.rdlg[open]) { overflow: hidden; }
 .doc-body li::marker { color: var(--ink-3); }
 .doc-body strong { color: var(--ink); }
 .doc-body a { color: var(--signal); border-bottom: 1px solid currentColor; overflow-wrap: anywhere; }
+/* アプリのサポートページのお問い合わせフォーム（本文の .doc-body を閉じた間に置く） */
+.cform--doc { margin-top: 8px; }
 .doc-body .doc-meta {
   margin-top: 56px;
   padding-top: 20px;
