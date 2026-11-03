@@ -176,11 +176,11 @@ body {
   letter-spacing: 0.02em;
   -webkit-font-smoothing: antialiased;
   font-feature-settings: "palt";
-  /* 日本語は「、」「。」と <wbr> の位置でだけ折り返し、言葉の途中で改行しない
-     （どのブラウザでも同じ位置で改行されるように。収まらないときだけ途中で折る） */
-  word-break: keep-all;
+  /* 日本語は自然に折り返す（言葉の途中でもよい。文節で区切って手前で改行させない）。
+     行頭の「、」「。」や小さい「っ」などは避ける。意図的な改行は「。」のあとに <br> で入れる */
+  word-break: normal;
+  line-break: strict;
   overflow-wrap: anywhere;
-  text-wrap: pretty;
 }
 
 img { display: block; max-width: 100%; }
@@ -207,7 +207,7 @@ h1, h2, h3, p, dl, dd { margin: 0; }
 
 .br-pc { display: inline; }
 @media (max-width: 767px) { .br-pc { display: none; } }
-/* 「」で囲んだ言葉と後ろの助詞など、途中で折り返したくないまとまり */
+/* 途中で折り返すと読めなくなるもの（「2,980円〜」「1〜2営業日」のような数字と単位）だけに使う */
 .nobr { white-space: nowrap; }
 
 /* ---------- Buttons / links ---------- */
@@ -1656,7 +1656,6 @@ h1, h2, h3, p, dl, dd { margin: 0; }
 .flow-list small {
   display: block;
   margin-top: 4px;
-  text-wrap: balance;
   font-size: 13px;
   font-weight: 400;
   color: var(--night-sub);
@@ -1960,7 +1959,7 @@ h1, h2, h3, p, dl, dd { margin: 0; }
 .case-client { margin-bottom: 6px; font-size: 13px; font-weight: 500; color: var(--signal-on-dark); }
 .case-title { font-size: clamp(20px, 2vw, 26px); font-weight: 700; line-height: 1.4; }
 /* 行の長さをそろえ、最後の行に「守る。」のような短い言葉だけが残らないように */
-.case-desc { margin-top: 12px; max-width: 38em; font-size: 14px; line-height: 1.95; color: var(--night-text); text-wrap: balance; }
+.case-desc { margin-top: 12px; max-width: 38em; font-size: 14px; line-height: 1.95; color: var(--night-text); }
 .case-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px; }
 .case-tags li { padding: 5px 12px; border-radius: 999px; background: rgba(255, 255, 255, 0.06); font-size: 12px; color: var(--night-text); }
 .case-cost { grid-area: cost; display: flex; align-items: baseline; gap: 12px; white-space: nowrap; }
@@ -3197,7 +3196,6 @@ button.btn { border: 0; cursor: pointer; }
 
 /* ---------- Work：自社プロダクトと受託開発は、別々の仕事ではなく、ひとつのチームが行き来するもの ---------- */
 /* 「あったらいいな」の途中で改行しない */
-.rsec-title .nobr { display: inline-block; }
 .rwork-lead { max-width: 44em; margin-top: 24px; font-size: 15px; line-height: 2; color: var(--ink-2); }
 
 /* 2つの仕事を、ひとつのチームが行き来する図。スマホでも横並びのまま縮める */
