@@ -163,6 +163,7 @@
 *::before,
 *::after { box-sizing: border-box; }
 
+/* 固定ヘッダーの高さぶんは、ここでまとめてずらす。各要素の scroll-margin-top には、ヘッダーの下に空けたい余白だけを書く */
 html { scroll-behavior: smooth; scroll-padding-top: var(--header-h); }
 
 body {
@@ -2580,10 +2581,11 @@ a.news-card:hover .news-card-visual--product img { transform: translate(-50%, -6
   justify-content: space-between;
   gap: 6px 24px;
   margin-bottom: clamp(20px, 2.4vw, 28px);
+  scroll-margin-top: 24px;
 }
 .cpick-title { font-size: clamp(22px, 2.6vw, 32px); font-weight: 700; line-height: 1.5; }
 .cpick-note { font-size: 14px; color: var(--ink-2); }
-.cpick { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(12px, 1.6vw, 20px); scroll-margin-top: calc(var(--header-h) + 16px); }
+.cpick { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(12px, 1.6vw, 20px); scroll-margin-top: 16px; }
 .cpick-card {
   position: relative;
   display: flex;
@@ -2669,7 +2671,7 @@ a.news-card:hover .news-card-visual--product img { transform: translate(-50%, -6
   gap: clamp(40px, 6vw, 96px);
   align-items: start;
   margin-top: clamp(40px, 5vw, 64px);
-  scroll-margin-top: calc(var(--header-h) + 16px);
+  scroll-margin-top: 16px;
   animation: cpanel-in .7s var(--ease) both;
 }
 @keyframes cpanel-in { from { opacity: 0; transform: translateY(20px); } }
@@ -2869,7 +2871,7 @@ button.btn { border: 0; cursor: pointer; }
 .cform-trap { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); opacity: 0; pointer-events: none; }
 
 /* 送信できたら、フォームの中身を「受け付けました」に入れ替える */
-.cform { scroll-margin-top: calc(var(--header-h) + 16px); }
+.cform { scroll-margin-top: 16px; }
 .cform.is-sent > :not(.cform-done) { display: none; }
 .cform-done { display: flex; flex-direction: column; align-items: flex-start; padding: clamp(8px, 2vw, 24px) 0; outline: none; animation: cpanel-in .7s var(--ease) both; }
 .cform-done-mark svg { display: block; width: 56px; height: 56px; fill: none; stroke: var(--signal); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
@@ -2981,7 +2983,8 @@ button.btn { border: 0; cursor: pointer; }
   /* 説明 → フォーム → 流れ の順に並べ替える */
   .cpanel { display: flex; flex-direction: column; gap: 0; }
   .cpanel-aside { display: contents; }
-  .cpanel .cform { order: 1; margin-top: 28px; }
+  /* 縦並びでは画面の幅に合わせる（中の選択肢の長さで、320px 幅の画面からはみ出さないように） */
+  .cpanel .cform { order: 1; align-self: stretch; min-width: 0; margin-top: 28px; }
   .cpanel .cp-topics,
   .cpanel-more,
   .cpanel-elsewhere { order: 2; }
@@ -3862,7 +3865,7 @@ body:has(.rdlg[open]) { overflow: hidden; }
   font-size: clamp(19px, 1.8vw, 24px);
   font-weight: 700;
   line-height: 1.5;
-  scroll-margin-top: calc(var(--header-h) + 24px);
+  scroll-margin-top: 24px;
 }
 .doc-body h3 {
   position: relative;
@@ -3889,6 +3892,9 @@ body:has(.rdlg[open]) { overflow: hidden; }
 .doc-body li::marker { color: var(--ink-3); }
 .doc-body strong { color: var(--ink); }
 .doc-body a { color: var(--signal); border-bottom: 1px solid currentColor; overflow-wrap: anywhere; }
+/* アプリのサポートページ：「お問い合わせ」の見出しの横にアプリのアイコン（ページ上部の .doc-app と同じ角の丸み） */
+.doc-body h2.doc-h2-app { display: flex; align-items: center; gap: 14px; }
+.doc-h2-app img { flex: none; width: 40px; height: 40px; border-radius: 10px; }
 /* アプリのサポートページのお問い合わせフォーム（本文の .doc-body を閉じた間に置く） */
 .cform--doc { margin-top: 8px; }
 .doc-body .doc-meta {

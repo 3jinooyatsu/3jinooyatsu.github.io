@@ -54,7 +54,7 @@
     for (let i = 0; i < text.length; i++) {
       const c = text[i];
       const p = text[i - 1];
-      if (p && ((p === "・" && c !== " " && shortAround(text, i - 1)) || c === "／" || (/[」』）]/.test(p) && HIRA.test(c)) || (/[0-9０-９]/.test(p) && !/[\s0-9０-９,.]/.test(c)))) {
+      if (p && ((p === "・" && c !== " " && shortAround(text, i - 1)) || c === "／" || (/[」』）]/.test(p) && HIRA.test(c)) || (/[0-9０-９]/.test(p) && !/[\s0-9０-９,.]/.test(c)) || (/[〜～]/.test(p) && /[0-9０-９]/.test(c)))) {
         joined += WORD_JOINER;
       } else if (p === "／") {
         cuts.push(joined.length);
@@ -73,6 +73,14 @@
     }
     return { joined, cuts };
   };
+  // 英数字と日本語の間の空白では折り返さない：英数字のあと（「API を」「47 都道府県」「IP アドレス」）と、
+  // 漢字・カタカナのあと（「広告 SDK」「マップ URL」）。ひらがなのあと（「目的で API」）は文節の切れ目なので折り返してよい。「App Store」も分けない
+  // 番地（「18-21 リードシー…」）は、くっつけると住所が長いひとかたまりになるので除く
+  const glueLatin = (text) =>
+    text
+      .replace(/(^|[^-A-Za-z0-9])([A-Za-z0-9]+) (?=[ぁ-ゖァ-ヺー㐀-鿿々])/g, "$1$2 ")
+      .replace(/([ァ-ヺー㐀-鿿々]) (?=[A-Za-z0-9])/g, "$1 ")
+      .replace(/App Store/g, "App Store");
   const JA_TEXT = /[぀-ヿ㐀-鿿]/;
   const phraseWalker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
     acceptNode: (node) =>
@@ -85,7 +93,7 @@
   const phraseNodes = [];
   while (phraseWalker.nextNode()) phraseNodes.push(phraseWalker.currentNode);
   phraseNodes.forEach((node) => {
-    const { joined, cuts } = splitPhrases(node.data);
+    const { joined, cuts } = splitPhrases(glueLatin(node.data));
     if (!cuts.length && joined === node.data) return;
     const frag = document.createDocumentFragment();
     let from = 0;
@@ -776,6 +784,12 @@
         if (option) form.elements.role.value = option.value;
         check("entry", params.get("kind") || (params.get("topic") === "カジュアル面談" ? "casual" : role ? "apply" : ""));
       }
+      // ほかのページのボタンから来たときは、ページ上部を飛ばして「ご用件をお選びください」から見せる
+      // （読み込みの途中だと高さが決まらず届かないので、画像と文字の読み込みが終わってから）
+      const pickHead = document.querySelector(".cpick-head") || contactPick;
+      const toForm = () => document.fonts.ready.then(() => pickHead.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" }));
+      if (document.readyState === "complete") toForm();
+      else window.addEventListener("load", toForm, { once: true });
     }
   }
 
