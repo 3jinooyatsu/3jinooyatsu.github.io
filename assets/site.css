@@ -2849,6 +2849,36 @@ button.btn { border: 0; cursor: pointer; }
 .cform-status:empty { display: none; }
 .cform-status[data-state="error"] { color: #D64545; }
 .cform-status[data-state="info"] { color: var(--signal); }
+.cform-status a { border-bottom: 1px solid currentColor; font-weight: 500; }
+.cform button[type="submit"]:disabled { opacity: .55; cursor: progress; }
+/* 自動送信よけの入力欄（site.js が足す）。人には見せない */
+.cform-trap { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); opacity: 0; pointer-events: none; }
+
+/* 送信できたら、フォームの中身を「受け付けました」に入れ替える */
+.cform { scroll-margin-top: calc(var(--header-h) + 16px); }
+.cform.is-sent > :not(.cform-done) { display: none; }
+.cform-done { display: flex; flex-direction: column; align-items: flex-start; padding: clamp(8px, 2vw, 24px) 0; outline: none; animation: cpanel-in .7s var(--ease) both; }
+.cform-done-mark svg { display: block; width: 56px; height: 56px; fill: none; stroke: var(--signal); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.cform-done-mark [pathLength] { stroke-dasharray: 1; animation: cpick-draw .9s var(--ease) .15s both; }
+.cform-done-mark path { animation-duration: .5s; animation-delay: .75s; }
+.cform-done-en {
+  margin-top: 28px;
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--signal);
+}
+.cform-done-title { margin-top: 10px; font-size: clamp(22px, 2.4vw, 30px); font-weight: 700; line-height: 1.55; }
+.cform-done-text { margin-top: 14px; font-size: 15px; line-height: 2; color: var(--ink-2); }
+.cform-done-text [data-when] { display: block; }
+.cform-done-note { align-self: stretch; margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 13px; line-height: 1.9; color: var(--ink-3); }
+.cform-done-note a { color: var(--signal); border-bottom: 1px solid currentColor; white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) {
+  .cform-done,
+  .cform-done-mark [pathLength] { animation: none; }
+}
 
 /* フォームの中の区切り（01 ご相談の内容 / 02 ご連絡先） */
 .cform-step { display: flex; align-items: center; gap: 12px; font-size: 13px; font-weight: 700; }

@@ -779,7 +779,8 @@
     }
   }
 
-  // ---------- お問い合わせフォーム：入力内容をメールアプリで開く ----------
+  // ---------- お問い合わせフォーム：その場で送信する ----------
+  // 送り先は data-contact-endpoint（Google Apps Script。_contact-form/）。空のときや送れなかったときはメールアプリで開く
   // ラジオ・チェックは選ばれた data-label、セレクトは表示名、それ以外は入力値
   const fieldValue = (field) => {
     if (field.tagName === "FIELDSET") return [...field.querySelectorAll("input:checked")].map((input) => input.dataset.label || input.value).join("、");
@@ -790,6 +791,15 @@
 
   document.querySelectorAll("[data-contact-form]").forEach((form) => {
     const status = form.querySelector("[data-form-status]");
+    const button = form.querySelector('[type="submit"]');
+    const done = form.querySelector("[data-form-done]");
+
+    // 自動送信よけ：人には見えない入力欄。ここが埋まっていたら、受け口（Apps Script）で捨てる
+    const trap = document.createElement("div");
+    trap.className = "cform-trap";
+    trap.setAttribute("aria-hidden", "true");
+    trap.innerHTML = '<label>この欄は空のままにしてください<input type="text" name="website" tabindex="-1" autocomplete="off" /></label>';
+    form.append(trap);
 
     // data-when="name:値,値" の項目は、そのラジオが選ばれているときだけ出す（隠れている間は必須・送信の対象外）
     const conditionals = [...form.querySelectorAll("[data-when]")];
@@ -805,32 +815,79 @@
     form.addEventListener("change", syncConditionals);
     syncConditionals();
 
-    form.addEventListener("submit", (e) => {
+    // data-mail-label の付いた項目を、上から順に。件名は【開発のご相談】LINEアプリ｜お名前様 のように data-subject-part の値を並べる
+    const collect = () => {
+      const fields = [...form.querySelectorAll("[data-mail-label]")].filter(isActive).map((field) => ({
+        label: field.dataset.mailLabel,
+        value: fieldValue(field),
+        long: field.tagName === "TEXTAREA",
+      }));
+      const parts = [...form.querySelectorAll("[data-subject-part]")].filter(isActive).map(fieldValue).filter(Boolean);
+      return { subject: `${form.dataset.subject}${parts.join("・")}｜${form.elements.name.value.trim()}様`, fields };
+    };
+    const mailtoOf = ({ subject, fields }) => {
+      const lines = [];
+      fields.forEach(({ label, value, long }) => {
+        if (long) lines.push("", `${label}：`, value || "-", "");
+        else lines.push(`${label}：${value || "-"}`);
+      });
+      return `mailto:${form.dataset.to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join("\n"))}`;
+    };
+    const say = (state, ...content) => {
+      status.dataset.state = state;
+      status.replaceChildren(...content);
+    };
+
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
+      if (button.disabled) return;
       if (!form.checkValidity()) {
-        status.dataset.state = "error";
-        status.textContent = "未入力の必須項目があります。";
+        say("error", "未入力の必須項目があります。");
         form.reportValidity();
         return;
       }
+      const mail = collect();
+      const endpoint = form.closest("[data-contact-endpoint]")?.dataset.contactEndpoint.trim();
+      if (!endpoint) {
+        window.location.href = mailtoOf(mail);
+        say("info", `メールアプリが開きます。内容を確認して送信してください。開かない場合は ${form.dataset.to} まで直接ご連絡ください。`);
+        return;
+      }
 
-      // data-mail-label の付いた項目を、上から順に本文へ
-      const lines = [];
-      form.querySelectorAll("[data-mail-label]").forEach((field) => {
-        if (!isActive(field)) return;
-        const label = field.dataset.mailLabel;
-        const value = fieldValue(field);
-        if (field.tagName === "TEXTAREA") lines.push("", `${label}：`, value || "-", "");
-        else lines.push(`${label}：${value || "-"}`);
-      });
-      // 件名：【開発のご相談】LINEアプリ｜お名前様 のように、data-subject-part の値を並べる
-      const parts = [...form.querySelectorAll("[data-subject-part]")].filter(isActive).map(fieldValue).filter(Boolean);
-      const subject = `${form.dataset.subject}${parts.join("・")}｜${form.elements.name.value.trim()}様`;
-      const to = form.dataset.to;
-
-      window.location.href = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join("\n"))}`;
-      status.dataset.state = "info";
-      status.textContent = `メールアプリが開きます。内容を確認して送信してください。開かない場合は ${to} まで直接ご連絡ください。`;
+      button.disabled = true;
+      form.setAttribute("aria-busy", "true");
+      say("info", "送信しています…");
+      try {
+        const res = await fetch(endpoint, {
+          method: "POST",
+          // フォーム形式で送ると、Apps Script への事前確認の通信（プリフライト）が起きない
+          body: new URLSearchParams({
+            payload: JSON.stringify({
+              form: form.dataset.formType,
+              name: form.elements.name.value.trim(),
+              email: form.elements.email.value.trim(),
+              website: form.elements.website.value,
+              ...mail,
+            }),
+          }),
+          signal: AbortSignal.timeout?.(30000),
+        });
+        const result = await res.json();
+        if (!result.ok) throw new Error(result.error);
+        say("info");
+        form.classList.add("is-sent");
+        done.hidden = false;
+        form.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+        done.focus({ preventScroll: true });
+      } catch {
+        const fallback = document.createElement("a");
+        fallback.href = mailtoOf(mail);
+        fallback.textContent = "メールアプリから送信";
+        say("error", "送信できませんでした。少し時間をおいてもう一度お試しいただくか、", fallback, "してください。");
+        button.disabled = false;
+      } finally {
+        form.removeAttribute("aria-busy");
+      }
     });
   });
 

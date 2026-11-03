@@ -58,7 +58,8 @@
     </section>
 
     <!-- ========== ご用件を選ぶ → 用件ごとの専用フォーム ========== -->
-    <section class="sec sec--tint ccontact">
+    <!-- data-contact-endpoint：送信先（Google Apps Script のウェブアプリの URL。_contact-form/README.md）。空のときはメールアプリで開く -->
+    <section class="sec sec--tint ccontact" data-contact-endpoint="https://script.google.com/macros/s/AKfycbxfIG0UFjsjybp7tcpYAvUzTce7l6b8mqKfjP7VCSA6XNmIiM1Sf9R_3A2wkZZuhERaJQ/exec">
       <div class="wrap">
         <div class="cpick-head" data-reveal>
           <h2 class="cpick-title">ご用件を<wbr />お選びください。</h2>
@@ -112,7 +113,7 @@
             <a class="link-arrow cpanel-more" href="../development/">開発の進め方・料金を見る<span aria-hidden="true">→</span></a>
           </aside>
 
-          <form class="cform" data-contact-form data-subject="【開発のご相談】" data-to="info@3jino-oyatsu.com" novalidate>
+          <form class="cform" data-contact-form data-form-type="development" data-subject="【開発のご相談】" data-to="info@3jino-oyatsu.com" novalidate>
             <p class="cform-step"><span>01</span>ご相談の内容</p>
             <fieldset class="cform-row" data-mail-label="つくりたいもの" data-subject-part>
               <legend class="cform-label">つくりたいもの <span class="req">必須</span></legend>
@@ -193,9 +194,16 @@
 
             <div class="cform-actions">
               <button type="submit" class="btn btn--primary btn--lg">無料で見積もりを依頼する<span class="btn-arrow" aria-hidden="true">→</span></button>
-              <p class="cform-hint">送信ボタンを押すと、入力内容が入ったメールがメールアプリで開きます。</p>
             </div>
             <p class="cform-status" data-form-status role="status" aria-live="polite"></p>
+
+            <div class="cform-done" data-form-done tabindex="-1" hidden>
+              <span class="cform-done-mark" aria-hidden="true"><svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="26" pathLength="1" /><path d="M18 28.5l7 7 13-14" pathLength="1" /></svg></span>
+              <p class="cform-done-en">Thank you</p>
+              <h3 class="cform-done-title">ご相談を受け付けました。</h3>
+              <p class="cform-done-text">内容を拝見のうえ、<span class="nobr">1〜2営業日</span>以内に担当からメールでご連絡します。</p>
+              <p class="cform-done-note">数日たっても連絡がない場合は、迷惑メールフォルダもご確認のうえ、<a href="mailto:info@3jino-oyatsu.com">info@3jino-oyatsu.com</a> までお知らせください。</p>
+            </div>
           </form>
         </div>
 
@@ -214,7 +222,7 @@
             <a class="link-arrow cpanel-more" href="../recruit/#positions">募集中の職種を見る<span aria-hidden="true">→</span></a>
           </aside>
 
-          <form class="cform" data-contact-form data-subject="【採用】" data-to="info@3jino-oyatsu.com" novalidate>
+          <form class="cform" data-contact-form data-form-type="recruit" data-subject="【採用】" data-to="info@3jino-oyatsu.com" novalidate>
             <p class="cform-step"><span>01</span>ご希望</p>
             <fieldset class="cform-row" data-mail-label="ご希望" data-subject-part>
               <legend class="cform-label">ご希望 <span class="req">必須</span></legend>
@@ -290,9 +298,17 @@
 
             <div class="cform-actions">
               <button type="submit" class="btn btn--primary btn--lg"><span data-when="entry:casual">カジュアル面談を申し込む</span><span data-when="entry:apply,">この内容で応募する</span><span class="btn-arrow" aria-hidden="true">→</span></button>
-              <p class="cform-hint">送信ボタンを押すと、入力内容が入ったメールがメールアプリで開きます。<span data-when="entry:apply">履歴書・職務経歴書は、そのメールに添付してお送りいただけます。</span></p>
+              <p class="cform-hint" data-when="entry:apply">履歴書・職務経歴書は、こちらからご連絡したあとにお送りいただけます。</p>
             </div>
             <p class="cform-status" data-form-status role="status" aria-live="polite"></p>
+
+            <div class="cform-done" data-form-done tabindex="-1" hidden>
+              <span class="cform-done-mark" aria-hidden="true"><svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="26" pathLength="1" /><path d="M18 28.5l7 7 13-14" pathLength="1" /></svg></span>
+              <p class="cform-done-en">Thank you</p>
+              <h3 class="cform-done-title"><span data-when="entry:casual">お申し込みを</span><span data-when="entry:apply,">ご応募を</span>受け付けました。</h3>
+              <p class="cform-done-text">内容を確認のうえ、ご入力のメールアドレスあてにご連絡します。<span data-when="entry:casual">面談の日程は、そのやりとりの中で調整させてください。</span><span data-when="entry:apply">履歴書・職務経歴書は、そのご連絡のあとにお送りください。</span></p>
+              <p class="cform-done-note">数日たっても連絡がない場合は、迷惑メールフォルダもご確認のうえ、<a href="mailto:info@3jino-oyatsu.com">info@3jino-oyatsu.com</a> までお知らせください。</p>
+            </div>
           </form>
         </div>
 
@@ -308,7 +324,7 @@
             </ul>
           </aside>
 
-          <form class="cform" data-contact-form data-subject="【お問い合わせ】" data-to="info@3jino-oyatsu.com" novalidate>
+          <form class="cform" data-contact-form data-form-type="company" data-subject="【お問い合わせ】" data-to="info@3jino-oyatsu.com" novalidate>
             <p class="cform-step"><span>01</span>お問い合わせの内容</p>
             <fieldset class="cform-row" data-mail-label="お問い合わせの種類" data-subject-part>
               <legend class="cform-label">お問い合わせの種類 <span class="req">必須</span></legend>
@@ -373,9 +389,16 @@
 
             <div class="cform-actions">
               <button type="submit" class="btn btn--primary btn--lg">この内容で送信する<span class="btn-arrow" aria-hidden="true">→</span></button>
-              <p class="cform-hint">送信ボタンを押すと、入力内容が入ったメールがメールアプリで開きます。</p>
             </div>
             <p class="cform-status" data-form-status role="status" aria-live="polite"></p>
+
+            <div class="cform-done" data-form-done tabindex="-1" hidden>
+              <span class="cform-done-mark" aria-hidden="true"><svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="26" pathLength="1" /><path d="M18 28.5l7 7 13-14" pathLength="1" /></svg></span>
+              <p class="cform-done-en">Thank you</p>
+              <h3 class="cform-done-title">お問い合わせを受け付けました。</h3>
+              <p class="cform-done-text">内容を拝見のうえ、<span class="nobr">1〜2営業日</span>を目安にご返信します。</p>
+              <p class="cform-done-note">数日たっても連絡がない場合は、迷惑メールフォルダもご確認のうえ、<a href="mailto:info@3jino-oyatsu.com">info@3jino-oyatsu.com</a> までお知らせください。</p>
+            </div>
           </form>
         </div>
 
