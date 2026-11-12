@@ -27,6 +27,8 @@
     const text = line.textContent.trim();
     line.textContent = "";
     for (const ch of text) {
+      // 英語の単語の間の空白は、inline-block の span に入れると消えるので、文字のまま残す
+      if (ch === " ") { line.append(" "); continue; }
       const span = document.createElement("span");
       span.className = "ch";
       span.style.setProperty("--i", i++);
@@ -1140,6 +1142,8 @@
   const nav = header.querySelector(".gh-nav");
   const cta = header.querySelector(".gh-cta");
   const desktop = window.matchMedia("(min-width: 961px)");
+  const en = document.documentElement.lang === "en";
+  const menuLabel = (open) => en ? (open ? "Close menu" : "Open menu") : (open ? "メニューを閉じる" : "メニューを開く");
 
   // PC：スクロールしたら右上の小さなカプセルにまとめる。
   // 白いカプセルは、閉じているときは「Menu」だけ、広げたときはメニューの先頭から「Close」までを包む
@@ -1159,7 +1163,7 @@
   const setExpanded = (open) => {
     header.classList.toggle("is-expanded", open);
     toggle.setAttribute("aria-expanded", String(open));
-    toggle.setAttribute("aria-label", open ? "メニューを閉じる" : "メニューを開く");
+    toggle.setAttribute("aria-label", menuLabel(open));
     expandedAt = window.scrollY;
     placePill();
   };
@@ -1208,7 +1212,7 @@
   const setMenu = (open) => {
     header.classList.toggle("is-open", open);
     toggle.setAttribute("aria-expanded", String(open));
-    toggle.setAttribute("aria-label", open ? "メニューを閉じる" : "メニューを開く");
+    toggle.setAttribute("aria-label", menuLabel(open));
     document.body.style.overflow = open ? "hidden" : "";
   };
   toggle.addEventListener("click", () => {

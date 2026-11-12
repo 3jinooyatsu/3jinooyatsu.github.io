@@ -2341,6 +2341,27 @@ h1, h2, h3, p, dl, dd { margin: 0; }
 .ph-kicker span { font-family: var(--font-ja); font-weight: 500; letter-spacing: 0.08em; text-transform: none; color: var(--ink-3); }
 .ph-statement { font-size: clamp(24px, 7.2vw, 96px); font-weight: 700; line-height: 1.3; letter-spacing: -0.01em; }
 
+/* 日本語・英語の切り替え（英語版があるのは About のみ）：パンくずの右端に置く */
+.lang-switch {
+  position: absolute;
+  top: -3px;
+  right: var(--gutter);
+  display: flex;
+  gap: 4px;
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+}
+.lang-switch > * { padding: 7px 12px; border: 1px solid var(--line-strong); border-radius: 999px; color: var(--ink-3); }
+.lang-switch [aria-current] { border-color: var(--ink); background: var(--ink); color: var(--base); }
+.lang-switch a { transition: color .2s ease, border-color .2s ease; }
+.lang-switch a:hover { border-color: var(--signal); color: var(--signal); }
+
+/* 英語版：欧文は Geist で組む。見出しは1行に収めず、狭い画面では単語の間で折り返す */
+html[lang="en"] { --font-ja: var(--font); }
+html[lang="en"] .hero-line { white-space: normal; }
+
 /* Products：4つのアプリの色を淡く重ね、アイコンを右に並べる */
 .page-head--products {
   background:
