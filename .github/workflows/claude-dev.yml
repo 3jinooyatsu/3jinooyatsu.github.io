@@ -47,7 +47,9 @@ jobs:
         with:
           node-version: 22
       - name: 作業用のブランチを作る
-        run: git switch -c "dev/$DEV_ID"
+        # 開発リーダーが、先にブランチを作って、絵（代表が OK を出した画像）を入れていることがある。そのときは、その続きから書く
+        run: |
+          if git fetch -q origin "dev/$DEV_ID" 2>/dev/null; then git switch -c "dev/$DEV_ID" FETCH_HEAD; else git switch -c "dev/$DEV_ID"; fi
       - name: エンジニア（Claude）が、依頼書どおりに直す
         uses: anthropics/claude-code-action@v1
         with:
