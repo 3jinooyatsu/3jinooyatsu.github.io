@@ -1,0 +1,145 @@
+# 開発チームのエンジニア（月額プランの Claude）。依頼書を受け取って、ホームページを直し、確かめてから、提案（プルリクエスト）を出す。
+# 始めるのは、開発リーダー（ようかん。3時のおやつの AI 社員）か、人の手（GitHub の Actions → claude-dev → Run workflow）。
+# Claude は、ファイルを書き換えるだけ。コミット・push・提案の作成は、このあとの決まった手順が行う。
+# 提案を main に入れると、GitHub Pages が、そのまま 3jino-oyatsu.com に公開する。入れるのは、代表が「OK」と返したときだけ。
+# このリポジトリは公開なので、依頼書と提案は、だれでも見られる。外に出せないことは、依頼書に書かない。
+# 鍵は、リポジトリの Secrets の CLAUDE_CODE_OAUTH_TOKEN（代表が `claude setup-token` で作る。1年で切れる）
+name: claude-dev
+# 実行の名前に、依頼の番号を入れる（開発リーダーが、自分の渡した実行を見つけるため）
+run-name: claude-dev ${{ inputs.id }}
+on:
+  workflow_dispatch:
+    inputs:
+      id:
+        description: 依頼の番号（ブランチの名前に使う。英数字とハイフン）
+        required: true
+        type: string
+      title:
+        description: 提案の題名（何を変えるかを、1行で）
+        required: true
+        type: string
+      task:
+        description: 依頼書（何を変えるか、できあがりの条件、触ってはいけないところ）
+        required: true
+        type: string
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  id-token: write
+  actions: read
+concurrency:
+  group: claude-dev-${{ inputs.id }}
+  cancel-in-progress: false
+jobs:
+  implement:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      DEV_ID: ${{ inputs.id }}
+      DEV_TITLE: ${{ inputs.title }}
+    steps:
+      - name: 依頼の番号を確かめる
+        run: |
+          echo "$DEV_ID" | grep -Eq '^[A-Za-z0-9][A-Za-z0-9-]{0,40}$' || { echo "依頼の番号は、英数字とハイフンだけにしてください"; exit 1; }
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: 作業用のブランチを作る
+        run: git switch -c "dev/$DEV_ID"
+      - name: エンジニア（Claude）が、依頼書どおりに直す
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            あなたは、3時のおやつの開発チームのエンジニアです。下の依頼書どおりに、このリポジトリ（会社のホームページ）を直してください。
+
+            ## このリポジトリ
+            - 3時のおやつ合同会社のホームページ（https://3jino-oyatsu.com）。手書きの HTML・CSS・JavaScript で、ビルドはありません
+            - main に入ると、そのまま公開されます。見た目と文面が、そのまま会社の顔になります
+            - 見た目は assets/site.css、動きは assets/site.js。ページごとの HTML は、同じヘッダーとフッターを、それぞれが持っています（1つを直したら、同じ部分を持つページも、そろえます）
+            - お知らせは、news.html の上のカード、news.html の一覧、index.html のお知らせの一覧の、3か所に同じ内容があります（1つを足したら、3か所をそろえます。新しいものが上）
+            - 日本語のページと、英語のページ（en/）があります。日本語を直して、対応する英語のページがあるときは、英語もそろえます
+
+            ## 進め方
+            - はじめに、関係するページと、同じ部品を持つほかのページを読んでから直します。まわりの書き方（クラスの名前、字下げ、言葉づかい）に合わせます
+            - 依頼書にないことは、変えません。迷うところは、小さいほうの解釈を選び、説明に書きます
+            - 文面は、依頼書に書かれたものを使います。書かれていない事実（日付、数字、名前、実績）を、足しません
+            - コミット、push、提案の作成は、しません（このあとの手順が行います）。ファイルを書き換えるだけです
+
+            ## 触ってはいけないもの
+            - .github/ の中、CNAME
+
+            ## 代表に必ず確かめるもの（触れたときは、説明のいちばん上に書く）
+            問い合わせフォームの送り先と項目（_contact-form/、contact/）、プライバシーポリシー、会社概要の事実（社名、住所、代表、設立日）、外のサービスの読み込み（計測、広告、埋め込み）
+
+            ## 最後に
+            リポジトリのいちばん上に PR_BODY.md というファイルを作り、代表がスマホで読める長さの日本語で、次を書いてください：
+            何を変えたか（専門の言葉を使わずに。どのページの、どこが、どう変わったか）、確かめられなかったこと、代表に決めてほしいこと（あれば）
+
+            ## 依頼書
+            ${{ inputs.task }}
+          claude_args: |
+            --max-turns 60
+            --allowedTools "Read,Write,Edit,Glob,Grep,Bash(git status:*),Bash(git diff:*),Bash(ls:*)"
+      - name: 変わったページを調べる
+        id: pages
+        run: |
+          set -euo pipefail
+          changed=$(git status --porcelain | cut -c4- | grep -v '^PR_BODY\.md$' || true)
+          if [ -z "$changed" ]; then echo "変更がありません。依頼書を確かめてください"; exit 1; fi
+          # 写真を撮るページ：変わった HTML（4ページまで）。HTML が変わっていなければ（見た目や動きだけの変更）、トップページ
+          pages=$(echo "$changed" | grep -E '\.html$' | grep -v '^_' | head -4 || true)
+          [ -n "$pages" ] || pages=index.html
+          { echo "list<<EOF"; echo "$pages"; echo "EOF"; } >> "$GITHUB_OUTPUT"
+          echo "$changed" | grep -E '\.html$' | grep -v '^_' > /tmp/changed-html.txt || true
+      - name: リンクと画像が、切れていないか
+        run: |
+          if [ -s /tmp/changed-html.txt ]; then xargs node .github/shots.mjs links < /tmp/changed-html.txt; else echo "HTML の変更は、ありません"; fi
+      - name: 画面の写真を撮る（PC の幅と、スマホの幅）
+        continue-on-error: true
+        env:
+          PW_DIR: /tmp/pw
+          PAGES: ${{ steps.pages.outputs.list }}
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/pw && npm install --prefix /tmp/pw --no-audit --no-fund playwright@1 >/dev/null
+          /tmp/pw/node_modules/.bin/playwright install --with-deps chromium >/dev/null
+          python3 -m http.server 8080 >/dev/null 2>&1 &
+          sleep 2
+          echo "$PAGES" | xargs node .github/shots.mjs shots
+      - name: 写真を残す
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: shots
+          path: /tmp/shots
+          retention-days: 7
+          if-no-files-found: ignore
+      - name: 提案を出す
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          body=/tmp/pr-body.md
+          if [ -f PR_BODY.md ]; then mv PR_BODY.md "$body"; else echo "（エンジニアの説明が、ありません）" > "$body"; fi
+          changed=$(git status --porcelain | cut -c4-)
+          if [ -z "$changed" ]; then echo "変更がありません。依頼書を確かめてください"; exit 1; fi
+          # 触ってはいけないものに触れていたら、出さない
+          if echo "$changed" | grep -E '^(\.github/|CNAME$)'; then echo "触ってはいけないファイルが、変わっています"; exit 1; fi
+          # 代表に必ず確かめるものに触れていたら、説明のいちばん上に書く
+          careful=$(echo "$changed" | grep -E '^(_contact-form/|contact/|contact\.html$|privacy\.html$|[^/]+/privacy/)' || true)
+          if [ -n "$careful" ]; then
+            { echo "> **代表に必ず確かめてほしい変更が、入っています**（問い合わせフォーム・プライバシーポリシーに関わるファイル）"; echo "$careful" | sed 's/^/> - /'; echo; cat "$body"; } > /tmp/pr-body2.md
+            mv /tmp/pr-body2.md "$body"
+          fi
+          # Claude の手順が、作業のあいだだけ使う鍵を git に入れて、終わると無効にする。この手順の鍵で、送り直せるようにする
+          git config --unset-all http.https://github.com/.extraheader || true
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git config user.name "claude-dev"
+          git config user.email "claude-dev@users.noreply.github.com"
+          git add -A
+          git commit -q -m "$DEV_TITLE"
+          git push -q origin "dev/$DEV_ID"
+          gh pr create --base main --head "dev/$DEV_ID" --title "$DEV_TITLE" --body-file "$body"
